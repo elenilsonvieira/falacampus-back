@@ -30,13 +30,13 @@ public class TokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-		String token = tokenService.get(request);
-		boolean valid = tokenService.isValid(token);
-		
-		if(valid) {
-			authenticate(token);
-		}
-		filterChain.doFilter(request, response);
+//		String token = tokenService.get(request);
+//		boolean valid = tokenService.isValid(token);
+//		
+//		if(valid) {
+//			authenticate(token);
+//		}
+//		filterChain.doFilter(request, response);
 		
 	}
 	private void authenticate(String token) {
