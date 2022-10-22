@@ -32,11 +32,12 @@ public class TokenFilter extends OncePerRequestFilter {
 		
 //		String token = tokenService.get(request);
 //		boolean valid = tokenService.isValid(token);
-//		
+
+			
 //		if(valid) {
 //			authenticate(token);
 //		}
-//		filterChain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 		
 	}
 	private void authenticate(String token) {
