@@ -22,7 +22,7 @@ import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
-
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -39,6 +39,10 @@ public class DepartamentController {
 
 	@Autowired
 	private DepartamentService departamentService;
+	
+//------------
+	@Autowired
+	private DepartamentConverterServiceImpl d;
 
 //	@Autowired
 //	private UserConverterService userConverterService;
@@ -195,5 +199,10 @@ public class DepartamentController {
 		}
 	}
 	
+////-------------
+	@GetMapping("/test")
+	public void teste() {
+		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
+	}
 
 }
