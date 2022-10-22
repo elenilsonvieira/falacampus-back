@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,9 +90,9 @@ public class DepartamentController {
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-			// User userEntity = userService.
-			// UserDto userDto = new UserDto();
-			// userDto.getDepartamentId();
+//			 User userEntity = userService.
+//			 UserDto userDto = new UserDto();
+//			 userDto.getDepartamentId();
 
 			/*
 			 * Lógica
@@ -193,5 +194,6 @@ public class DepartamentController {
 			return departamentService.findAll();	
 		}
 	}
+	
 
 }

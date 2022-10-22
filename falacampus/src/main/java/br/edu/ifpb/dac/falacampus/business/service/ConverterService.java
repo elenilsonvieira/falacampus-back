@@ -115,5 +115,19 @@ public class ConverterService {
 
 		return user;
 	}
+	
+//------------------	
+	public Departament jsonToDepartament(String jsonDepartament) {
+		JsonElement jsonE = JsonParser.parseString(jsonDepartament);
+		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
+		
+		String nome = results.get("nome").getAsString();
+		System.out.println(nome);
+		Departament d = new Departament();
+		
+		d.setName(nome);
+		
+		return d;
+	}
 
 }
