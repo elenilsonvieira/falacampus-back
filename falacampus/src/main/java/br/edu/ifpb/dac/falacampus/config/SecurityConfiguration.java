@@ -98,6 +98,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/auth").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/departament").permitAll()
+				//------
+				.antMatchers(HttpMethod.PUT, "/api/departament").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/departament").permitAll()
+				//-----
 				.antMatchers(HttpMethod.POST, "/api/isValidToken").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/api/user")

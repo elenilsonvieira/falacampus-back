@@ -29,11 +29,11 @@ public class DepartamentService {
 
 	public void deleteById(Long id) {
 
-		Departament departament = findById(id);
-
-		if (departament == null) {
-			throw new IllegalStateException(String.format("Could not find a entity with id=%1", id));
-		}
+//		Departament departament = findById(id);
+//
+//		if (departament == null) {
+//			throw new IllegalStateException(String.format("Could not find a entity with id=%1", id));
+//		}
 
 		departamentRepository.deleteById(id);
 	}

@@ -167,4 +167,14 @@ private String find(String token, String findUrl) {
 		return response;
 	}
 
+	
+//----------------------------------
+	@Override
+	public String findAllDepartament(String token) {
+		String url = String.format("%s?search=%s", DEPARTAMENTS_URL);
+		return find(token, url);
+	}
+	
+	
+
 }
