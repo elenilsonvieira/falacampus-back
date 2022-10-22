@@ -18,10 +18,10 @@ public class DepartamentService {
 	private DepartamentRepository departamentRepository;
 	
 	
-	
 	public Departament findByName(String name) {
 		return departamentRepository.findByName(name);
 	}
+	
 	public Departament save(Departament departament) {
 
 		return departamentRepository.save(departament);
@@ -39,7 +39,12 @@ public class DepartamentService {
 	}
 
 	public Departament update(Departament departament) {
+		
+		Departament departamentUp = findById(departament.getId());
+		departamentUp.setName(departament.getName());
+
 		return departamentRepository.save(departament);
+	
 	}
 
 	public Departament update(Long id) {

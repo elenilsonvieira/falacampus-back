@@ -71,16 +71,18 @@ public class DepartamentController {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid DepartamentDto dto) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody DepartamentDto dto) {
 		try {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
 			departament = departamentService.update(departament);
+
 			dto = departamentConvertService.departamentToDTO(departament);
 
 			return ResponseEntity.ok(dto);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
+
 		}
 	}
 
@@ -115,6 +117,8 @@ public class DepartamentController {
 			
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
+		
+
 		}
 	}
 
