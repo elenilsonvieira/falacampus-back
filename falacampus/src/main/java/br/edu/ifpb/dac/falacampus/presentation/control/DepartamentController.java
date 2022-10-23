@@ -196,23 +196,23 @@ public class DepartamentController {
 	}
 	
 	//FIND ALL
-	@GetMapping("/all")
-	public List<Departament> findAll() throws Exception {
-
-		List<Departament> result = departamentService.findAll();
-
-		if (result.isEmpty()){
-			throw new Exception("List is empty!");
-
-		} else {
-			return departamentService.findAll();	
-		}
-	}
-	
-////-------------
-//	@GetMapping("/test")
-//	public void teste() {
-//		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
+//	@GetMapping("/all")
+//	public List<Departament> findAll() throws Exception {
+//
+//		List<Departament> result = departamentService.findAll();
+//
+//		if (result.isEmpty()){
+//			throw new Exception("List is empty!");
+//
+//		} else {
+//			return departamentService.findAll();	
+//		}
 //	}
+//	
+//////-------------
+	@GetMapping("/test")
+	public void teste() {
+		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
+	}
 
 }
