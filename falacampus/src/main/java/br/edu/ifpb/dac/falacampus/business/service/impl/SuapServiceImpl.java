@@ -74,13 +74,15 @@ public class SuapServiceImpl implements SuapService {
 	}
 	
 private String find(String token, String findUrl) {
-		
+		System.out.println("Converter URL");
 		try {
 			HttpRequest url = generateGetUrl(findUrl,
-					Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)));
+					Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));
+			
+			System.out.println("Conveteu");
 			return sendRequest(url);
 		} catch (URISyntaxException e) {
-			e.printStackTrace();
+			e.getMessage();
 		} catch (IOException e2) {
 			e2.printStackTrace();
 		} catch (InterruptedException e3) {
@@ -167,4 +169,12 @@ private String find(String token, String findUrl) {
 		return response;
 	}
 
+	
+//----------------------------------
+	@Override
+	public String findAllDepartament(String token) {
+		String url = String.format("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w", DEPARTAMENTS_URL);
+		return find(token, DEPARTAMENTS_URL);
+	}
+	
 }

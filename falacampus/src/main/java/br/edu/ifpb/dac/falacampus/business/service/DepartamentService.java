@@ -7,6 +7,7 @@ import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.repository.DepartamentRepository;
@@ -18,10 +19,10 @@ public class DepartamentService {
 	private DepartamentRepository departamentRepository;
 	
 	
-	
 	public Departament findByName(String name) {
 		return departamentRepository.findByName(name);
 	}
+	
 	public Departament save(Departament departament) {
 
 		return departamentRepository.save(departament);
@@ -39,7 +40,12 @@ public class DepartamentService {
 	}
 
 	public Departament update(Departament departament) {
+		
+		Departament departamentUp = findById(departament.getId());
+		departamentUp.setName(departament.getName());
+
 		return departamentRepository.save(departament);
+	
 	}
 
 	public Departament update(Long id) {
@@ -68,6 +74,5 @@ public class DepartamentService {
 				ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
 
 		return departamentRepository.findAll(example);
-	}
-
+	}	
 }

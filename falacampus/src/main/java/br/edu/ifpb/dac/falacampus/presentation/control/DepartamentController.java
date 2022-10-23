@@ -1,9 +1,11 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,17 +17,19 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
-
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
+import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
-
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
@@ -38,6 +42,13 @@ public class DepartamentController {
 
 	@Autowired
 	private DepartamentService departamentService;
+	
+	@Autowired
+	private UserServiceImpl userS;
+	
+//------------
+	@Autowired
+	private DepartamentConverterServiceImpl d;
 
 //	@Autowired
 //	private UserConverterService userConverterService;
@@ -71,25 +82,33 @@ public class DepartamentController {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid DepartamentDto dto) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody DepartamentDto dto) {
 		try {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
+			if(departament.getId_responsavel() != null) {
+				User o = userS.findById(Long.parseLong(departament.getId_responsavel()));
+				if(o==null) {
+					throw new NullPointerException("Id do usuario não encontrado");
+				}
+			}
 			departament = departamentService.update(departament);
+
 			dto = departamentConvertService.departamentToDTO(departament);
 
 			return ResponseEntity.ok(dto);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
+
 		}
 	}
 
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-			// User userEntity = userService.
-			// UserDto userDto = new UserDto();
-			// userDto.getDepartamentId();
+//			 User userEntity = userService.
+//			 UserDto userDto = new UserDto();
+//			 userDto.getDepartamentId();
 
 			/*
 			 * Lógica
@@ -115,6 +134,8 @@ public class DepartamentController {
 			
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
+		
+
 		}
 	}
 
@@ -177,17 +198,33 @@ public class DepartamentController {
 	}
 	
 	//FIND ALL
-	@GetMapping("/all")
-	public List<Departament> findAll() throws Exception {
-
-		List<Departament> result = departamentService.findAll();
-
-		if (result.isEmpty()){
-			throw new Exception("List is empty!");
-
-		} else {
-			return departamentService.findAll();	
-		}
+//	@GetMapping("/all")
+//	public List<Departament> findAll() throws Exception {
+//
+//		List<Departament> result = departamentService.findAll();
+//
+//		if (result.isEmpty()){
+//			throw new Exception("List is empty!");
+//
+//		} else {
+//			return departamentService.findAll();	
+//		}
+//	}
+//	
+//////-------------
+	@GetMapping("/test")
+	public void teste() {
+		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MjAyODgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1MzM4ODh9.RtI8C1u7T31Lo8otIBmhYFscIfL8k9jzpNODJvQzpbY");
 	}
 
+////~~~~~~~~~~~~~teste
+//	@GetMapping("/getdep")
+//	private List<Departament> getDep() {
+//		String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/?format=json\\";  
+//		RestTemplate restTemplate = new RestTemplate();
+//		
+//		Departament[] result = restTemplate.getForObject(url, Departament[].class);
+//		//return Arrays.asList(result);
+//		return (List<Departament>) new ResponseEntity<Departament>(HttpStatus.OK);
+//	}
 }

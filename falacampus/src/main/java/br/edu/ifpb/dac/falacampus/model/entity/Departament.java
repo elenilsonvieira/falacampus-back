@@ -37,6 +37,14 @@ public class Departament implements Serializable {
 	@OneToMany(mappedBy = "departament")
 	private List<User> users = new ArrayList<>();
 	
+
+	//------------
+	
+	private String id_responsavel;
+	
+	private String siglaDepartamento;
+	//------------
+	
 	
 
 	public Departament() {
@@ -86,10 +94,29 @@ public class Departament implements Serializable {
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
+	
+	
+	
+
+	public String getId_responsavel() {
+		return id_responsavel;
+	}
+
+	public void setId_responsavel(String id_responsavel) {
+		this.id_responsavel = id_responsavel;
+	}
+
+	public String getSiglaDepartamento() {
+		return siglaDepartamento;
+	}
+
+	public void setSiglaDepartamento(String siglaDepartamento) {
+		this.siglaDepartamento = siglaDepartamento;
+	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name, users);
+		return Objects.hash(id, id_responsavel, name, siglaDepartamento, users);
 	}
 
 	@Override
@@ -101,7 +128,13 @@ public class Departament implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Departament other = (Departament) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name) && Objects.equals(users, other.users);
+		return Objects.equals(id, other.id) && Objects.equals(id_responsavel, other.id_responsavel)
+				&& Objects.equals(name, other.name) && Objects.equals(siglaDepartamento, other.siglaDepartamento)
+				&& Objects.equals(users, other.users);
 	}
+	
+	
+
+
 
 }

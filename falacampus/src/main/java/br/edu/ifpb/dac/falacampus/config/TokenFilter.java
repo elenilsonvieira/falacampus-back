@@ -29,11 +29,11 @@ public class TokenFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
+//		
 //		String token = tokenService.get(request);
 //		boolean valid = tokenService.isValid(token);
-
-			
+//
+//		
 //		if(valid) {
 //			authenticate(token);
 //		}

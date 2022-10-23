@@ -94,13 +94,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		//Liberando acesso aos endpoints publicos
 		http.csrf().disable().authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 				.antMatchers(HttpMethod.GET, "/api/departament/**").permitAll()
+				.antMatchers(HttpMethod.DELETE, "/api/departament/**").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/departament/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/auth").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/departament").permitAll()
+				//------
+//				.antMatchers(HttpMethod.PUT, "/api/departament").permitAll()
+//				.antMatchers(HttpMethod.DELETE, "/api/departament").permitAll()
+				//-----
 				.antMatchers(HttpMethod.POST, "/api/isValidToken").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user").permitAll()
+				.antMatchers(HttpMethod.GET, "/api/user").permitAll()
+				.antMatchers(HttpMethod.PUT, "/api/user").permitAll()
 				.antMatchers(HttpMethod.DELETE, "/api/user")
+
 				
 				.hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
 				.anyRequest().authenticated() //Essa configuração serve para indicar que outras URLs que não foram configuradas devem ter acesso restrito

@@ -37,7 +37,9 @@ public class ConverterService {
 
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
-		String token = jsonElement.getAsJsonObject().get("token").getAsString();
+		System.out.println(json);
+		
+		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;
 	}
 
@@ -114,6 +116,19 @@ public class ConverterService {
 		}
 
 		return user;
+	}
+	
+//------------------	
+	public Departament jsonToDepartament(String jsonDepartament) {
+		JsonElement jsonE = JsonParser.parseString(jsonDepartament);
+		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
+		
+		String nome = results.get("nome").getAsString();
+		
+		Departament d = new Departament();		
+		d.setName(nome);
+		
+		return d;
 	}
 
 }

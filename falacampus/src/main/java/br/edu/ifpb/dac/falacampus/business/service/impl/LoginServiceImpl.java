@@ -50,7 +50,7 @@ public class LoginServiceImpl implements LoginService {
 
 	}
 
-	public User suapLogin(String username, String password) throws NumberFormatException {
+	public User suapLogin(String username,String password) throws NumberFormatException {
 
 		
 		// 1) Login no SUAP, retorna token 
@@ -91,7 +91,6 @@ public class LoginServiceImpl implements LoginService {
 			user.setToken(tokenService.generate(user)); // Gera o token do sistema
 			
 			userService.update(user);
-
 			
 			/// autentica no spring security
 			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,
