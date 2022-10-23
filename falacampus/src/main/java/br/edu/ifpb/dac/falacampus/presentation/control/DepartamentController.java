@@ -22,7 +22,8 @@ import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
-
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
+import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -39,6 +40,13 @@ public class DepartamentController {
 
 	@Autowired
 	private DepartamentService departamentService;
+	
+	@Autowired
+	private UserServiceImpl userS;
+	
+//------------
+	@Autowired
+	private DepartamentConverterServiceImpl d;
 
 //	@Autowired
 //	private UserConverterService userConverterService;
@@ -76,6 +84,12 @@ public class DepartamentController {
 		try {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
+			if(departament.getId_responsavel() != null) {
+				User o = userS.findById(Long.parseLong(departament.getId_responsavel()));
+				if(o==null) {
+					throw new NullPointerException("Id do usuario não encontrado");
+				}
+			}
 			departament = departamentService.update(departament);
 
 			dto = departamentConvertService.departamentToDTO(departament);
@@ -182,18 +196,23 @@ public class DepartamentController {
 	}
 	
 	//FIND ALL
-	@GetMapping("/all")
-	public List<Departament> findAll() throws Exception {
-
-		List<Departament> result = departamentService.findAll();
-
-		if (result.isEmpty()){
-			throw new Exception("List is empty!");
-
-		} else {
-			return departamentService.findAll();	
-		}
+//	@GetMapping("/all")
+//	public List<Departament> findAll() throws Exception {
+//
+//		List<Departament> result = departamentService.findAll();
+//
+//		if (result.isEmpty()){
+//			throw new Exception("List is empty!");
+//
+//		} else {
+//			return departamentService.findAll();	
+//		}
+//	}
+//	
+//////-------------
+	@GetMapping("/test")
+	public void teste() {
+		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MjAyODgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1MzM4ODh9.RtI8C1u7T31Lo8otIBmhYFscIfL8k9jzpNODJvQzpbY");
 	}
-	
 
 }

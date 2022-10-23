@@ -5,9 +5,16 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
+import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
+import br.edu.ifpb.dac.falacampus.business.service.SuapService;
+import br.edu.ifpb.dac.falacampus.business.service.TokenService;
+import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 
@@ -16,6 +23,27 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	@Autowired
 	private ModelMapper modelMapper;
+	
+	//------------
+	@Autowired
+	private DepartamentService dS;
+//=---------------
+	@Autowired
+	private SuapService suapService;
+
+	@Autowired
+	private ConverterService converterService;
+	@Autowired
+	private AuthenticationManager authenticationManager;
+
+	@Autowired
+	private TokenService tokenService;
+
+	@Value("${app.logintype}")
+	private String logintype;
+	private String suapToken;
+	
+	//------------
 	
 	@Override
 	public List<DepartamentDto> departamentToDTO(List<Departament> entities) {
@@ -52,4 +80,32 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		return dto;
 	}
 	
+	//----------------------
+	
+	public void SalvarTodosOsDepartamentos(String token) {
+		//Converter token
+		System.out.println("Chegou aqui");
+		try {
+			
+			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(token));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(this.suapToken == null) {
+			throw new IllegalArgumentException();
+		}
+		String suapDepartamentJson = this.suapService.findAllDepartament(token);
+		
+		Departament departament = null;
+		System.out.println("Converteu");
+		try {
+			departament = converterService.jsonToDepartament(suapDepartamentJson);
+			dS.save(departament);
+			
+			System.out.println(departament.getName());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 }
