@@ -52,13 +52,15 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		
-		if(findAll() == null) {
+		if(findAll().isEmpty()) {
+			System.out.println("N1");
+
 			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
 		}else {
 			roles.add(roleService.findDefault());
 		}
 		
-		
+		System.out.println("poha" +" "+ findAll().getClass());
 		user.setRoles(roles);
 		
 		return userRepository.save(user);
@@ -130,8 +132,8 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public Iterable<User> findAll() {
-		return userRepository.findAll();
+	public ArrayList<User> findAll() {
+		return (ArrayList<User>) userRepository.findAll();
 	}
 
 	@Override
