@@ -15,6 +15,7 @@ public class DepartamentDto {
 	
 	@NotNull @NotEmpty @Size(min = 2, max=100)
 	private String name;
+<<<<<<< HEAD
 
 	//------------
 	private String id_responsavel;
@@ -23,6 +24,20 @@ public class DepartamentDto {
 	//------------
 	
 
+=======
+<<<<<<< HEAD
+		
+=======
+	
+
+	//------------
+	private String id_responsavel;
+	
+	private String siglaDepartamento;
+	//------------
+	
+>>>>>>> 1f128a960bd304c4b92f4cb162da636c0daa7834
+>>>>>>> 3787d50568667afb4d993c11ad6567bb91176166
 	public DepartamentDto() {
 		
 	}
