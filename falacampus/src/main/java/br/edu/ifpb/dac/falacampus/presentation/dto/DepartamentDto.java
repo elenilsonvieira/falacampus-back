@@ -15,7 +15,18 @@ public class DepartamentDto {
 	
 	@NotNull @NotEmpty @Size(min = 2, max=100)
 	private String name;
+<<<<<<< HEAD
+		
+=======
 	
+
+	//------------
+	private String id_responsavel;
+	
+	private String siglaDepartamento;
+	//------------
+	
+>>>>>>> 1f128a960bd304c4b92f4cb162da636c0daa7834
 	public DepartamentDto() {
 		
 	}
@@ -45,4 +56,19 @@ public class DepartamentDto {
 		this.name = name;
 	}
 	
+	public String getId_responsavel() {
+		return id_responsavel;
+	}
+
+	public void setId_responsavel(String id_responsavel) {
+		this.id_responsavel = id_responsavel;
+	}
+
+	public String getSiglaDepartamento() {
+		return siglaDepartamento;
+	}
+
+	public void setSiglaDepartamento(String siglaDepartamento) {
+		this.siglaDepartamento = siglaDepartamento;
+	}
 }

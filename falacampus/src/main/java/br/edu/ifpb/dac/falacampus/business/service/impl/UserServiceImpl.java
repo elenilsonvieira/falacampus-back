@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.PasswordEnconderService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
+import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -43,15 +44,32 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User save(User user) {
+		
 		if (user.getId() != null) {
 			throw new IllegalStateException("User is already in the database");
 		}
 		
 		passwordEnconderService.encryptPassword(user);
-		//
-		//List<SystemRole> roles = new ArrayList<>();
-		//roles.add(roleService.findDefault());
-		//user.setRoles(roles);
+		
+		List<SystemRole> roles = new ArrayList<>();
+		
+<<<<<<< HEAD
+		if(userRepository.findAll().isEmpty()) {
+=======
+		if(findAll().isEmpty()) {
+			System.out.println("N1");
+
+>>>>>>> 1f128a960bd304c4b92f4cb162da636c0daa7834
+			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
+		}else {
+			roles.add(roleService.findDefault());
+		}
+<<<<<<< HEAD
+=======
+		
+		System.out.println("poha" +" "+ findAll().getClass());
+>>>>>>> 1f128a960bd304c4b92f4cb162da636c0daa7834
+		user.setRoles(roles);
 		
 		return userRepository.save(user);
 
@@ -122,8 +140,8 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public Iterable<User> findAll() {
-		return userRepository.findAll();
+	public ArrayList<User> findAll() {
+		return (ArrayList<User>) userRepository.findAll();
 	}
 
 	@Override
