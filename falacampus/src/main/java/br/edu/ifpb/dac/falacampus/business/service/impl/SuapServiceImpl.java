@@ -77,7 +77,8 @@ private String find(String token, String findUrl) {
 		System.out.println("Converter URL");
 		try {
 			HttpRequest url = generateGetUrl(findUrl,
-					Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));
+				//	Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));					
+				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)));
 			
 			System.out.println("Conveteu");
 			return sendRequest(url);
@@ -173,8 +174,12 @@ private String find(String token, String findUrl) {
 //----------------------------------
 	@Override
 	public String findAllDepartament(String token) {
-		String url = String.format("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w", DEPARTAMENTS_URL);
-		return find(token, DEPARTAMENTS_URL);
+		String t = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MzgxNTcsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1NTE3NTd9.2KyGMxcGrPzYW7H6GI-WnWnSjyxtOM7UOxYn1tw4v74";
+		
+		String te = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
+		
+		String[] l = te.split("v1/");
+		return find(t, DEPARTAMENTS_URL+l[1]);	
 	}
 	
 }

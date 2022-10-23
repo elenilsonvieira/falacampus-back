@@ -9,15 +9,8 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-
-import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
-import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
-import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
-import br.edu.ifpb.dac.falacampus.business.service.impl.SuapServiceImpl;
-import br.edu.ifpb.dac.falacampus.model.entity.Departament;
+
 
 @SpringBootApplication
 @EnableWebMvc

@@ -124,9 +124,11 @@ public class ConverterService {
 		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
 		
 		String nome = results.get("nome").getAsString();
+		String sigla = results.get("sigla").getAsString();
 		
 		Departament d = new Departament();		
 		d.setName(nome);
+		d.setSiglaDepartamento(sigla);
 		
 		return d;
 	}

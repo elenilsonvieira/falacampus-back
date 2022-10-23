@@ -14,7 +14,7 @@ public interface SuapService {
 //-----	
 
 
-	public static final String DEPARTAMENTS_URL ="https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
+	public static final String DEPARTAMENTS_URL ="https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/";
 
 
 //------	
@@ -23,7 +23,7 @@ public interface SuapService {
 	public static final String TOKEN_JSON_FIELD	 = "token";
 
 	public static final String TOKEN_HEADER_NAME ="Authorization";
-	public static final String TOKEN_HEADER_VALUE = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MjAyODgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1MzM4ODh9.RtI8C1u7T31Lo8otIBmhYFscIfL8k9jzpNODJvQzpbY";
+	public static final String TOKEN_HEADER_VALUE = "JWT %s";
 	
 	public static final Map<String ,String> DEFAULT_HEADERS = Map.of("Content-Type","application/json");
 	
