@@ -74,13 +74,13 @@ public class SuapServiceImpl implements SuapService {
 	}
 	
 private String find(String token, String findUrl) {
-		System.out.println("Converter URL");
+		
 		try {
 			HttpRequest url = generateGetUrl(findUrl,
 				//	Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));					
 				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)));
 			
-			System.out.println("Conveteu");
+			
 			return sendRequest(url);
 		} catch (URISyntaxException e) {
 			e.getMessage();

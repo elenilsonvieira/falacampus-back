@@ -103,7 +103,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 			departament = converterService.jsonToDepartament(suapDepartamentJson);
 			dS.save(departament);
 			
-			System.out.println(departament.getName());
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}

@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -37,7 +38,7 @@ public class ConverterService {
 
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
-		System.out.println(json);
+		
 		
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;
@@ -125,10 +126,16 @@ public class ConverterService {
 		
 		String nome = results.get("nome").getAsString();
 		String sigla = results.get("sigla").getAsString();
+		JsonArray setoresFilhos = results.get("setores_filho").getAsJsonArray();
 		
 		Departament d = new Departament();		
 		d.setName(nome);
 		d.setSiglaDepartamento(sigla);
+		
+				
+		for (JsonElement jsonElement : setoresFilhos) {
+			System.out.println(jsonElement);
+		}
 		
 		return d;
 	}
