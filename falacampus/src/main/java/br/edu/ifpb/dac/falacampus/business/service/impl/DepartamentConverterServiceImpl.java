@@ -25,7 +25,9 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	private ModelMapper modelMapper;
 	
 	//------------
-
+	@Autowired
+	private DepartamentService dS;
+//=---------------
 	@Autowired
 	private SuapService suapService;
 
@@ -81,13 +83,24 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	//----------------------
 	
 	public void SalvarTodosOsDepartamentos(String token) {
+		//Converter token
 		
+		try {
+			this.suapToken = converterService.jsonToToken(token);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		if(this.suapToken == null) {
+			throw new IllegalArgumentException();
+		}
 		String suapDepartamentJson = this.suapService.findAllDepartament(token);
 		
 		Departament departament = null;
 		
 		try {
 			departament = converterService.jsonToDepartament(suapDepartamentJson);
+			dS.save(departament);
 			
 			System.out.println(departament.getName());
 		} catch (Exception e) {

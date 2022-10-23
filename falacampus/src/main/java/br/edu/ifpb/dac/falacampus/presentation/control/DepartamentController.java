@@ -23,6 +23,7 @@ import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
+import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -39,6 +40,9 @@ public class DepartamentController {
 
 	@Autowired
 	private DepartamentService departamentService;
+	
+	@Autowired
+	private UserServiceImpl userS;
 	
 //------------
 	@Autowired
@@ -80,6 +84,12 @@ public class DepartamentController {
 		try {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
+			if(departament.getId_responsavel() != null) {
+				Object o = userS.findById(Long.parseLong(departament.getId_responsavel()));
+				if(o==null) {
+					throw new NullPointerException("Id do usuario não encontrado");
+				}
+			}
 			departament = departamentService.update(departament);
 
 			dto = departamentConvertService.departamentToDTO(departament);
@@ -200,9 +210,9 @@ public class DepartamentController {
 	}
 	
 ////-------------
-	@GetMapping("/test")
-	public void teste() {
-		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
-	}
+//	@GetMapping("/test")
+//	public void teste() {
+//		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
+//	}
 
 }
