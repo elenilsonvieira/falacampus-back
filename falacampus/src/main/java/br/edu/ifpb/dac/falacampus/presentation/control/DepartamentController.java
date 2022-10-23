@@ -85,7 +85,7 @@ public class DepartamentController {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
 			if(departament.getId_responsavel() != null) {
-				Object o = userS.findById(Long.parseLong(departament.getId_responsavel()));
+				User o = userS.findById(Long.parseLong(departament.getId_responsavel()));
 				if(o==null) {
 					throw new NullPointerException("Id do usuario não encontrado");
 				}
@@ -212,7 +212,7 @@ public class DepartamentController {
 //////-------------
 	@GetMapping("/test")
 	public void teste() {
-		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
+		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MjAyODgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1MzM4ODh9.RtI8C1u7T31Lo8otIBmhYFscIfL8k9jzpNODJvQzpbY");
 	}
 
 }

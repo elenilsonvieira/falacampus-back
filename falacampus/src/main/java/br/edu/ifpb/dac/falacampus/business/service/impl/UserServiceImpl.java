@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.PasswordEnconderService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
+import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -48,10 +49,17 @@ public class UserServiceImpl implements UserService {
 		}
 		
 		passwordEnconderService.encryptPassword(user);
-		//
-		//List<SystemRole> roles = new ArrayList<>();
-		//roles.add(roleService.findDefault());
-		//user.setRoles(roles);
+		
+		List<SystemRole> roles = new ArrayList<>();
+		
+		if(findAll() == null) {
+			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
+		}else {
+			roles.add(roleService.findDefault());
+		}
+		
+		
+		user.setRoles(roles);
 		
 		return userRepository.save(user);
 
