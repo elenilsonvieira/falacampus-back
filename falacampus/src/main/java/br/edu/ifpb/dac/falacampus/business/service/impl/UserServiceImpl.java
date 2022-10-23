@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.PasswordEnconderService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
+import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -43,15 +44,21 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User save(User user) {
+		
 		if (user.getId() != null) {
 			throw new IllegalStateException("User is already in the database");
 		}
 		
 		passwordEnconderService.encryptPassword(user);
-		//
-		//List<SystemRole> roles = new ArrayList<>();
-		//roles.add(roleService.findDefault());
-		//user.setRoles(roles);
+		
+		List<SystemRole> roles = new ArrayList<>();
+		
+		if(userRepository.findAll().isEmpty()) {
+			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
+		}else {
+			roles.add(roleService.findDefault());
+		}
+		user.setRoles(roles);
 		
 		return userRepository.save(user);
 

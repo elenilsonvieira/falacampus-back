@@ -12,7 +12,7 @@ public interface SuapService {
 	public static final String EMPLOYEES_URL = "https://suap.ifpb.edu.br/api/recursos-humanos/servidores/v1/";
 	public static final String STUDENTS_URL ="https://suap.ifpb.edu.br/api/ensino/alunos/v1/";
 //-----	
-	public static final String DEPARTAMENTS_URL ="https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/";
+	public static final String DEPARTAMENTS_URL ="https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/";
 //------	
 	public static final String USERNAME_JSON_FIELD = "username";
 	public static final String PASSWORD_JSON_FIELD = "password";

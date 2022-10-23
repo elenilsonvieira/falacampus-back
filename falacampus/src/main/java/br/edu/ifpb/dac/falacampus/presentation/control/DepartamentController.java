@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
@@ -26,7 +29,6 @@ import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServ
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
-
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
@@ -205,4 +207,14 @@ public class DepartamentController {
 		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w");
 	}
 
+////~~~~~~~~~~~~~teste
+//	@GetMapping("/getdep")
+//	private List<Departament> getDep() {
+//		String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/?format=json\\";  
+//		RestTemplate restTemplate = new RestTemplate();
+//		
+//		Departament[] result = restTemplate.getForObject(url, Departament[].class);
+//		//return Arrays.asList(result);
+//		return (List<Departament>) new ResponseEntity<Departament>(HttpStatus.OK);
+//	}
 }

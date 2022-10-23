@@ -38,7 +38,7 @@ public class TokenFilter extends OncePerRequestFilter {
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		
-//		String token = recuperarToken(request);
+		String token = recuperarToken(request);
 //		boolean valid = tokenService.isValid(token);
 		
 //		if (valid) {
