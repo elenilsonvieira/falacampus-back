@@ -53,38 +53,23 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		
-<<<<<<< HEAD
+
+
 
 		if(findAll().isEmpty()) {
 
-=======
-<<<<<<< HEAD
-		if(userRepository.findAll().isEmpty()) {
-=======
-		if(findAll().isEmpty()) {
-			System.out.println("N1");
-
->>>>>>> 1f128a960bd304c4b92f4cb162da636c0daa7834
->>>>>>> 3787d50568667afb4d993c11ad6567bb91176166
 			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
 		}else {
 			roles.add(roleService.findDefault());
 		}
-<<<<<<< HEAD
 
-
-=======
-<<<<<<< HEAD
-=======
-		
-		System.out.println("poha" +" "+ findAll().getClass());
->>>>>>> 1f128a960bd304c4b92f4cb162da636c0daa7834
->>>>>>> 3787d50568667afb4d993c11ad6567bb91176166
 		user.setRoles(roles);
 		
 		return userRepository.save(user);
+		
+		}
 
-	}
+	
 
 	@Override
 	public User update(User user) {
