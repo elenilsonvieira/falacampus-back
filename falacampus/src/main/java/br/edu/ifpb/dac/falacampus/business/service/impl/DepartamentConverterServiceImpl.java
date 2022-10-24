@@ -81,10 +81,10 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	}
 	
 	//----------------------
-	
+
 	public void SalvarTodosOsDepartamentos(String token) {
 		//Converter token
-		System.out.println("Chegou aqui");
+		
 		try {
 			
 			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(token));
@@ -98,12 +98,12 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		String suapDepartamentJson = this.suapService.findAllDepartament(token);
 		
 		Departament departament = null;
-		System.out.println("Converteu");
+	
 		try {
 			departament = converterService.jsonToDepartament(suapDepartamentJson);
 			dS.save(departament);
 			
-			System.out.println(departament.getName());
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
