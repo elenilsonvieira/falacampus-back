@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
@@ -43,6 +47,8 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	@Value("${app.logintype}")
 	private String logintype;
 	private String suapToken;
+
+	private Departament departament;
 	
 	//------------
 	
@@ -98,12 +104,25 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		}
 		String suapDepartamentJson = this.suapService.findAllDepartament(token);
 		
-		Departament departament = null;
 	
 		try {
-			departament = converterService.jsonToDepartament(suapDepartamentJson);
-			departamentService.save(departament);
+			JsonObject result = converterService.jsonToDepartament(suapDepartamentJson);			
+			System.out.println("result "+result);
 			
+			String name = result.get("nome").getAsString().toString();
+	
+			System.out.println("nome " + name);			
+			
+			departament = new Departament();
+			departament.setName(name);
+			departamentService.save(departament);
+
+			JsonArray childSectors = result.get("setores_filho").getAsJsonArray();
+			
+			for (JsonElement jsonElement : childSectors) {
+				System.out.println("Elemento " + jsonElement);
+				SaveAllDepartments(jsonElement.toString());
+			}
 			
 		} catch (Exception e) {
 			// TODO: handle exception
