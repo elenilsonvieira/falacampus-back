@@ -113,9 +113,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 			departament.setName(name);
 			
 			String initials = result.get("sigla").getAsString().toString();
-			System.out.println(name);
-			System.out.println(initials);
-		
+
 			departament.setAcronymDepartment(initials);
 			
 			departamentService.save(departament);
