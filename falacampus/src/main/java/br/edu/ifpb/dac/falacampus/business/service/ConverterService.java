@@ -1,11 +1,14 @@
 package br.edu.ifpb.dac.falacampus.business.service;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.SystemPropertyUtils;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -13,6 +16,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
+import br.edu.ifpb.dac.falacampus.business.service.impl.SuapServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.SystemRoleServiceImpl;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
@@ -26,6 +30,9 @@ public class ConverterService {
 
 	@Autowired
 	private DepartamentService departamentService;
+	
+	@Autowired
+	private SuapServiceImpl suapServiceImp;
 	
 	@Autowired
 	private UserService userService;
@@ -131,11 +138,15 @@ public class ConverterService {
 		Departament d = new Departament();		
 		d.setName(name);
 		d.setSiglaDepartamento(initials);
-		
-				
+		ArrayList<String> a = new ArrayList<>();
+	
 		for (JsonElement jsonElement : childSectors) {
-			System.out.println(jsonElement);
+			//System.out.println(jsonElement.toString());			
+			suapServiceImp.findAllDepartament(jsonElement.toString());
+			
 		}
+		
+					
 		
 		return d;
 	}

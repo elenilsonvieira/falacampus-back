@@ -8,9 +8,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
@@ -173,13 +174,23 @@ private String find(String token, String findUrl) {
 	
 //----------------------------------
 	@Override
-	public String findAllDepartament(String token) {
-	//	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3MjAyNzgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2MzM4Nzh9.CpUf_OvsTBLOudlFGPhr0jLd9SgCx_nEBzYATBSMVy8";
+	public String findAllDepartament(String url) {
+	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3MjAyNzgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2MzM4Nzh9.CpUf_OvsTBLOudlFGPhr0jLd9SgCx_nEBzYATBSMVy8";
 		
-		String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
+	//	String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
+		ArrayList<String> a = new ArrayList<>();
+		a.add(url);
 		
-		String[] getIdFromUrl = url.split("v1/");
-		return find(token, DEPARTAMENTS_URL+getIdFromUrl[1]);	
+		while(a!= null) {
+			String[] getIdFromUrl = url.split("v1/");
+			System.out.println("AA" + url);
+			return find(token, DEPARTAMENTS_URL+getIdFromUrl[1]);	
+		}
+		
+		return null;
 	}
+	
+
+	
 	
 }

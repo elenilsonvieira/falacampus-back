@@ -214,7 +214,8 @@ public class DepartamentController {
 //////-------------
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
-		d.SaveAllDepartments("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3Mzg3ODksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2NTIzODl9.kpMxqcdH9cmmi6jhRIJlKec3k9pI8pBu_3crbYq1RyI");
+	//	d.SaveAllDepartments("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3Mzg3ODksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2NTIzODl9.kpMxqcdH9cmmi6jhRIJlKec3k9pI8pBu_3crbYq1RyI");
+		d.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/");
 	}
 
 ////~~~~~~~~~~~~~teste
