@@ -174,12 +174,12 @@ private String find(String token, String findUrl) {
 //----------------------------------
 	@Override
 	public String findAllDepartament(String token) {
-		String t = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MzgxNTcsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1NTE3NTd9.2KyGMxcGrPzYW7H6GI-WnWnSjyxtOM7UOxYn1tw4v74";
+	//	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3MjAyNzgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2MzM4Nzh9.CpUf_OvsTBLOudlFGPhr0jLd9SgCx_nEBzYATBSMVy8";
 		
-		String te = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
+		String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
 		
-		String[] l = te.split("v1/");
-		return find(t, DEPARTAMENTS_URL+l[1]);	
+		String[] getIdFromUrl = url.split("v1/");
+		return find(token, DEPARTAMENTS_URL+getIdFromUrl[1]);	
 	}
 	
 }

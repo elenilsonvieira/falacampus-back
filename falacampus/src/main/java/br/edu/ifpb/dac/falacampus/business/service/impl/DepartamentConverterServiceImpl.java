@@ -26,13 +26,14 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	//------------
 	@Autowired
-	private DepartamentService dS;
+	private DepartamentService departamentService;
 //=---------------
 	@Autowired
 	private SuapService suapService;
 
 	@Autowired
 	private ConverterService converterService;
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -82,7 +83,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	//----------------------
 
-	public void SalvarTodosOsDepartamentos(String token) {
+	public void SaveAllDepartments(String token) {
 		//Converter token
 		
 		try {
@@ -101,7 +102,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 		try {
 			departament = converterService.jsonToDepartament(suapDepartamentJson);
-			dS.save(departament);
+			departamentService.save(departament);
 			
 			
 		} catch (Exception e) {

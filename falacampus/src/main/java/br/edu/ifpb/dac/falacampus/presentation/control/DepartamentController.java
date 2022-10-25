@@ -212,9 +212,9 @@ public class DepartamentController {
 //	}
 //	
 //////-------------
-	@GetMapping("/test")
-	public void teste() {
-		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MjAyODgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1MzM4ODh9.RtI8C1u7T31Lo8otIBmhYFscIfL8k9jzpNODJvQzpbY");
+	@GetMapping("/getDepartmentsApi")
+	public void getDepartmentsApi() {
+		d.SaveAllDepartments("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3Mzg3ODksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2NTIzODl9.kpMxqcdH9cmmi6jhRIJlKec3k9pI8pBu_3crbYq1RyI");
 	}
 
 ////~~~~~~~~~~~~~teste

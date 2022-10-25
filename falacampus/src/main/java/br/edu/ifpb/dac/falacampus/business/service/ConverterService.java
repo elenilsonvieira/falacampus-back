@@ -124,16 +124,16 @@ public class ConverterService {
 		JsonElement jsonE = JsonParser.parseString(jsonDepartament);
 		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
 		
-		String nome = results.get("nome").getAsString();
-		String sigla = results.get("sigla").getAsString();
-		JsonArray setoresFilhos = results.get("setores_filho").getAsJsonArray();
+		String name = results.get("nome").getAsString();
+		String initials = results.get("sigla").getAsString();
+		JsonArray childSectors = results.get("setores_filho").getAsJsonArray();
 		
 		Departament d = new Departament();		
-		d.setName(nome);
-		d.setSiglaDepartamento(sigla);
+		d.setName(name);
+		d.setSiglaDepartamento(initials);
 		
 				
-		for (JsonElement jsonElement : setoresFilhos) {
+		for (JsonElement jsonElement : childSectors) {
 			System.out.println(jsonElement);
 		}
 		
