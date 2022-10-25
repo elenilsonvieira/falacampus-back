@@ -8,9 +8,10 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
@@ -74,12 +75,13 @@ public class SuapServiceImpl implements SuapService {
 	}
 	
 private String find(String token, String findUrl) {
-		System.out.println("Converter URL");
+		
 		try {
 			HttpRequest url = generateGetUrl(findUrl,
-					Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));
+				//	Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));					
+				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)));
 			
-			System.out.println("Conveteu");
+			
 			return sendRequest(url);
 		} catch (URISyntaxException e) {
 			e.getMessage();
@@ -172,11 +174,17 @@ private String find(String token, String findUrl) {
 	
 //----------------------------------
 	@Override
-	public String findAllDepartament(String token) {
-		String url = String.format("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY0NjIxMjksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjYzNzU3Mjl9.sEi5m2i0dwOjWRCf-CSFnQTPP6n6V9ryEh8o8poh43w", DEPARTAMENTS_URL);
-		return find(token, DEPARTAMENTS_URL);
+	@Lazy
+	public String findAllDepartament(String url) {
+	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3MjAyNzgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2MzM4Nzh9.CpUf_OvsTBLOudlFGPhr0jLd9SgCx_nEBzYATBSMVy8";
+		
+		String[] getIdFromUrl = url.split("v1/");
+		String urlSon = getIdFromUrl[1];
+		urlSon = urlSon.substring(0,urlSon.length()-1);
+		return find(token, DEPARTAMENTS_URL+urlSon);
 	}
 	
-	
 
+	
+	
 }

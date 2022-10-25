@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
@@ -27,7 +30,6 @@ import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
-
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
@@ -80,12 +82,14 @@ public class DepartamentController {
 	}
 
 	@PutMapping("{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody DepartamentDto dto) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid DepartamentDto dto) {
 		try {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
-			if(departament.getId_responsavel() != null) {
-				User o = userS.findById(Long.parseLong(departament.getId_responsavel()));
+			
+			if(departament.getId_responsible() != null) {
+				
+				User o = userS.findById(Long.parseLong(departament.getId_responsible()));
 				if(o==null) {
 					throw new NullPointerException("Id do usuario não encontrado");
 				}
@@ -96,6 +100,7 @@ public class DepartamentController {
 
 			return ResponseEntity.ok(dto);
 		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e.getMessage());
 
 		}
@@ -210,9 +215,20 @@ public class DepartamentController {
 //	}
 //	
 //////-------------
-	@GetMapping("/test")
-	public void teste() {
-		d.SalvarTodosOsDepartamentos("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY2MjAyODgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY1MzM4ODh9.RtI8C1u7T31Lo8otIBmhYFscIfL8k9jzpNODJvQzpbY");
+	@GetMapping("/getDepartmentsApi")
+	public void getDepartmentsApi() {
+	//	d.SaveAllDepartments("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3Mzg3ODksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2NTIzODl9.kpMxqcdH9cmmi6jhRIJlKec3k9pI8pBu_3crbYq1RyI");
+		d.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/a");
 	}
 
+////~~~~~~~~~~~~~teste
+//	@GetMapping("/getdep")
+//	private List<Departament> getDep() {
+//		String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/?format=json\\";  
+//		RestTemplate restTemplate = new RestTemplate();
+//		
+//		Departament[] result = restTemplate.getForObject(url, Departament[].class);
+//		//return Arrays.asList(result);
+//		return (List<Departament>) new ResponseEntity<Departament>(HttpStatus.OK);
+//	}
 }

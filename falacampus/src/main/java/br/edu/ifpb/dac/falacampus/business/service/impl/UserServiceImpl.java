@@ -44,6 +44,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User save(User user) {
+		
 		if (user.getId() != null) {
 			throw new IllegalStateException("User is already in the database");
 		}
@@ -52,20 +53,23 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		
+
+
+
 		if(findAll().isEmpty()) {
-			System.out.println("N1");
 
 			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
 		}else {
 			roles.add(roleService.findDefault());
 		}
-		
-		System.out.println("poha" +" "+ findAll().getClass());
+
 		user.setRoles(roles);
 		
 		return userRepository.save(user);
+		
+		}
 
-	}
+	
 
 	@Override
 	public User update(User user) {
