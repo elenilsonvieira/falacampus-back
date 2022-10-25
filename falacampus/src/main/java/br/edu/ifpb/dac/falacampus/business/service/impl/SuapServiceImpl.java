@@ -174,6 +174,7 @@ private String find(String token, String findUrl) {
 	
 //----------------------------------
 	@Override
+	@Lazy
 	public String findAllDepartament(String url) {
 	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3MjAyNzgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2MzM4Nzh9.CpUf_OvsTBLOudlFGPhr0jLd9SgCx_nEBzYATBSMVy8";
 		
@@ -181,13 +182,25 @@ private String find(String token, String findUrl) {
 		ArrayList<String> a = new ArrayList<>();
 		a.add(url);
 		
-		while(a!= null) {
-			String[] getIdFromUrl = url.split("v1/");
-			System.out.println("AA" + url);
-			return find(token, DEPARTAMENTS_URL+getIdFromUrl[1]);	
+		String bb = "";
+		while(a!= null) {	
+			
+			for (String string : a) {
+				
+				String[] getIdFromUrl = string.split("v1/");
+				//System.out.println("AA " + string.toString());
+				
+				bb = getIdFromUrl[1];
+				bb = bb.substring(0,bb.length()-1);
+				System.out.println(bb);
+				
+				return this.find(token, DEPARTAMENTS_URL+bb);
+
+			}
+	
 		}
-		
-		return null;
+		String[] getIdFromUrl = url.split("v1/");
+		return find(token, DEPARTAMENTS_URL+getIdFromUrl[1]);
 	}
 	
 

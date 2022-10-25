@@ -135,6 +135,8 @@ public class ConverterService {
 		String initials = results.get("sigla").getAsString();
 		JsonArray childSectors = results.get("setores_filho").getAsJsonArray();
 		
+		System.out.println(name);
+		
 		Departament d = new Departament();		
 		d.setName(name);
 		d.setSiglaDepartamento(initials);
@@ -145,8 +147,7 @@ public class ConverterService {
 			suapServiceImp.findAllDepartament(jsonElement.toString());
 			
 		}
-		
-					
+						
 		
 		return d;
 	}
