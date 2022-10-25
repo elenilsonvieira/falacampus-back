@@ -178,31 +178,10 @@ private String find(String token, String findUrl) {
 	public String findAllDepartament(String url) {
 	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3MjAyNzgsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2MzM4Nzh9.CpUf_OvsTBLOudlFGPhr0jLd9SgCx_nEBzYATBSMVy8";
 		
-	//	String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/65cca523-9a7c-4b55-9611-6d5d3c2830fd/";
-//		ArrayList<String> a = new ArrayList<>();
-//		a.add(url);
-//		
-//		String bb = "";
-//		while(a!= null) {	
-//			
-//			for (String string : a) {
-//				
-//				String[] getIdFromUrl = string.split("v1/");
-//				//System.out.println("AA " + string.toString());
-//				
-//				bb = getIdFromUrl[1];
-//				bb = bb.substring(0,bb.length()-1);
-//				System.out.println(bb);
-//				
-//				return this.find(token, DEPARTAMENTS_URL+bb);
-//
-//			}
-//	
-//		}c
 		String[] getIdFromUrl = url.split("v1/");
-		String bb = getIdFromUrl[1];
-		bb = bb.substring(0,bb.length()-1);
-		return find(token, DEPARTAMENTS_URL+bb);
+		String urlSon = getIdFromUrl[1];
+		urlSon = urlSon.substring(0,urlSon.length()-1);
+		return find(token, DEPARTAMENTS_URL+urlSon);
 	}
 	
 

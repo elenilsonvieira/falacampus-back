@@ -89,12 +89,12 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	//----------------------
 
-	public void SaveAllDepartments(String token) {
+	public void SaveAllDepartments(String url) {
 		//Converter token
 		
 		try {
 			
-			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(token));
+			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(url));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -102,25 +102,28 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException();
 		}
-		String suapDepartamentJson = this.suapService.findAllDepartament(token);
+		String suapDepartamentJson = this.suapService.findAllDepartament(url);
 		
 	
 		try {
 			JsonObject result = converterService.jsonToDepartament(suapDepartamentJson);			
-			System.out.println("result "+result);
+			departament = new Departament();
 			
 			String name = result.get("nome").getAsString().toString();
-	
-			System.out.println("nome " + name);			
-			
-			departament = new Departament();
 			departament.setName(name);
+			
+			String initials = result.get("sigla").getAsString().toString();
+			System.out.println(name);
+			System.out.println(initials);
+		
+			departament.setAcronymDepartment(initials);
+			
 			departamentService.save(departament);
 
 			JsonArray childSectors = result.get("setores_filho").getAsJsonArray();
 			
 			for (JsonElement jsonElement : childSectors) {
-				System.out.println("Elemento " + jsonElement);
+				
 				SaveAllDepartments(jsonElement.toString());
 			}
 			

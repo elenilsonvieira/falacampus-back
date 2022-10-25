@@ -40,9 +40,9 @@ public class Departament implements Serializable {
 
 	//------------
 	
-	private String id_responsavel;
+	private String id_responsible;
 	
-	private String siglaDepartamento;
+	private String acronymDepartment;
 	//------------
 	
 	
@@ -95,28 +95,28 @@ public class Departament implements Serializable {
 		return serialVersionUID;
 	}
 	
-	
-	
+		
 
-	public String getId_responsavel() {
-		return id_responsavel;
+
+	public String getId_responsible() {
+		return id_responsible;
 	}
 
-	public void setId_responsavel(String id_responsavel) {
-		this.id_responsavel = id_responsavel;
+	public void setId_responsible(String id_responsible) {
+		this.id_responsible = id_responsible;
 	}
 
-	public String getSiglaDepartamento() {
-		return siglaDepartamento;
+	public String getAcronymDepartment() {
+		return acronymDepartment;
 	}
 
-	public void setSiglaDepartamento(String siglaDepartamento) {
-		this.siglaDepartamento = siglaDepartamento;
+	public void setAcronymDepartment(String acronymDepartment) {
+		this.acronymDepartment = acronymDepartment;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, id_responsavel, name, siglaDepartamento, users);
+		return Objects.hash(acronymDepartment, id, id_responsible, name, users);
 	}
 
 	@Override
@@ -128,13 +128,14 @@ public class Departament implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Departament other = (Departament) obj;
-		return Objects.equals(id, other.id) && Objects.equals(id_responsavel, other.id_responsavel)
-				&& Objects.equals(name, other.name) && Objects.equals(siglaDepartamento, other.siglaDepartamento)
+		return Objects.equals(acronymDepartment, other.acronymDepartment) && Objects.equals(id, other.id)
+				&& Objects.equals(id_responsible, other.id_responsible) && Objects.equals(name, other.name)
 				&& Objects.equals(users, other.users);
 	}
-	
-	
 
+
+
+	
 
 
 }

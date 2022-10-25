@@ -43,8 +43,9 @@ public class DepartamentService {
 		
 		Departament departamentUp = findById(departament.getId());
 		departamentUp.setName(departament.getName());
-
-		return departamentRepository.save(departament);
+		departamentUp.setId_responsible(departament.getId_responsible());
+		
+		return departamentRepository.save(departamentUp);
 	
 	}
 
