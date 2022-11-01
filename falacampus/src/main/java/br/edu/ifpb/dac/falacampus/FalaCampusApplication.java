@@ -9,8 +9,13 @@ import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+<<<<<<< HEAD
 
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
+=======
+import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
+
+>>>>>>> 54eca1c5ea6c0940e455832860fff8ca958235c9
 
 @SpringBootApplication
 @EnableWebMvc
@@ -40,7 +45,8 @@ public class FalaCampusApplication implements WebMvcConfigurer, CommandLineRunne
 		systemRoleService.createDefaultValues();
 
 //---------------	
-		
+	
+
 		
 		
 		

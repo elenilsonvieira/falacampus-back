@@ -91,7 +91,6 @@ public class LoginServiceImpl implements LoginService {
 			user.setToken(tokenService.generate(user)); // Gera o token do sistema
 			
 			userService.update(user);
-
 			
 			/// autentica no spring security
 			UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user, null,

@@ -9,6 +9,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
@@ -26,13 +30,14 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	//------------
 	@Autowired
-	private DepartamentService dS;
+	private DepartamentService departamentService;
 //=---------------
 	@Autowired
 	private SuapService suapService;
 
 	@Autowired
 	private ConverterService converterService;
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
@@ -42,6 +47,8 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	@Value("${app.logintype}")
 	private String logintype;
 	private String suapToken;
+
+	private Departament departament;
 	
 	//------------
 	
@@ -81,13 +88,13 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	}
 	
 	//----------------------
-	
-	public void SalvarTodosOsDepartamentos(String token) {
+
+	public void SaveAllDepartments(String url) {
 		//Converter token
-		System.out.println("Chegou aqui");
+		
 		try {
 			
-			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(token));
+			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(url));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -95,15 +102,29 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException();
 		}
-		String suapDepartamentJson = this.suapService.findAllDepartament(token);
+		String suapDepartamentJson = this.suapService.findAllDepartament(url);
 		
-		Departament departament = null;
-		System.out.println("Converteu");
+	
 		try {
-			departament = converterService.jsonToDepartament(suapDepartamentJson);
-			dS.save(departament);
+			JsonObject result = converterService.jsonToDepartament(suapDepartamentJson);			
+			departament = new Departament();
 			
-			System.out.println(departament.getName());
+			String name = result.get("nome").getAsString().toString();
+			departament.setName(name);
+			
+			String initials = result.get("sigla").getAsString().toString();
+
+			departament.setAcronymDepartment(initials);
+			
+			departamentService.save(departament);
+
+			JsonArray childSectors = result.get("setores_filho").getAsJsonArray();
+			
+			for (JsonElement jsonElement : childSectors) {
+				
+				SaveAllDepartments(jsonElement.toString());
+			}
+			
 		} catch (Exception e) {
 			// TODO: handle exception
 		}
