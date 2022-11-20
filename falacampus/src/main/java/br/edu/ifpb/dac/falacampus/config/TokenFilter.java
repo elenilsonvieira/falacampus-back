@@ -17,6 +17,7 @@ import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 
 public class TokenFilter extends OncePerRequestFilter {
+	
 	private TokenService tokenService;
 	private UserService userService;
 	
@@ -27,24 +28,27 @@ public class TokenFilter extends OncePerRequestFilter {
 		this.userService= userService;
 	}
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+	protected void doFilterInternal(HttpServletRequest request, 
+			HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-//		
-//		String token = tokenService.get(request);
-//		boolean valid = tokenService.isValid(token);
-//
-//		
-//		if(valid) {
-//			authenticate(token);
-//		}
+		
+		String token = tokenService.get(request);
+		boolean valid = tokenService.isValid(token);
+
+		
+		if(valid) {
+			authenticate(token);
+		}
 		filterChain.doFilter(request, response);
 		
 	}
 	private void authenticate(String token) {
-		Long userid = tokenService.getUserId(token);
-		User user = userService.findByToken(token);
 		
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
+		Long userid = tokenService.getUserId(token);
+		User user = userService.findById(userid);
+		
+		UsernamePasswordAuthenticationToken authentication = 
+				new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 		
 	}

@@ -24,9 +24,6 @@ import io.jsonwebtoken.Jwts;
 @RestController
 @RequestMapping("/api")
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-
-//@RequestMapping("/api")
-//@Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class AuthenticationController {
 
 	@Autowired
@@ -38,56 +35,36 @@ public class AuthenticationController {
 	@Autowired
 	private TokenService tokenService;
 
-	@PostMapping("/loginAuth")
+	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
 
-		// System.out.println(dto.getRegistration());
-		// System.out.println(dto.getUsername());
-		// System.out.println(dto.getPassword());
-
-		return ResponseEntity.ok().build();
-
-//		try {
-//			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
-//			//User entity = userService.findByRegistration(dto.getRegistration());
-//			
-//			User entity = userService.findByUserName(dto.getUsername());
-//					
-//			UserDto userDto = userConverterService.userToDTO(entity); 
-//			
-//			TokenDto tokenDto = new TokenDto(token, userDto);
-//			
-//			return new ResponseEntity(tokenDto, HttpStatus.OK);
-//			
-//		} catch (Exception e) {
-//			return ResponseEntity.badRequest().body(e.getMessage());
-//		}
+		try {
+			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
+			
+			User entity = userService.findByUserName(dto.getUsername());
+					
+			UserDto userDto = userConverterService.userToDTO(entity); 
+			
+			TokenDto tokenDto = new TokenDto(token, userDto);
+			
+			return new ResponseEntity(tokenDto, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
 	}
 
 	@PostMapping("/isValidToken")
 	public ResponseEntity isTokenValid(@RequestBody String token) {
 
-		System.out.println("teste: " + token);
 		try {
 			boolean isTokenValid = tokenService.isValid(token);
 
-			return new ResponseEntity(true, HttpStatus.OK);
+			return new ResponseEntity(isTokenValid, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-
-	/*
-	 * @PostMapping("/isTokenValid") public ResponseEntity isTokenValid(@RequestBody
-	 * TokenDto dto) { try { boolean isTokenValid =
-	 * tokenService.isValid(dto.getToken());
-	 * 
-	 * return new ResponseEntity(isTokenValid, HttpStatus.OK);
-	 * 
-	 * } catch (Exception e) { return
-	 * ResponseEntity.badRequest().body(e.getMessage()); } }
-	 * 
-	 */
-
 }

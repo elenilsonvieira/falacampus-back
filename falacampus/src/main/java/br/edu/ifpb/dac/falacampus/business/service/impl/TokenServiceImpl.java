@@ -34,6 +34,7 @@ public class TokenServiceImpl implements TokenService{
 
 	@Override
 	public String generate(User user) {
+		
 		long expiration = Long.valueOf(this.expiration);
 		
 		LocalDateTime expirationLocalDateTime = LocalDateTime.now().plusMinutes(expiration);
@@ -52,13 +53,19 @@ public class TokenServiceImpl implements TokenService{
 				.claim(CLAIM_USERID, user.getId())
 				.claim(CLAIM_USERNAME, user.getUsername())
 				.claim(CLAIM_EXPIRATION, tokenExpiration)
-				.signWith(SignatureAlgorithm.HS256, secret)
+				.signWith(SignatureAlgorithm.HS512, secret)
 				.compact();
+		System.out.println("TOKEN interno:" + token);
 		return token;
+
+
 	}
 
 	@Override
 	public Claims getClaims(String token) throws ExpiredJwtException {
+		System.out.println(token);
+		System.out.println(secret);
+
 		return Jwts
 				.parser()
 				.setSigningKey(secret)
@@ -73,7 +80,7 @@ public class TokenServiceImpl implements TokenService{
 	public boolean isValid(String token) {
 		
 		if(token == null) {
-						
+			
 			return false;
 		}
 		
@@ -87,7 +94,8 @@ public class TokenServiceImpl implements TokenService{
 			return !LocalDateTime.now().isAfter(expirationDate);
 			
 		} catch (Exception e){
-			
+			System.out.println("exception do return");
+
 			e.printStackTrace();
 			return false;
 		}

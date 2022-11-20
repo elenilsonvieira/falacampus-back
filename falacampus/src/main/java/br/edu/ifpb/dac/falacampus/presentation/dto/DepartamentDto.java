@@ -32,6 +32,8 @@ public class DepartamentDto {
 	public DepartamentDto(Departament departament) {
 		this.id = departament.getId();
 		this.name = departament.getName();
+		this.id_responsible = departament.getId_responsible();
+		this.acronymDepartment = departament.getAcronymDepartment();
 	}
 	
 	public static List<DepartamentDto> convert(List<Departament> departament){

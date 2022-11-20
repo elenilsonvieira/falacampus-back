@@ -11,16 +11,16 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Service
 public interface TokenService {
 	
-	public String generate(User user); 
+	String generate(User user); 
 	
-	public Claims getClaims(String token) throws ExpiredJwtException;
+	Claims getClaims(String token) throws ExpiredJwtException;
 	
-	public boolean isValid(String token);
+	boolean isValid(String token);
 	
-	public String getUsername(String token);
+	String getUsername(String token);
 	
-	public Long getUserId(String token);
+	Long getUserId(String token);
 	
-	public String get(HttpServletRequest request);
+	String get(HttpServletRequest request);
 
 }

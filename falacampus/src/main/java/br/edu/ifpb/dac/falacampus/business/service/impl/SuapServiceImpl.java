@@ -67,8 +67,10 @@ public class SuapServiceImpl implements SuapService {
 	}
 
 	public String findUser(String token, String username) {
+		
 		String result = findEmployee(token, username);
 		if(result.contains("\"count\":0")) {
+//		if(result == null) {
 			result = findStudent(token, username);
 		}
 		return result;
@@ -160,14 +162,14 @@ private String find(String token, String findUrl) {
 		
 		HttpClient httpClient = HttpClient.newHttpClient();
 		String response = httpClient.send(httpRequest,HttpResponse.BodyHandlers.ofString()).body();
-		
-		try {
-			response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString()).body();
-
-		} catch (IOException | InterruptedException e) {
-
-			e.printStackTrace();
-		}
+//		
+//		try {
+//			response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString()).body();
+//
+//		} catch (IOException | InterruptedException e) {
+//
+//			e.printStackTrace();
+//		}
 		return response;
 	}
 

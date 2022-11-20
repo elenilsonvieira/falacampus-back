@@ -44,20 +44,5 @@ public interface SuapService {
 //---------------------------	
 	public String findAllDepartament(String token);
 
-	
-
-//		public String login (Long registration ,String password);
-//		
-//		public String findEmployee (String token,Long registration);
-//		
-//		public String findEmployee (String token);
-//		
-//		public String findStudent (String token,Long registration);
-//		
-//		public String findStudent (String token);
-//		
-//		public String findUser (String token,Long registration);
-//	
-//		public String findUser(String suapToken, String password);
 
 }

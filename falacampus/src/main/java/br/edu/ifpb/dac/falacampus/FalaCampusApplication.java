@@ -8,14 +8,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-
-<<<<<<< HEAD
-
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
-=======
-import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
-
->>>>>>> 54eca1c5ea6c0940e455832860fff8ca958235c9
 
 @SpringBootApplication
 @EnableWebMvc
@@ -23,10 +16,6 @@ import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
 public class FalaCampusApplication implements WebMvcConfigurer, CommandLineRunner {
 	@Autowired
 	private SystemRoleService systemRoleService;
-//---------------	
-		
-	
-//---------------	
 
 	
 	public static void main(String[] args) {
@@ -44,13 +33,6 @@ public class FalaCampusApplication implements WebMvcConfigurer, CommandLineRunne
 	public void run(String... args) throws Exception {
 		systemRoleService.createDefaultValues();
 
-//---------------	
-	
-
-		
-		
-		
-//---------------	
 
 	}
 }

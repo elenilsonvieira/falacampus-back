@@ -8,6 +8,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.User;
 
 @Service
 public interface PasswordEnconderService extends PasswordEncoder{
-	public void encryptPassword(User user);
+	
+	void encryptPassword(User user);
 
 }

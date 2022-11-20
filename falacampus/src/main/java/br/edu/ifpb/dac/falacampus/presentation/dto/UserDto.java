@@ -26,7 +26,7 @@ public class UserDto {
 	private String email;
 	
 	@NotNull
-	private String registration;
+	private String username;
 	
 //	@NotNull
 //	private Role role = Role.STUDENTS;
@@ -45,17 +45,9 @@ public class UserDto {
 	}
 	
 	public UserDto(User user) {
-		this.id = user.getId();
-		this.name = user.getName();
-		this.email = user.getEmail();
-		this.registration = user.getRegistration();
-		this.password = user.getPassword();
-		this.departamentId = user.getDepartament().getId();
+
 	}
-	
-	public static List<UserDto> converter(List<User> users) {
-		return users.stream().map(UserDto::new).collect(Collectors.toList());
-	}
+
 	
 	public Long getId() {
 		return id;
@@ -81,12 +73,12 @@ public class UserDto {
 		this.email = email;
 	}
 
-	public String getRegistration() {
-		return registration;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setRegistration(String registration) {
-		this.registration = registration;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 	
 	public List<SystemRole> getRoles() {
