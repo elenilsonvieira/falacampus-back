@@ -36,9 +36,7 @@ import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 
-@Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
@@ -62,7 +60,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	//Configuracoes de Autenticacao (login, acesso)
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userService).passwordEncoder(passwordEnconderService);
+		auth
+			.userDetailsService(userService)
+			.passwordEncoder(passwordEnconderService);
 	}
 
 	@Bean
@@ -92,40 +92,56 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 
 		//Liberando acesso aos endpoints publicos
-		http.csrf().disable().authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
-				.antMatchers(HttpMethod.GET, "/api/departament/**").permitAll()
-				.antMatchers(HttpMethod.DELETE, "/api/departament/**").permitAll()
-				.antMatchers(HttpMethod.PUT, "/api/departament/**").permitAll()
-				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/auth").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/departament").permitAll()
+		http
+			.csrf().disable()
+				.authorizeRequests()
+					.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+					.antMatchers(HttpMethod.POST, "/api/login").permitAll()
+					.antMatchers(HttpMethod.POST, "/api/isTokenValid").permitAll()
+					.antMatchers(HttpMethod.POST, "/api/user").permitAll()
+					.antMatchers(HttpMethod.DELETE, "/api/user").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+//====================
+//					.requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
+					.antMatchers(HttpMethod.GET, "/api/departament/**").permitAll()
+//					.antMatchers(HttpMethod.DELETE, "/api/departament/**").permitAll()
+//					.antMatchers(HttpMethod.PUT, "/api/departament/**").permitAll()
+//					.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+				
+					.antMatchers(HttpMethod.POST, "/api/loginL").permitAll()
+					.antMatchers(HttpMethod.POST, "/api/**").permitAll()
+					.antMatchers(HttpMethod.POST, "/api/user").permitAll()
+					
+//					.antMatchers(HttpMethod.POST, "/api/auth").permitAll()
+//					.antMatchers(HttpMethod.POST, "/api/departament").permitAll()
 				//------
 //				.antMatchers(HttpMethod.PUT, "/api/departament").permitAll()
 //				.antMatchers(HttpMethod.DELETE, "/api/departament").permitAll()
 				//-----
-				.antMatchers(HttpMethod.POST, "/api/isValidToken").permitAll()
-				.antMatchers(HttpMethod.POST, "/api/user").permitAll()
-				.antMatchers(HttpMethod.GET, "/api/user").permitAll()
-				.antMatchers(HttpMethod.PUT, "/api/user").permitAll()
-				.antMatchers(HttpMethod.DELETE, "/api/user")
-
+//					.antMatchers(HttpMethod.POST, "/api/isValidToken").permitAll()
+//					.antMatchers(HttpMethod.POST, "/api/user").permitAll()
+//					.antMatchers(HttpMethod.GET, "/api/user").permitAll()
+//					.antMatchers(HttpMethod.PUT, "/api/user").permitAll()
+//					.antMatchers(HttpMethod.DELETE, "/api/user").hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
+					.anyRequest().authenticated() //Essa configuração serve para indicar que outras URLs que não foram configuradas devem ter acesso restrito
 				
-				.hasRole(SystemRoleService.AVAILABLE_ROLES.ADMIN.name())
-				.anyRequest().authenticated() //Essa configuração serve para indicar que outras URLs que não foram configuradas devem ter acesso restrito
-				.and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-				.and().addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+				.and()
+					.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				.and()
+					.addFilterBefore(jwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
 
-		http.logout(logout -> 
-			logout
-			.clearAuthentication(true)
-			.invalidateHttpSession(true)
-			.logoutUrl("/api/logout")
-			.logoutSuccessHandler(new LogoutSuccessHandler() {
+		http
+			.logout(
+					logout -> 
+						logout
+						.clearAuthentication(true)
+						.invalidateHttpSession(true)
+						.logoutUrl("/api/logout")
+						.logoutSuccessHandler(new LogoutSuccessHandler() {
 
 					@Override
 					public void onLogoutSuccess(HttpServletRequest request, 
-							HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+							HttpServletResponse response, Authentication authentication)
+							throws IOException, ServletException {
 
 					}
 					

@@ -71,24 +71,17 @@ public class TokenServiceImpl implements TokenService{
 	
 	@Override
 	public boolean isValid(String token) {
-		
 		if(token == null) {
-						
 			return false;
 		}
 		
 		try {
 			Claims claims = getClaims(token);
 			LocalDateTime expirationDate = claims.getExpiration().toInstant()
-			.atZone(ZoneId.systemDefault()).toLocalDateTime();
+					.atZone(ZoneId.systemDefault()).toLocalDateTime();
 			
-		
-			System.out.println("antes do return");
-			return !LocalDateTime.now().isAfter(expirationDate);
-			
-		} catch (Exception e){
-			
-			e.printStackTrace();
+			return!LocalDateTime.now().isAfter(expirationDate);
+		}catch(Exception e) {
 			return false;
 		}
 	}

@@ -47,7 +47,7 @@ public class ConverterService {
 		JsonElement jsonElement = JsonParser.parseString(json);
 		
 		
-		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
+		String token = jsonElement.getAsJsonObject().get("token").getAsString();
 		return token;
 	}
 

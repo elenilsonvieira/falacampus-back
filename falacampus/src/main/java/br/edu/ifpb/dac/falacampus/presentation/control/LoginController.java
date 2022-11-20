@@ -40,7 +40,7 @@ public class LoginController {
 	private TokenService tokenService;
 
 	@SuppressWarnings("unchecked")
-	@PostMapping("/login")
+	@PostMapping("/loginL")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
 
 		try {

@@ -58,7 +58,7 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 //		return tokenService.generate(user);
 //	}
 	
-	private String suapLogin(String username, String password) {
+	public String suapLogin(String username, String password) {
 		String jsonToken = suapService.login(username, password);
 		this.suapToken = converterService.jsonToToken(jsonToken);
 		

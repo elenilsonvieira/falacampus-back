@@ -29,20 +29,19 @@ public class TokenFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-//		
-//		String token = tokenService.get(request);
-//		boolean valid = tokenService.isValid(token);
-//
-//		
-//		if(valid) {
-//			authenticate(token);
-//		}
+		String token = tokenService.get(request);
+		boolean valid = tokenService.isValid(token);
+	
+		if(valid) {
+			authenticate(token);
+		}
+		
 		filterChain.doFilter(request, response);
 		
 	}
 	private void authenticate(String token) {
 		Long userid = tokenService.getUserId(token);
-		User user = userService.findByToken(token);
+		User user = userService.findById(userid);
 		
 		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(user,null, user.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
