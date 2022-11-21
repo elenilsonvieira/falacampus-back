@@ -40,12 +40,13 @@ public class AuthenticationController {
 
 		try {
 			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
+	
 			
 			User entity = userService.findByUserName(dto.getUsername());
 					
-			UserDto userDto = userConverterService.userToDTO(entity); 
+			UserDto user = userConverterService.userToDTO(entity); 
 			
-			TokenDto tokenDto = new TokenDto(token, userDto);
+			TokenDto tokenDto = new TokenDto(token, user);
 			
 			return new ResponseEntity(tokenDto, HttpStatus.OK);
 			
@@ -61,7 +62,7 @@ public class AuthenticationController {
 		try {
 			boolean isTokenValid = tokenService.isValid(token);
 
-			return new ResponseEntity(isTokenValid, HttpStatus.OK);
+			return new ResponseEntity(true, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
