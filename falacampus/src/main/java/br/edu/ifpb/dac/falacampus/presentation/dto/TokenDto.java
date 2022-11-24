@@ -1,23 +1,15 @@
 package br.edu.ifpb.dac.falacampus.presentation.dto;
 
-
+import java.util.Objects;
 
 public class TokenDto {
 	
 	private String token;
-	
 	private UserDto user;
-
 	
-	public TokenDto(String token) {
+	public TokenDto(String token, UserDto user) {
 		this.token =token;
-
-	}
-	
-	public TokenDto (String token, UserDto systemUserDTO) {
-		super();
-		this.token = token;
-		this.user = systemUserDTO;
+		this.user = user;
 	}
 
 	public String getToken() {
@@ -34,14 +26,5 @@ public class TokenDto {
 
 	public void setUser(UserDto user) {
 		this.user = user;
-	}
-	
-	
-
-	
-	
-	
-	
-	
-
+	}	
 }

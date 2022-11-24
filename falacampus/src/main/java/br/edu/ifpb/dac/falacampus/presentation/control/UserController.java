@@ -41,7 +41,7 @@ public class UserController {
 	
 	//SAVE
 	@PostMapping
-	public ResponseEntity save(@RequestBody @Valid UserDto dto) {
+	public ResponseEntity save(@RequestBody UserDto dto) {
 		
 		try {
 			if (dto.getDepartamentId() == null) {
@@ -70,19 +70,24 @@ public class UserController {
 	
 	//PUT
 	@PutMapping("{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid UserDto dto) {
+	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody UserDto dto) {
 		try {
 			dto.setId(id);
+			
+			if (dto.getDepartamentId() == null) {
+				throw new IllegalStateException("departamentId cannot be null");
+			}
 			
 			Long departamentId = dto.getDepartamentId();
 			Departament departament = departamentService.findById(departamentId);
 			
 			if(departament == null) {
-				throw new IllegalStateException(String.format("Cound not find any departament with id=%1", id));
+				throw new IllegalStateException(String.format("Could not find any departament with id=%1", departamentId));
 			}
 			
 			User entity = userConverterService.dtoToUser(dto);
 			entity.setDepartament(departament);
+			
 			
 			entity = userService.update(entity);
 			dto = userConverterService.userToDTO(entity);
@@ -112,9 +117,9 @@ public class UserController {
 				@RequestParam(value = "id", required = false) Long id,
 				@RequestParam(value = "name", required = false) String name,
 				@RequestParam(value = "email", required = false) String email,
-				@RequestParam(value = "registration", required = false) String registration,
+				@RequestParam(value = "username", required = false) String username) {
 				//@RequestParam(value = "role", required = false) Role role,
-				@RequestParam(value = "departamentId", required = false) Long departamentId) {
+			//	@RequestParam(value = "departamentId", required = false) Long departamentId) {
 		
 		try {
 			
@@ -122,17 +127,17 @@ public class UserController {
 			filter.setId(id);
 			filter.setName(name);
 			filter.setEmail(email);
-			filter.setRegistration(registration);
+			filter.setUsername(username);
 			//filter.setRole(role);
 			//.setRole(role);
 			
-			Departament departament = departamentService.findById(departamentId);
-			
-			if(departament == null) {
-				throw new IllegalStateException(String.format("Could not find any departament whit id=%1", departamentId));
-			}
-			
-			filter.setDepartament(departament);
+//			Departament departament = departamentService.findById(departamentId);
+//			
+//			if(departament == null) {
+//				throw new IllegalStateException(String.format("Could not find any departament whit id=%1", departamentId));
+//			}
+//			
+//			filter.setDepartament(departament);
 			
 			List<User> entities = (List<User>) userService.find(filter);
 					//.find(filter);

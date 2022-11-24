@@ -24,6 +24,7 @@ import br.edu.ifpb.dac.falacampus.model.repository.UserRepository;
 //(contém a lógica para validar as credenciais de um usuário que está se autenticando)
 @Service
 public class UserServiceImpl implements UserService {
+	
 	@Autowired
 	private UserRepository userRepository;
 	@Autowired
@@ -31,17 +32,6 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEnconderService passwordEnconderService;
 
-	
-	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		//User user = userRepository.findByRegistration(Long.parseLong(username)).get();
-		User user = userRepository.findByRegistration(username);
-		if (user == null) {
-			throw new UsernameNotFoundException(String.format("Could not find any user with username %s", username));
-		}
-		return user.get();
-	}
-	
 	@Override
 	public User save(User user) {
 		
@@ -53,11 +43,7 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		
-
-
-
 		if(findAll().isEmpty()) {
-
 			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
 		}else {
 			roles.add(roleService.findDefault());
@@ -68,16 +54,21 @@ public class UserServiceImpl implements UserService {
 		return userRepository.save(user);
 		
 		}
-
 	
-
 	@Override
 	public User update(User user) {
-		if (user.getId() == null) {
+		User userUp = findById(user.getId());
+		if (userUp == null) {
 			throw new IllegalStateException("User id is null");
 		}
 		
-		passwordEnconderService.encryptPassword(user);
+		userUp.setEmail(user.getEmail());
+		userUp.setUsername(user.getUsername());
+		userUp.setName(user.getName());
+		userUp.setDepartament(user.getDepartament());
+		
+		
+		
 		/*
 		
 		List<SystemRole> roles = new ArrayList<>();
@@ -86,7 +77,7 @@ public class UserServiceImpl implements UserService {
 			*/	
 		return userRepository.save(user);
 	}
-
+	
 	@Override
 	public void delete(Long id) {
 		User user = findById(id);
@@ -105,41 +96,7 @@ public class UserServiceImpl implements UserService {
 		}
 		return userRepository.findById(id).get();
 	}
-
-	@Override
-	public Optional<User> findByEmail(String email) {
-		return userRepository.findByEmail(email);
-	}
-
-	@Override
-	public User findByName(String name) {
-		return userRepository.findByName(name);
-	}
 	
-	@Override
-	public User findByUserName(String username) {
-		return userRepository.findByName(username);
-	}
-	
-	/*
-	@Override
-	public User findByRegistration(Long registration) throws IllegalStateException{
-	
-		if(registration == null) {
-		
-			throw new IllegalStateException("Registration cannot be null");
-		}
-	
-		
-		return userRepository.findByRegistration(registration);
-	}*/
-	
-
-	@Override
-	public ArrayList<User> findAll() {
-		return (ArrayList<User>) userRepository.findAll();
-	}
-
 	@Override
 	public Iterable<User> find(User filter) {
 		Example example = Example.of(filter,
@@ -148,19 +105,43 @@ public class UserServiceImpl implements UserService {
 		return userRepository.findAll(example);
 
 	}
-
+	
 	@Override
-	public User findByToken(String token) {
-		return userRepository.findByToken(token);
+	public User findByUserName(String username) {
+		if(username == null) {
+			throw new IllegalStateException("Username cannot be null");
+		}
+		Optional<User> optional = userRepository.findByUsername(username); 
+		
+		return optional.isPresent() ? optional.get() : null;
+	}
+	
+	@Override
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+		User user = findByUserName(username);
+		if (user == null) {
+			throw new UsernameNotFoundException(String.format("Could not find any user with username %s", username));
+		}
+		return user;
 	}
 
 	@Override
-	public User findByRegistration(String username) {
-
-		return userRepository.findByRegistration(username);
+	public ArrayList<User> findAll() {
+		return (ArrayList<User>) userRepository.findAll();
 	}
+
+	@Override
+	public Optional<User> findByEmail(String email) {
+		// TODO Auto-generated method stub
+		return Optional.empty();
+	}
+
+
 
 	
+
+
 
 	
 

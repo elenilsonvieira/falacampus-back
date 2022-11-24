@@ -48,13 +48,8 @@ public class User implements UserDetails {
 	
 	@NotNull
 	//@NotBlank
-	@Column(name = "user_registration")
-	private String registration;
-//	
-//	@NotNull
-//	@Enumerated(EnumType.STRING)
-//	@Column(name = "user_role")
-//	private Role role = Role.STUDENTS;
+	@Column(name = "username")
+	private String username;
 	
 	//@NotNull
 	@NotBlank
@@ -70,20 +65,17 @@ public class User implements UserDetails {
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<SystemRole> roles = new ArrayList<>();
 	
-//	@Column(name = "USER_TOKEN", nullable = true)
-	private String token;
 	
 	public User() {
 		
 	}
 	
-	public User(Long id, String name, String email, String registration,  String password,
+	public User(Long id, String name, String email, String username,  String password,
 			Departament departament) {
 		this.id = id;
 		this.name = name;
 		this.email = email;
-		this.registration = registration;
-	
+		this.username = username;
 		this.password = password;
 		this.departament = departament;
 	}
@@ -112,23 +104,11 @@ public class User implements UserDetails {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public String getRegistration() {
-		return registration;
-	}
-
-	public void setRegistration(String registration) {
-		this.registration = registration;
-	}
 	
-	public String getToken() {
-		return token;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
-	public void setToken(String token) {
-		this.token = token;
-	}
-	
 	public List<SystemRole> getRoles() {
 		return roles;
 	}
@@ -155,7 +135,7 @@ public class User implements UserDetails {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(departament, email, id, name, password, registration, roles);
+		return Objects.hash(departament, email, id, name, password, username, roles);
 	}
 
 	@Override
@@ -169,19 +149,18 @@ public class User implements UserDetails {
 		User other = (User) obj;
 		return Objects.equals(departament, other.departament) && Objects.equals(email, other.email)
 				&& Objects.equals(id, other.id) && Objects.equals(name, other.name)
-				&& Objects.equals(password, other.password) && Objects.equals(registration, other.registration)
+				&& Objects.equals(password, other.password) && Objects.equals(username, other.username)
 				&& Objects.equals(roles, other.roles);
 	}
 
 	@Override
 	public Collection<? extends GrantedAuthority>  getAuthorities() {
-		//return new ArrayList<>();
 		return this.roles;
 	}
 	
 	@Override
 	public String getUsername() {
-		return this.email;
+		return this.username;
 	}
 
 	@Override
@@ -203,11 +182,7 @@ public class User implements UserDetails {
 	public boolean isEnabled() {
 		return true;
 	}
-
-	public User get() {
-		
-		return null;
-	}
 	
+
 
 }

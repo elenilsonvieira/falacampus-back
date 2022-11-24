@@ -94,7 +94,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		
 		try {
 			
-			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(url));
+			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

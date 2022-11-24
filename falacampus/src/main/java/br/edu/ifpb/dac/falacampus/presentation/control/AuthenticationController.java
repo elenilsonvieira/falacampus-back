@@ -11,11 +11,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.WebApplicationContext;
 
 import br.edu.ifpb.dac.falacampus.business.service.AuthenticationService;
-import br.edu.ifpb.dac.falacampus.business.service.LoginService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
-import br.edu.ifpb.dac.falacampus.business.service.impl.AuthenticationServiceImpl;
+
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.LoginDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.TokenDto;
@@ -25,16 +24,10 @@ import io.jsonwebtoken.Jwts;
 @RestController
 @RequestMapping("/api")
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
-
-//@RequestMapping("/api")
-//@Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class AuthenticationController {
-	
-	@Autowired
-	private LoginService loginService;
 
 	@Autowired
-	private AuthenticationServiceImpl authenticationService;
+	private AuthenticationService authenticationService;
 	@Autowired
 	private UserConverterService userConverterService; // private ConverterSystemUser converterSystemUser;
 	@Autowired
@@ -44,25 +37,30 @@ public class AuthenticationController {
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
+
 		try {
-			String token = authenticationService.suapLogin(dto.getUsername(), dto.getPassword());
-			User entity = userService.findByRegistration(dto.getUsername());
-			UserDto systemUserDTO = userConverterService.userToDTO(entity);
+			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
+	
 			
-			TokenDto tokenDTO = new TokenDto(token, systemUserDTO);
+			User entity = userService.findByUserName(dto.getUsername());
+					
+			UserDto user = userConverterService.userToDTO(entity); 
 			
-			return new ResponseEntity(tokenDTO, HttpStatus.OK);
-		}catch (Exception e) {
+			TokenDto tokenDto = new TokenDto(token, user);
+			
+			return new ResponseEntity(tokenDto, HttpStatus.OK);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
 
 	@PostMapping("/isValidToken")
-	public ResponseEntity isTokenValid(@RequestBody TokenDto token) {
+	public ResponseEntity isTokenValid(@RequestBody String token) {
 
-		System.out.println("teste: " + token);
 		try {
-			boolean isTokenValid = tokenService.isValid(token.getToken());
+			boolean isTokenValid = tokenService.isValid(token);
 
 			return new ResponseEntity(true, HttpStatus.OK);
 
@@ -70,17 +68,4 @@ public class AuthenticationController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-
-	/*
-	 * @PostMapping("/isTokenValid") public ResponseEntity isTokenValid(@RequestBody
-	 * TokenDto dto) { try { boolean isTokenValid =
-	 * tokenService.isValid(dto.getToken());
-	 * 
-	 * return new ResponseEntity(isTokenValid, HttpStatus.OK);
-	 * 
-	 * } catch (Exception e) { return
-	 * ResponseEntity.badRequest().body(e.getMessage()); } }
-	 * 
-	 */
-
 }

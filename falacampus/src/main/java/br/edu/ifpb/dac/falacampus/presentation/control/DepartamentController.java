@@ -1,9 +1,11 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.validation.Valid;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,15 +17,21 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
+import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
+import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
+import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
 @RestController
 @RequestMapping("/api/departament")
@@ -161,17 +169,16 @@ public class DepartamentController {
 //	}
 
 	@GetMapping
-	public ResponseEntity findByFilter(
-			@RequestParam(value = "id", required = false) Long id,
+	public ResponseEntity findByFilter(@RequestParam(value = "id", required = false) Long id,
 			@RequestParam(value = "name", required = false) String name) {
 
 		try {
 
-			Departament filter = new Departament();
-			filter.setId(id);
-			filter.setName(name);
+			Departament departamento = new Departament();
+			departamento.setId(id);
+			departamento.setName(name);
 
-			List<Departament> entities = departamentService.find(filter);
+			List<Departament> entities = departamentService.find(departamento);
 			List<DepartamentDto> dtos = departamentConvertService.departamentToDTO(entities);
 			return ResponseEntity.ok(dtos);
 
