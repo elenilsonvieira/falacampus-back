@@ -35,7 +35,7 @@ class UserControllerIntegrationTest2 {
 
     @Test
     public void whenGetRequestToUsers_thenCorrectResponse() throws Exception {
-        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/user?departamentId=1&id=1")
+        mockMvc.perform(MockMvcRequestBuilders.get("http://localhost:8080/api/user/1")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.content().contentType(MediaType.APPLICATION_JSON));
@@ -46,7 +46,7 @@ class UserControllerIntegrationTest2 {
     public void whenPostRequestToUsersAndValidUser_thenCorrectResponse() throws Exception {
         
         String user ="{ \"name\": \"Maria da Silva\", \"email\": \"maria_silva@gmail.com\", \"registration\": 202114050030, \"role\": \"STUDENT\", \"password\": 12345678, \"departamentId\": 1 }";
-        
+
         mockMvc.perform(MockMvcRequestBuilders.post("http://localhost:8080/api/user")
                 .content(user)
                 .contentType(MediaType.APPLICATION_JSON))

@@ -39,10 +39,8 @@ public class AuthenticationController {
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
-
 		try {
 			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
-	
 			
 			User entity = userService.findByUserName(dto.getUsername());
 					
@@ -62,9 +60,9 @@ public class AuthenticationController {
 	public ResponseEntity isTokenValid(@RequestBody String token) {
 
 		try {
-		//	boolean isTokenValid = tokenService.isValid(token);
+			boolean isTokenValid = tokenService.isValid(token);
 
-			return new ResponseEntity(tokenService.isValid(token), HttpStatus.OK);
+			return new ResponseEntity(true, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());

@@ -31,7 +31,7 @@ class DepartamentConverterServiceImplTest {
 	static void initAll() throws Exception {
 		departamentConvertServiceImpl = new DepartamentConverterServiceImpl();
 		departament = new Departament();
-		departament.setId_responsible("1");
+	//	departament.setId_responsible("1");
 		departament.setName("Direção Geral");
 		departament.setAcronymDepartment("DG");
 	
@@ -42,7 +42,7 @@ class DepartamentConverterServiceImplTest {
 		dto = departamentConvertServiceImpl.departamentToDTO(departament);
 		
 		assertEquals(departament.getName(),dto.getName());
-		assertEquals(departament.getId_responsible() ,dto.getId_responsible());
+		//assertEquals(departament.getId_responsible() ,dto.getId_responsible());
 		assertEquals(departament.getAcronymDepartment(), dto.getAcronymDepartment());
 		
 		assertEquals(DepartamentDto.class, dto.getClass());
@@ -56,7 +56,7 @@ class DepartamentConverterServiceImplTest {
 		assertAll("dtoToDepartament", 
 				() -> assertEquals(dto.getId(),departament.getId()),
 				() -> assertEquals(dto.getName(),departament.getName()),
-				() -> assertEquals(dto.getId_responsible(), departament.getId_responsible()),
+		//		() -> assertEquals(dto.getId_responsible(), departament.getId_responsible()),
 				() -> assertEquals(dto.getAcronymDepartment(),departament.getAcronymDepartment()));
 		
 		assertEquals(Departament.class, departament.getClass());

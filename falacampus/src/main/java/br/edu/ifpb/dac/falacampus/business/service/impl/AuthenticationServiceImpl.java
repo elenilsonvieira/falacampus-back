@@ -40,15 +40,16 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	
 	
 	public String login(String username, String password) {
-//		return suapLogin(username, password);		
-			switch (logintype) {
-			case "suap": 
-				return suapLogin(username, password);
-			case "local":
-				return localLogin(username, password);
-			default:
-				return suapLogin(username, password);
-			}
+		
+		return suapLogin(username, password);		
+//			switch (logintype) {
+//			case "suap": 
+//				return suapLogin(username, password);
+//			case "local":
+//				return localLogin(username, password);
+//			default:
+//				return suapLogin(username, password);
+//			}
 		}
 			
 		private String localLogin(String username, String password) {
