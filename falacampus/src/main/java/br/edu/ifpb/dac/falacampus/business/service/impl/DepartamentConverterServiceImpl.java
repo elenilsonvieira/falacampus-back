@@ -66,10 +66,11 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	public Departament dtoToDepartament(DepartamentDto dto) {
 		
 		Departament entity = modelMapper.map(dto, Departament.class);
-		//Departament entity = new Departament();
-		
-		//entity.setId(dto.getId());
-		//entity.setName(dto.getName());
+//		Departament entity = new Departament();
+//		
+//		entity.setId(dto.getId());
+//		entity.setName(dto.getName());
+//		entity.setResponsibleUsers(dto.getResponsibleUsers());
 		
 		return entity;
 	}
@@ -78,10 +79,11 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	public DepartamentDto departamentToDTO(Departament entity) {
 		
 		DepartamentDto dto = modelMapper.map(entity, DepartamentDto.class);
-		//DepartamentDto dto = new DepartamentDto();
-		
-		//dto.setId(entity.getId());
-		//dto.setName(entity.getName());
+//		DepartamentDto dto = new DepartamentDto();
+//		
+//		dto.setId(entity.getId());
+//		dto.setName(entity.getName());
+//		dto.setResponsibleUsers(entity.getResponsibleUsers().ge);
 		
 		return dto;
 	}

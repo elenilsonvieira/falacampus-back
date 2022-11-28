@@ -67,14 +67,19 @@ public class UserServiceImpl implements UserService {
 		userUp.setName(user.getName());
 		userUp.setDepartament(user.getDepartament());
 		
-		
-		
-		/*
-		
 		List<SystemRole> roles = new ArrayList<>();
-		roles.add(roleService.findDefault());
+		
+		if(user.getRoles().get(0).getName().equals("ADMIN")) {
+			roles.add(roleService.findAdmin());
+		}else {
+			roles.add(roleService.findDefault());		}
+		
+		
+		
+		
 		user.setRoles(roles);
-			*/	
+		
+		
 		return userRepository.save(user);
 	}
 	

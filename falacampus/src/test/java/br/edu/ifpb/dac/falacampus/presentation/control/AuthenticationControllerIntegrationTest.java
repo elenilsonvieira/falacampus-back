@@ -1,6 +1,9 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.CALLS_REAL_METHODS;
+import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
+import static org.mockito.Mockito.RETURNS_DEFAULTS;
 import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeAll;
@@ -34,20 +37,14 @@ class AuthenticationControllerIntegrationTest {
 	
 	
 	@Autowired
-	private static AuthenticationController authenticationController;
+	private AuthenticationController authenticationController;
 	
 	@Autowired
 	private static LoginDto loginDto;
 	
-    private static MockMvc mockMvc;
-
-    //Instância do mock repository
-    @Mock
-    private AuthenticationService authenticationService;
-	
 	 @BeforeAll
 	 static void iniciar() {
-		 authenticationController = new AuthenticationController();
+//		 authenticationController = new AuthenticationController();
 //		 mockMvc = MockMvcBuilders.standaloneSetup(authenticationController).build();
 				
 		 
@@ -77,6 +74,7 @@ class AuthenticationControllerIntegrationTest {
 			ResponseEntity<String> response = authenticationController.login(loginDto);
 			System.out.println(response);
 			assertEquals(HttpStatus.OK.value(), response.getStatusCodeValue());		
+			assertEquals("Username: 202025020004", response.getBody());
 			
 	}
 }

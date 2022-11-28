@@ -1,5 +1,6 @@
-package br.edu.ifpb.dac.falacampus.presentation.control;
+ package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -87,16 +88,19 @@ public class DepartamentController {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
 			
-			if(departament.getResponsibleUsers() != null) {
-				List <User> users = departament.getResponsibleUsers();
-				for (User user : users) {
-					User o = userS.findById(user.getId());
+			ArrayList<User> users = new ArrayList<>();
+
+			if(dto.getResponsibleUsers() != null) {
+				for (String user : dto.getResponsibleUsers()) {
+					User o = userS.findById(Long.parseLong( user));
 					if(o==null) {
 						throw new NullPointerException("Id do usuario não encontrado");
-				}
-
+					}else {
+					users.add(o);
+					}
 				}
 			}
+			departament.setResponsibleUsers(users);
 			departament = departamentService.update(departament);
 			dto = departamentConvertService.departamentToDTO(departament);
 
