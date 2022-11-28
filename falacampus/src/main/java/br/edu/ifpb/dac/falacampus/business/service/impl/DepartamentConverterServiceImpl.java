@@ -6,8 +6,10 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
+import org.springframework.web.context.WebApplicationContext;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -45,6 +47,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 
 	@Value("${app.logintype}")
 	private String logintype;
+
 	private String suapToken;
 
 	private Departament departament;
@@ -95,7 +98,8 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		
 		try {
 			
-			this.suapToken = converterService.jsonToToken(suapService.findAllDepartament(url));
+			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
+			System.out.println("TOKEN  SUAP 2: "+suapToken);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
