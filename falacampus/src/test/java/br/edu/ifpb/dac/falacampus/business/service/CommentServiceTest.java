@@ -1,10 +1,12 @@
 package br.edu.ifpb.dac.falacampus.business.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.io.File;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -20,6 +22,7 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.*;
 import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Answer;
@@ -33,17 +36,6 @@ import br.edu.ifpb.dac.falacampus.presentation.dto.CommentDto;
 
 class CommentServiceTest {
 	
-	private static final Long ID = 1L;
-	private static final String TITLE = "Crítica telhado";
-	private static final String MESSAGE = "Qual o prazo para realizar reparo do telhado.";
-	private static final LocalDateTime DATE_COMMENT = LocalDateTime.now();
-	private static final CommentType COMMENT_TYPE = CommentType.REVIEW;
-	private static final StatusComment STATUS_COMMENT = StatusComment.NOT_SOLVED; 
-	private static final User AUTHOR = new User(); 
-	private static final Departament DEPARTAMENT = new Departament(); 
-	private static final Answer ANSWER = new Answer(); 
-	private static final File ATTACHMENT = new File("Document");
-	
 	@InjectMocks
 	private CommentService commentService;
 	
@@ -53,56 +45,57 @@ class CommentServiceTest {
 	@Mock
 	private ModelMapper mapper;
 	
-	private CommentDto commentDto;
-	private Optional<Comment> optionalComment;
+	private static CommentDto commentDto;
+	
+	private static Optional<Comment> optionalComment;
+	
+	@Spy
 	private List<Comment> listComment;
-	private Comment comment;
-
+	
+	private static Comment comment;
+	
+	
+	@BeforeAll
+	static void initAll() {
+		comment = new Comment(1L, "Fechadura Digital", "A fechadura não funciona", CommentType.REVIEW, StatusComment.NOT_SOLVED, new User(), new Departament(),new Answer(), new File("Doc"));
+		commentDto = new CommentDto(comment);
+		optionalComment = Optional.of(new Comment(1L, "Fechadura Digital", "A fechadura não funciona", CommentType.REVIEW, StatusComment.NOT_SOLVED, new User(), new Departament(),new Answer(), new File("Doc")));		
+	}
 
 	@BeforeEach
 	void setUp() throws Exception {
 		MockitoAnnotations.openMocks(this);
-		startComment();
 	}
 	
-	private void startComment() {
-		
-		comment = new Comment(ID, TITLE, MESSAGE, COMMENT_TYPE,
-				STATUS_COMMENT, AUTHOR, DEPARTAMENT, ANSWER, ATTACHMENT);
-		
-		commentDto = new CommentDto(comment);
-		
-		optionalComment = Optional.of(new Comment(ID, TITLE, MESSAGE, COMMENT_TYPE,
-				STATUS_COMMENT, AUTHOR, DEPARTAMENT, ANSWER, ATTACHMENT));		
-	}
-	
-	@DisplayName("Save Comment")
+	@DisplayName("SaveComment")
 	@Test
-	public void saveCommentSucess() {
+	public void saveCommentTest() {
 		
 		when(commentRepository.save(comment))
 		.thenReturn(comment);
 		
-		Comment response = commentService.save(comment);
-		assertNotNull(response);
-		assertEquals(Comment.class, response.getClass());
-		assertEquals(ID, response.getId());
-		assertEquals(TITLE, response.getTitle());
-		assertEquals(MESSAGE, response.getMessage());
-		assertEquals(COMMENT_TYPE, response.getCommentType());
-		assertEquals(STATUS_COMMENT, response.getStatusComment());
-		assertEquals(AUTHOR, response.getAuthor());
-		assertEquals(DEPARTAMENT, response.getDepartament());
-		assertEquals(ANSWER, response.getAnswer());
-		assertEquals(ATTACHMENT, response.getAttachment());
+		Comment returnSave = commentService.save(comment);
 		
-		verify(commentRepository, times(1)).save(response);
+		assertNotNull(returnSave);
+		assertEquals(Comment.class, returnSave.getClass());
+		
+		assertEquals(comment.getId(), returnSave.getId());
+		assertEquals(comment.getTitle(), returnSave.getTitle());
+		assertEquals(comment.getMessage(), returnSave.getMessage());
+		assertEquals(comment.getCommentType(), returnSave.getCommentType());
+		assertEquals(comment.getStatusComment(), returnSave.getStatusComment());
+		assertEquals(comment.getAuthor(), returnSave.getAuthor());
+		assertEquals(comment.getDepartament(), returnSave.getDepartament());
+		assertEquals(comment.getAnswer(), returnSave.getAnswer());
+		assertEquals(comment.getAttachment(), returnSave.getAttachment());
+	
+		verify(commentRepository, times(1)).save(returnSave);
 		
 	}
 		
-	@DisplayName("Save CommentDto")
+	@DisplayName("SaveCommentDto")
 	@Test
-	public void saveCommentDtoSucess() {
+	public void saveCommentDtoTest() {
 		
 		commentService.saveCommentDto(commentDto);
 		Comment c = mapper.map(commentDto, Comment.class);
@@ -110,26 +103,56 @@ class CommentServiceTest {
 		verify(commentRepository, times(1)).save(c);
 	}
 	
-	@DisplayName("Find by id")
+	@DisplayName("FindById")
 	@Test
-	public void findByIdSucess() {
+	public void findByIdTest() {
 		
-		when(commentRepository.findById(ID)).thenReturn(optionalComment);
+		when(commentRepository.findById(comment.getId())).thenReturn(optionalComment);
+		commentService.findById(comment.getId());
 		
-		
-		verify(commentRepository, times(0)).findById(ID);
-		
+		verify(commentRepository, times(1)).findById(comment.getId());
+	
 	}
 
-	@DisplayName("Find All Comment")
+	@DisplayName("FindAllComment")
 	@Test
-	public void findAllSucess() {
-		
+	public void findAllTest() {	
 		when(commentRepository.findAll())
 		.thenReturn(listComment);
-		
+		 
 		verify(commentRepository, times(0)).findAll();
 		
 	}
+	
+	
+	@Test
+	void spyTestList() {
+		listComment = new ArrayList<Comment>();
+		
+		assertEquals(true, listComment.isEmpty());
+		
+		assertNotNull(comment);	
+		listComment.add(comment);
+		
+		
+		
+			
+		assertEquals(1, listComment.size());
+//		
+//		when(listComment.size()).thenReturn(100);		
+//	    assertEquals(100, listComment.size());
+		
+	}
+	
+	@Test
+	void testDeleteById() {		
+		assertThrows(IllegalStateException.class, 
+				() -> commentService.deleteById(null));
+	}
 
+	@Test
+	void testFindById () { 
+		assertThrows(IllegalStateException.class,
+				() -> commentService.findById(null));
+	}
 }

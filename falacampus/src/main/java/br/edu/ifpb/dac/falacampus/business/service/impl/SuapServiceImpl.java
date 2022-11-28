@@ -67,8 +67,10 @@ public class SuapServiceImpl implements SuapService {
 	}
 
 	public String findUser(String token, String username) {
+		
 		String result = findEmployee(token, username);
 		if(result.contains("\"count\":0")) {
+//		if(result == null) {
 			result = findStudent(token, username);
 		}
 		return result;
@@ -160,14 +162,7 @@ private String find(String token, String findUrl) {
 		
 		HttpClient httpClient = HttpClient.newHttpClient();
 		String response = httpClient.send(httpRequest,HttpResponse.BodyHandlers.ofString()).body();
-		
-		try {
-			response = httpClient.send(httpRequest, HttpResponse.BodyHandlers.ofString()).body();
 
-		} catch (IOException | InterruptedException e) {
-
-			e.printStackTrace();
-		}
 		return response;
 	}
 
@@ -176,7 +171,7 @@ private String find(String token, String findUrl) {
 	@Override
 	@Lazy
 	public String findAllDepartament(String url) {
-	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjczNTQxMTQsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjcyNjc3MTR9.jouHhndRpzZeORB8GW_vtPJNrY58OZPJKcliEDWk3ts";
+	String token = "eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2NjkzMjUxMjUsInN1YiI6IjEiLCJ1c2VySWQiOjEsInVzZXJuYW1lIjoiMjAyMDI1MDIwMDA0IiwiZXhwaXJhdGlvblRpbWUiOiIxODoyNSJ9.CB-Hq1i1FjP29yuHkIbDZRelpvIifvF0xeD1Lj2dS80";
 		
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
+import br.edu.ifpb.dac.falacampus.model.entity.User;
 
 public class DepartamentDto {
 	
@@ -16,9 +17,8 @@ public class DepartamentDto {
 	@NotNull @NotEmpty @Size(min = 2, max=100)
 	private String name;
 
-
 	//------------
-	private String id_responsible;
+	private List<User> responsibleUsers;
 	
 	private String acronymDepartment;
 	//------------
@@ -29,14 +29,13 @@ public class DepartamentDto {
 		
 	}
 
-	public DepartamentDto(Departament departament) {
-		this.id = departament.getId();
-		this.name = departament.getName();
-	}
+//	public DepartamentDto(Departament departament) {
+//		this.id = departament.getId();
+//		this.name = departament.getName();
+//		this.responsibleUsers = departament.getResponsibleUsers();
+//		this.acronymDepartment = departament.getAcronymDepartment();
+//	}
 	
-	public static List<DepartamentDto> convert(List<Departament> departament){
-		return departament.stream().map(DepartamentDto::new).collect(Collectors.toList());
-	}
 
 	public Long getId() {
 		return id;
@@ -53,14 +52,13 @@ public class DepartamentDto {
 	public void setName(String name) {
 		this.name = name;
 	}
-	
-	
-	public String getId_responsible() {
-		return id_responsible;
+
+	public List<User> getResponsibleUsers() {
+		return responsibleUsers;
 	}
 
-	public void setId_responsible(String id_responsible) {
-		this.id_responsible = id_responsible;
+	public void setResponsibleUsers(List<User> responsibleUsers) {
+		this.responsibleUsers = responsibleUsers;
 	}
 
 	public String getAcronymDepartment() {

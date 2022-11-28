@@ -5,38 +5,31 @@ import java.util.Objects;
 public class TokenDto {
 	
 	private String token;
-
+	private UserDto user;
 	
-	public TokenDto(String token) {
+	public TokenDto(String token, UserDto user) {
 		this.token =token;
-
+		this.user = user;
 	}
+
 	public String getToken() {
 		return token;
 	}
+
 	public void setToken(String token) {
 		this.token = token;
 	}
-	@Override
-	public int hashCode() {
-		return Objects.hash(token);
-	}
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		TokenDto other = (TokenDto) obj;
-		return Objects.equals(token, other.token);
+
+	public UserDto getUser() {
+		return user;
 	}
 
+	public void setUser(UserDto user) {
+		this.user = user;
+	}
 	
-	
-	
-	
-	
-
+	@Override
+	public String toString() {
+		return "Username: "+user.getUsername();
+	}
 }

@@ -37,10 +37,9 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 
 	@Autowired
 	private ConverterService converterService;
-	
 	@Autowired
 	private AuthenticationManager authenticationManager;
-
+	
 	@Autowired
 	private TokenService tokenService;
 

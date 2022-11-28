@@ -32,9 +32,6 @@ public class ConverterService {
 	private DepartamentService departamentService;
 	
 	@Autowired
-	private SuapServiceImpl suapServiceImp;
-	
-	@Autowired
 	private UserService userService;
 
 	public String mapToJson(Map<String, String> map) {
@@ -46,6 +43,12 @@ public class ConverterService {
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
 		
+		String token = jsonElement.getAsJsonObject().get("token").getAsString();
+		return token;
+	}
+	
+	public String jsonToTokenDepartament(String json) {
+		JsonElement jsonElement = JsonParser.parseString(json);
 		
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;
@@ -54,15 +57,22 @@ public class ConverterService {
 	public User jsonToUser(String jsonUser) {
 
 		JsonElement jsonElement = JsonParser.parseString(jsonUser);
-		JsonObject results = jsonElement.getAsJsonObject().get("results").getAsJsonArray().get(0).getAsJsonObject();
+		System.out.println("jsonUser" + jsonUser);
+		JsonObject results = jsonElement.getAsJsonObject()
+				.get("results")
+				.getAsJsonArray()
+				.get(0)
+				.getAsJsonObject();
+		
+		System.out.println("results" + results);
 
 		
 		String name = results.get("nome").getAsString();
-		String registration = results.get("matricula").getAsString();
+		String username = results.get("matricula").getAsString();
 		JsonElement office = results.get("cargo_emprego");
 		
 		
-		User user = userService.findByRegistration(registration);
+		User user = userService.findByUserName(username);
 		
 		if(user==null) {
 			user = new User();
@@ -111,7 +121,7 @@ public class ConverterService {
 		}
 
 		user.setName(name);
-		user.setRegistration(registration);
+		user.setUsername(username);
 		user.setRoles(roles);
 		user.setDepartament(departament);
 		user.setPassword("password");

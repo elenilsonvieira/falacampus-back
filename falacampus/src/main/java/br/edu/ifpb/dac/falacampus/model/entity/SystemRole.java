@@ -18,10 +18,6 @@ public class SystemRole implements GrantedAuthority {
 	
 	private String name;
 
-	@Override
-	public String getAuthority() {
-		return name;
-	}
 
 	public Long getId() {
 		return id;
@@ -42,6 +38,11 @@ public class SystemRole implements GrantedAuthority {
 	@Override
 	public String toString() {
 		return "SystemRole [id=" + id + ", name=" + name + "]";
+	}
+
+	@Override
+	public String getAuthority() {
+		return getName();
 	}
 	
 	

@@ -9,6 +9,7 @@ import static org.mockito.Mockito.when;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.repository.AnswerRepository;
 
-class AnswerServiceTest2 {
+class AnswerServiceTest {
 	
 	@Mock
 	private AnswerRepository answerRepository;
@@ -40,9 +41,9 @@ class AnswerServiceTest2 {
 		
 		when(answerRepository.findAll()).thenReturn(answers);		
 		when(answers.size()).thenReturn(10);		
+		
 		assertEquals(10, answers.size());
-		verify(answerRepository.findAll()).size();//saber se o método findAll foi chamado durante
-												//a execução do teste
+		verify(answerRepository.findAll()).size();
 	}
 	
 	@Test
@@ -53,26 +54,25 @@ class AnswerServiceTest2 {
 	
 	@Test
 	void testFindById () { 
-		
 		assertThrows(IllegalStateException.class,
-				() -> answerService.findById(null));
+				() -> answerService.findById(1L));
 	}
 	
 	@Test
-	void testUpate() {
+	void testUpdate() {
 		when(answers.get(0)).thenReturn(new Answer(1l, "teste1", new Comment(), new User()));
 		when(answerRepository.save(any(Answer.class))).thenReturn(new Answer(1l, "updateteste1", new Comment(), new User()));
 		
-		String updateMessage = "updateteste1";
+		String upMessage = "updateteste1";
 		
 		Answer answer = answers.get(0);
-		answer.setMessage(updateMessage); 		
+		answer.setMessage(upMessage); 		
 		
 		Answer answerUpdate = answerRepository.save(answer);
 		String message = answerUpdate.getMessage();
 		
-		assertEquals(updateMessage, answerUpdate.getMessage()); 
+		assertEquals(upMessage, answerUpdate.getMessage()); 
 		
 	}
-
+	
 }

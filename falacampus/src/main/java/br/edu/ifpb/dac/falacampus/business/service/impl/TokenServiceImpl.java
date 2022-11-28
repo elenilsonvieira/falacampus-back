@@ -22,7 +22,7 @@ import io.jsonwebtoken.ExpiredJwtException;
 @Service
 public class TokenServiceImpl implements TokenService{
 	
-	public static final String CLAIM_USERID = "userid";
+	public static final String CLAIM_USERID = "userId";
 	public static final String CLAIM_USERNAME = "username";
 	public static final String CLAIM_EXPIRATION = "expirationTime";
 	
@@ -34,6 +34,7 @@ public class TokenServiceImpl implements TokenService{
 
 	@Override
 	public String generate(User user) {
+		
 		long expiration = Long.valueOf(this.expiration);
 		
 		LocalDateTime expirationLocalDateTime = LocalDateTime.now().plusMinutes(expiration);
@@ -42,8 +43,6 @@ public class TokenServiceImpl implements TokenService{
 		
 		String tokenExpiration = expirationLocalDateTime.toLocalTime()
 				.format(DateTimeFormatter.ofPattern("HH:mm"));
-		
-	
 		
 		String token = Jwts
 				.builder()
@@ -55,10 +54,13 @@ public class TokenServiceImpl implements TokenService{
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
 		return token;
+
+
 	}
 
 	@Override
 	public Claims getClaims(String token) throws ExpiredJwtException {
+
 		return Jwts
 				.parser()
 				.setSigningKey(secret)
@@ -71,23 +73,30 @@ public class TokenServiceImpl implements TokenService{
 	
 	@Override
 	public boolean isValid(String token) {
+		System.out.println("TOKEN IS VALID1 " +token);
 		
 		if(token == null) {
-						
 			return false;
 		}
+		System.out.println("TOKEN IS VALID2 " +token);
+
 		
 		try {
+			System.out.println("TOKEN IS VALID try1 " +token);
 			Claims claims = getClaims(token);
+			System.out.println("TOKEN IS VALID try2 " +token);
+
 			LocalDateTime expirationDate = claims.getExpiration().toInstant()
 			.atZone(ZoneId.systemDefault()).toLocalDateTime();
+			System.out.println("TOKEN IS VALID try3 " +token);
+
 			
-		
-			System.out.println("antes do return");
+			System.out.println("antes do return try");
 			return !LocalDateTime.now().isAfter(expirationDate);
 			
-		} catch (Exception e){
 			
+		} catch (Exception e){
+			System.out.println("exception do return");
 			e.printStackTrace();
 			return false;
 		}
@@ -96,7 +105,7 @@ public class TokenServiceImpl implements TokenService{
 	@Override
 	public String getUsername(String token) {
 		Claims claims = getClaims(token);
-		
+	
 		return (String) claims.get(CLAIM_USERNAME);
 	}
 

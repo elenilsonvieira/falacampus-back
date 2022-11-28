@@ -40,10 +40,10 @@ public class DepartamentService {
 	}
 
 	public Departament update(Departament departament) {
-		
 		Departament departamentUp = findById(departament.getId());
 		departamentUp.setName(departament.getName());
-		departamentUp.setId_responsible(departament.getId_responsible());
+		departamentUp.setResponsibleUsers(departament.getResponsibleUsers());
+
 		
 		return departamentRepository.save(departamentUp);
 	

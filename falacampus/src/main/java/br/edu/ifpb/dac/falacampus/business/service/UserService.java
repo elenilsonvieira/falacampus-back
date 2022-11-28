@@ -19,9 +19,9 @@ public interface UserService extends UserDetailsService {
 	public Iterable<User>findAll();
 	public Iterable<User>find(User filter);
 
-	public User findByName(String name);
+//	public User findByName(String name);
 	public User findByUserName(String username);
-	public User findByToken(String token);
-	public User findByRegistration(String username);
-	
+//	public User findByToken(String token);
+//	public User findByRegistration(String username);
+//	
 }
