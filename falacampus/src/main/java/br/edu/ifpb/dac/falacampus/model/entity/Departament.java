@@ -5,17 +5,23 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Departament implements Serializable {
@@ -32,29 +38,33 @@ public class Departament implements Serializable {
 	@Size(min = 2, max=100)
 	@Column(name = "departament_name")
 	private String name;
-	
 	 
 	@OneToMany(mappedBy = "departament")
 	private List<User> users = new ArrayList<>();
-	
 
+	
 	//------------
 	
-	private String id_responsible;
+//	@ManyToMany(fetch = FetchType.EAGER)
+//	private List<User> responsibleUsers;
+
+	@ManyToMany
+	@JoinTable(name = "departaments_responsibleUsers", joinColumns = @JoinColumn(name = "departament_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+	private List<User> responsibleUsers;
 	
 	private String acronymDepartment;
 	//------------
-	
-	
+
 
 	public Departament() {
 
 	}
 
-	public Departament(Long id, String name, List<User> users) {
+	public Departament(Long id, String name, List<User> users,List<User> responsibleUsers) {
 		this.id = id;
 		this.name = name;
 		this.users = users;
+		this.responsibleUsers = responsibleUsers;
 	}
 	
 	public Departament(Long id, String name) {
@@ -91,20 +101,19 @@ public class Departament implements Serializable {
 		this.users = users;
 	}
 	
+	
+	public List<User> getResponsibleUsers() {
+		return responsibleUsers;
+	}
+
+	public void setResponsibleUsers(List<User> responsibleUsers) {
+		this.responsibleUsers = responsibleUsers;
+	}
+
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
-	
-		
 
-
-	public String getId_responsible() {
-		return id_responsible;
-	}
-
-	public void setId_responsible(String id_responsible) {
-		this.id_responsible = id_responsible;
-	}
 
 	public String getAcronymDepartment() {
 		return acronymDepartment;
@@ -116,7 +125,7 @@ public class Departament implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(acronymDepartment, id, id_responsible, name, users);
+		return Objects.hash(acronymDepartment, id, name, responsibleUsers, users);
 	}
 
 	@Override
@@ -129,11 +138,13 @@ public class Departament implements Serializable {
 			return false;
 		Departament other = (Departament) obj;
 		return Objects.equals(acronymDepartment, other.acronymDepartment) && Objects.equals(id, other.id)
-				&& Objects.equals(id_responsible, other.id_responsible) && Objects.equals(name, other.name)
+				&& Objects.equals(name, other.name) && Objects.equals(responsibleUsers, other.responsibleUsers)
 				&& Objects.equals(users, other.users);
 	}
 
+	
 
+	
 
 	
 

@@ -1,5 +1,6 @@
-package br.edu.ifpb.dac.falacampus.presentation.control;
+ package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,7 +49,7 @@ public class DepartamentController {
 	
 //------------
 	@Autowired
-	private DepartamentConverterServiceImpl d;
+	private DepartamentConverterServiceImpl departamentConverterServiceImpl;
 
 //	@Autowired
 //	private UserConverterService userConverterService;
@@ -87,15 +88,20 @@ public class DepartamentController {
 			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
 			
-			if(departament.getId_responsible() != null) {
-				
-				User o = userS.findById(Long.parseLong(departament.getId_responsible()));
-				if(o==null) {
-					throw new NullPointerException("Id do usuario não encontrado");
+			ArrayList<User> users = new ArrayList<>();
+
+			if(dto.getResponsibleUsers() != null) {
+				for (String user : dto.getResponsibleUsers()) {
+					User o = userS.findById(Long.parseLong( user));
+					if(o==null) {
+						throw new NullPointerException("Id do usuario não encontrado");
+					}else {
+					users.add(o);
+					}
 				}
 			}
+			departament.setResponsibleUsers(users);
 			departament = departamentService.update(departament);
-
 			dto = departamentConvertService.departamentToDTO(departament);
 
 			return ResponseEntity.ok(dto);
@@ -218,17 +224,7 @@ public class DepartamentController {
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
 	//	d.SaveAllDepartments("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3Mzg3ODksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2NTIzODl9.kpMxqcdH9cmmi6jhRIJlKec3k9pI8pBu_3crbYq1RyI");
-		d.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/a");
+		departamentConverterServiceImpl.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/a");
 	}
-
-////~~~~~~~~~~~~~teste
-//	@GetMapping("/getdep")
-//	private List<Departament> getDep() {
-//		String url = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/?format=json\\";  
-//		RestTemplate restTemplate = new RestTemplate();
-//		
-//		Departament[] result = restTemplate.getForObject(url, Departament[].class);
-//		//return Arrays.asList(result);
-//		return (List<Departament>) new ResponseEntity<Departament>(HttpStatus.OK);
-//	}
+	
 }

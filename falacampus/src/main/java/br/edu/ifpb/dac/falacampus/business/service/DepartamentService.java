@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.falacampus.business.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
+import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.repository.DepartamentRepository;
 
 @Service
@@ -40,12 +42,14 @@ public class DepartamentService {
 	}
 
 	public Departament update(Departament departament) {
-		
 		Departament departamentUp = findById(departament.getId());
 		departamentUp.setName(departament.getName());
-		departamentUp.setId_responsible(departament.getId_responsible());
+		departamentUp.setResponsibleUsers(departament.getResponsibleUsers());
 		
-		return departamentRepository.save(departamentUp);
+		
+
+		
+		return departamentRepository.save(departament);
 	
 	}
 

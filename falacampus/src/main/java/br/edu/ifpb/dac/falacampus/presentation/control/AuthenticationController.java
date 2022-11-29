@@ -1,9 +1,12 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,7 +32,7 @@ public class AuthenticationController {
 	@Autowired
 	private AuthenticationService authenticationService;
 	@Autowired
-	private UserConverterService userConverterService; // private ConverterSystemUser converterSystemUser;
+	private UserConverterService userConverterService;
 	@Autowired
 	private UserService userService;
 	@Autowired
@@ -37,10 +40,8 @@ public class AuthenticationController {
 
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
-
 		try {
 			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
-	
 			
 			User entity = userService.findByUserName(dto.getUsername());
 					
@@ -50,7 +51,7 @@ public class AuthenticationController {
 			
 			return new ResponseEntity(tokenDto, HttpStatus.OK);
 			
-		} catch (Exception e) {
+		} catch (AuthenticationException e) {
 			e.printStackTrace();
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

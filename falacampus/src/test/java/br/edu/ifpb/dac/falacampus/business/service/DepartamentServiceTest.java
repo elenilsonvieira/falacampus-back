@@ -1,89 +1,105 @@
 package br.edu.ifpb.dac.falacampus.business.service;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
-import java.util.ArrayList;
+import java.util.List;
 
-import org.hibernate.mapping.List;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
+import org.mockito.Mock;
+import org.mockito.Spy;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.CrudRepository;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
-
 import br.edu.ifpb.dac.falacampus.model.repository.DepartamentRepository;
-import br.edu.ifpb.dac.falacampus.presentation.control.DepartamentController;
 
 class DepartamentServiceTest {
 	
-	@Autowired
-	private DepartamentService departamentService;
-
-	@Autowired
+	@Mock
 	private DepartamentRepository departamentRepository;
 	
-	@Autowired
-	private Departament departament;
+	@Mock
+	private DepartamentService departamentService = new DepartamentService();
 	
-	@Autowired
-	private User user;
+	@Mock
+	private List<Departament> departaments;
 	
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
-	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
+	@Spy
+	private List<User> usersSpy;
+	
+	@Captor
+	private ArgumentCaptor<User> argCaptor;
+	
 	@BeforeEach
-	void setUp() throws Exception {
-		departament = new Departament();
-		ArrayList<User> users = new ArrayList<>();
-		user = new User();
-		
-		user.setId(1L);
-		user.setName("Maria");
-		user.setEmail("maria@email.com");
-		user.setRegistration("12345L");
-		user.setPassword("12345678");
-		//user.setRole(Role.STUDENTS);
-		user.setDepartament(departament);
-		
-		users.add(user);
-		
-		departament.setId(1L);
-		departament.setName("Biblioteca");
-		departament.setUsers(users);
-	    
+	public void before() {
+		this.departamentRepository =  mock(DepartamentRepository.class);
+		this.departaments =  mock(List.class);	
+		this.departamentService = mock(DepartamentService.class);
 	}
-
-	@AfterEach
-	void tearDown() throws Exception {
+ 
+	@Test
+	void testFindAllService() {
+		when(departamentRepository.findAll()).thenReturn(departaments);		
+		when(departaments.size()).thenReturn(10);		
+		assertEquals(10, departaments.size());
+		verify(departamentRepository.findAll()).size(); 													
+	}
+	
+	@Test
+	void testDeleteById() {
+		doThrow(new IllegalStateException()).when(departamentService).deleteById(null);
+		assertDoesNotThrow(() -> departamentService.deleteById(null));
+	}
+	
+	@Test
+	void testFindById () { 
+		doThrow(new IllegalStateException()).when(departamentService).findById(null);
+		assertDoesNotThrow(() -> departamentService.findById(9L));
 	}
 
 	@Test
-	 void cadastroTest() {
-		departamentService.save(departament);
-
-	    Departament dep = departamentRepository.findAll().stream()
-	        .filter(depar -> depar.getName().equals("Biblioteca")).findFirst().get();
-
-	    assertEquals("1L", dep.getId());
-	    assertEquals("Biblioteca", dep.getName());
-	    assertEquals("1L", user.getId());
-	    assertEquals("Maria", user.getName());
-	    assertEquals("maria@email.com",user.getEmail());
-	    assertEquals(12345L,user.getRegistration());
-	    assertEquals("12345678",user.getPassword());
-	   // assertEquals(Role.STUDENTS,user.getRole());
-	    assertEquals(departament,user.getDepartament());
-	    
-	    
-	  }
+	void testUpdate() {
+		when(departaments.get(0)).thenReturn(new Departament (1l, "Coordenação de ADS")); 
+		
+		when(departamentRepository.save(any(Departament.class))).thenReturn(new Departament(1l, "Biblioteca"));
+		
+		String updatedDepartamentName ="Biblioteca";
+		
+		Departament departament = departaments.get(0);
+		departament.setName(updatedDepartamentName);		
+		
+		Departament departamentUpdate = departamentRepository.save(departament);
+		String name = departamentUpdate.getName();
+		
+		assertEquals(updatedDepartamentName, departamentUpdate.getName());
+	}
+	
+	@Test
+	void testSaveDepartament() {
+		
+		Departament d = new Departament(1L, "Dep 1");
+		d.setUsers(usersSpy);
+		
+		departamentService.save(d);
+		
+		verify(departamentService, times(1)).save(d);
+		
+		assertEquals(usersSpy, d.getUsers());
+//		verifyNoInteractions(departamentService); //verifica se há outras chamadas além das que chamei
+	}
+	
 
 }

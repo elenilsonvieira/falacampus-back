@@ -15,7 +15,7 @@ public interface SystemRoleService {
 
 	public SystemRole findDefault();
 	
-	
+	public SystemRole findAdmin();
 	
 
 }

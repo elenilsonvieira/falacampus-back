@@ -27,10 +27,7 @@ public class UserDto {
 	
 	@NotNull
 	private String username;
-	
-//	@NotNull
-//	private Role role = Role.STUDENTS;
-//	
+		
 	@NotBlank
 	//@Size(min=8, max=30)
 	private String password;

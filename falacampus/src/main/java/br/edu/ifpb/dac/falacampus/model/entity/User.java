@@ -23,6 +23,8 @@ import javax.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import lombok.ToString;
+
 @Entity
 @Table(name = "UserSystem")
 public class User implements UserDetails {
@@ -64,6 +66,9 @@ public class User implements UserDetails {
 	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<SystemRole> roles = new ArrayList<>();
+	
+	@ManyToMany(mappedBy = "responsibleUsers")
+	private List<Departament> responsable;
 	
 	
 	public User() {
@@ -183,6 +188,11 @@ public class User implements UserDetails {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "Username: "+ getUsername()+ "   "+ 
+				"Nome: " + getName();
+	}
 
 
 }

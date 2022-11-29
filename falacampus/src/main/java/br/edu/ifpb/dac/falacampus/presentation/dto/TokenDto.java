@@ -26,5 +26,10 @@ public class TokenDto {
 
 	public void setUser(UserDto user) {
 		this.user = user;
-	}	
+	}
+	
+	@Override
+	public String toString() {
+		return "Username: "+user.getUsername();
+	}
 }

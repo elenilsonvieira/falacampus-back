@@ -1,9 +1,7 @@
 package br.edu.ifpb.dac.falacampus.model.entity;
 
 import static org.hamcrest.CoreMatchers.containsString;
-import static org.hamcrest.CoreMatchers.either;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
@@ -13,71 +11,83 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
+import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 
+import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.ClassOrderer.OrderAnnotation;
+
 import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.DynamicTest;
-import org.junit.jupiter.api.Nested;
-import org.junit.jupiter.api.Order;
+
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestClassOrder;
-import org.junit.jupiter.api.TestFactory;
+
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.converter.ConvertWith;
-import org.junit.jupiter.params.provider.EnumSource;
+
 import org.junit.jupiter.params.provider.ValueSource;
 import org.junit.platform.commons.annotation.Testable;
-import org.mockito.Mock;
+import org.junit.runner.OrderWith;
+import org.junit.runners.MethodSorters;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import br.edu.ifpb.dac.falacampus.model.repository.UserRepository;
-import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
 @Testable
+@FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @DisplayName("User")
-@TestClassOrder(org.junit.jupiter.api.ClassOrderer.OrderAnnotation.class)
 class UserTest {
-//testes
+	
 	@Autowired
 	private static Validator validator;
-	private User user;
-	 
-	// teste de email sem caracter, no caso email invalido
-
-	@ValueSource(strings = { "", "    ", " \t " })
-	void testEmailWithoutCharacters(String email) {
-		user.setEmail(email);
-
-		Set<ConstraintViolation<User>> violations = validator.validateProperty(user, "email");
-		assertNotEquals(0, violations.size(), () -> "Valid email");
-
-		ConstraintViolation<User> constraintViolation = violations.iterator().next();
-		assertTrue(constraintViolation.getPropertyPath().toString().contains("email"));
-		assertThat(constraintViolation.getMessageTemplate(), containsString("NotEmpty"));
+	
+	@Autowired
+	private static User user;
+	
+	@BeforeAll
+	static void setUp() {
+		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+	    validator = factory.getValidator();
+	    
+	    user = new User();
+		user.setName("Aaaaa");
+		user.setEmail("email@email.com");
+		user.setUsername("1");
+		user.setDepartament(new Departament());
+		user.setPassword("12345678");
 	}
-
-	// test se a senha e valida
-	@ValueSource(strings = { "eeeee", "efrrrgtrstuvwxyzABCD", "d43b*C3**" })
-	void testPasswordValid(String password) {
+	
+	@ParameterizedTest
+	@ValueSource(strings = {"T", "Th","Thallyta Maria Medeiros xxxxxxxxxxxxxxxxxxxxxxxxx51", ""})
+//	@ValueSource(strings = { "Th"})
+	void nameTest(String name) {
+		user.setName(name);
+		
+		Set<ConstraintViolation<User>> validacoes = validator.validateProperty(user, "name");		
+		
+		assertEquals(0, validacoes.size());
+		
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = {"thallyta@email.com", "@email", "thallytaemail.com", ""})
+//	@ValueSource(strings = {"thallyta@email.com"})
+	void emailTest(String email) {
+	
+		user.setEmail(email);
+		
+		Set<ConstraintViolation<User>> validacoes = validator.validateProperty(user, "email");
+		
+		assertTrue(validacoes.isEmpty());	
+	}
+	
+	@ParameterizedTest
+	@ValueSource(strings = { "1234567", "efrrrgtrstuvwxyzABC21", "d43b*C3**",""})
+//	@ValueSource(strings = { "d43b*C3**"})
+	void passwordValidTest(String password) {
 		user.setPassword(password);
 
 		Set<ConstraintViolation<User>> violations = validator.validateProperty(user, "password");
-		assertEquals(0, violations.size(), () -> "Invalid password");
-	}
 
-	@Test
-	@DisplayName("╯°□°）╯")
-	void testNameCharacters() {
+		assertEquals(0, violations.size());
 	}
-
-	@Test
-	@DisplayName("😱")
-	void testNameContainingEmoji() {
-	}
-	
 
 }
