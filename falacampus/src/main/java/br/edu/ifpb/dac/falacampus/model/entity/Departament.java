@@ -13,12 +13,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 @Entity
 public class Departament implements Serializable {
@@ -42,9 +45,11 @@ public class Departament implements Serializable {
 	
 	//------------
 	
-//	private String id_responsible;
-	
-	@OneToMany(fetch = FetchType.EAGER)
+//	@ManyToMany(fetch = FetchType.EAGER)
+//	private List<User> responsibleUsers;
+
+	@ManyToMany
+	@JoinTable(name = "departaments_responsibleUsers", joinColumns = @JoinColumn(name = "departament_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> responsibleUsers;
 	
 	private String acronymDepartment;
@@ -55,10 +60,11 @@ public class Departament implements Serializable {
 
 	}
 
-	public Departament(Long id, String name, List<User> users) {
+	public Departament(Long id, String name, List<User> users,List<User> responsibleUsers) {
 		this.id = id;
 		this.name = name;
 		this.users = users;
+		this.responsibleUsers = responsibleUsers;
 	}
 	
 	public Departament(Long id, String name) {

@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.falacampus.business.service.impl;
+package br.edu.ifpb.dac.falacampus.model.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,7 +26,7 @@ import br.edu.ifpb.dac.falacampus.model.repository.UserRepository;
 
 @AutoConfigureMockMvc
 @SpringBootTest
-class UserRepositoryTest {
+class UserRepositoryIntegrationTest {
 	
 	@Autowired
 	private UserRepository userRepository;

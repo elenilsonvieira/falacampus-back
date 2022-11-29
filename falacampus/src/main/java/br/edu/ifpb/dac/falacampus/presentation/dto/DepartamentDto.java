@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.falacampus.presentation.dto;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,7 +19,7 @@ public class DepartamentDto {
 	private String name;
 
 	//------------
-	private List<User> responsibleUsers;
+	private List<String> responsibleUsers;
 	
 	private String acronymDepartment;
 	//------------
@@ -29,7 +30,9 @@ public class DepartamentDto {
 		
 	}
 
-//	public DepartamentDto(Departament departament) {
+	public DepartamentDto(Departament departament) {
+	
+	}
 //		this.id = departament.getId();
 //		this.name = departament.getName();
 //		this.responsibleUsers = departament.getResponsibleUsers();
@@ -53,11 +56,11 @@ public class DepartamentDto {
 		this.name = name;
 	}
 
-	public List<User> getResponsibleUsers() {
+	public List<String> getResponsibleUsers() {
 		return responsibleUsers;
 	}
 
-	public void setResponsibleUsers(List<User> responsibleUsers) {
+	public void setResponsibleUsers(List<String> responsibleUsers) {
 		this.responsibleUsers = responsibleUsers;
 	}
 
@@ -69,5 +72,7 @@ public class DepartamentDto {
 		this.acronymDepartment = acronymDepartment;
 	}
 
-
+	public static List<DepartamentDto> toConvert(List<Departament> departaments){
+		return departaments.stream().map(DepartamentDto:: new).collect(Collectors.toList());
+	}
 }

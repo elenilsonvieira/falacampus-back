@@ -38,7 +38,7 @@ public class UserController {
 	private UserService userService;
 	@Autowired
 	private DepartamentService departamentService;
-	
+	 
 	//SAVE
 	@PostMapping
 	public ResponseEntity save(@RequestBody UserDto dto) {

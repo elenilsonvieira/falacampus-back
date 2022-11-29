@@ -66,6 +66,7 @@ public class UserServiceImpl implements UserService {
 		userUp.setUsername(user.getUsername());
 		userUp.setName(user.getName());
 		userUp.setDepartament(user.getDepartament());
+		
 		List<SystemRole> roles = new ArrayList<>();
 		
 		if(user.getRoles().get(0).getName().equals("ADMIN")) {
@@ -77,7 +78,8 @@ public class UserServiceImpl implements UserService {
 		
 		
 		user.setRoles(roles);
-			
+		
+		
 		return userRepository.save(user);
 	}
 	

@@ -53,6 +53,17 @@ class UserControllerTest {
 		assertEquals("Thallyta Maria Medeiros Silva Pereira", user.getName());
 		
 	}
+	
+	@Test
+	void findByFilterHttpTest() throws Exception {
+		user = userController.findById(1L);
+		ResponseEntity<String> response = userController.findByFilter(1L, user.getName(), user.getEmail(), user.getUsername());
+
+		assertEquals(HttpStatus.OK, response.getStatusCode());
+
+		assertEquals("Thallyta Maria Medeiros Silva Pereira", user.getName());
+		
+	}
 	@Test
 	void saveHttpTest() {
 		user.setDepartament(new Departament("Dep 1"));
@@ -66,6 +77,16 @@ class UserControllerTest {
 //		
 //		assertDoesNotThrow(() -> userController.save(userDto));
 
+	}
+	
+	@Test
+	void deleteHttpTest() {
+		user.setDepartament(new Departament("Dep 1"));
+		UserDto userDto = new UserDto(user);
+
+		ResponseEntity<String> response = userController.delete(user.getId());
+		System.out.println(response);
+		assertEquals(HttpStatus.NO_CONTENT, response.getStatusCode());
 	}
 	@Test
 	void saveTest() {

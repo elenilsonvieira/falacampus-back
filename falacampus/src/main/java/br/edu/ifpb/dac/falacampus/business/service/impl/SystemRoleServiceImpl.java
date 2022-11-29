@@ -13,7 +13,6 @@ import br.edu.ifpb.dac.falacampus.model.repository.SystemRoleRepository;
 @Service
 public class SystemRoleServiceImpl implements SystemRoleService{
 	
-	
 	@Autowired
 	private SystemRoleRepository systemRoleRepository;
 
@@ -48,12 +47,10 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 					
 		return findByName(AVAILABLE_ROLES.STUDENTS.name());
 	}
-	
+
 	@Override
 	public SystemRole findAdmin() {
-		
 		return findByName(AVAILABLE_ROLES.ADMIN.name());
 	}
-
 
 }
