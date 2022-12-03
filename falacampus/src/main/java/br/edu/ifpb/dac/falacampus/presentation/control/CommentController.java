@@ -44,7 +44,6 @@ import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
-import br.edu.ifpb.dac.falacampus.presentation.dto.CommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 
 @RestController
@@ -149,7 +148,7 @@ public class CommentController {
 			filter.setCreationDate(creationDate);
 			
 			List<Comment> entities = commentService.find(filter);
-			List<CommentDto> dtos = commentConverterService.commentToDTOList(entities);
+			List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(entities);
 			return ResponseEntity.ok(dtos);
 
 		} catch (Exception e) {

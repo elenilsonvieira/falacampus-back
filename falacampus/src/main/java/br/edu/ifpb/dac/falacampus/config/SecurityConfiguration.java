@@ -94,6 +94,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 		//Liberando acesso aos endpoints publicos
 		http.csrf().disable().authorizeRequests().requestMatchers(CorsUtils::isPreFlightRequest).permitAll()
 				.antMatchers(HttpMethod.GET, "/actuator/**").permitAll()
+				
+				.antMatchers(HttpMethod.POST, "/user").permitAll()
+				.antMatchers(HttpMethod.POST, "/api/user").permitAll()
+				
 				.antMatchers(HttpMethod.POST, "/api/login").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/isValidToken").permitAll()
 				.antMatchers(HttpMethod.POST, "/api/user").permitAll()
