@@ -38,6 +38,7 @@ import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
 import br.edu.ifpb.dac.falacampus.config.ConfigPagination;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
+import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;
 import br.edu.ifpb.dac.falacampus.exceptions.NotFoundException;
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
@@ -111,18 +112,15 @@ public class CommentController {
 	}
 
 	@DeleteMapping("{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id, @RequestBody @Valid DetailsCommentDto dto) {
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-			
-			dto.setId(id);
-			Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto);
+			Comment entity = findById(id);
 			
 			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
 				commentService.deleteById(id);
 			} else {
-				throw new CommentCannotUpdateException();
-			}
-			 
+				throw new CommentSolvedException("Comment is solved, cannot deleted");
+				}
 
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
