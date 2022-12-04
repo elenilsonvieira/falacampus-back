@@ -2,8 +2,8 @@ package br.edu.ifpb.dac.falacampus.exceptions;
 
 public class CommentSolvedException extends Exception {
 	
-	public CommentSolvedException(String message){
-        super(message);
+	public CommentSolvedException(){
+		 super(String.format("Comment solved, cannot be deleted!"));
     }
 
     @Override

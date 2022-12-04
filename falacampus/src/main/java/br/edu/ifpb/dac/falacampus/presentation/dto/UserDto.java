@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
+import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 
@@ -36,6 +37,8 @@ public class UserDto {
 	private Long departamentId;
 	
 	private List<SystemRole> roles = new ArrayList<>();
+	
+	private List<String> responsable = new ArrayList<>();;
 	
 	public UserDto() {
 		
@@ -101,5 +104,15 @@ public class UserDto {
 	public void setDepartamentId(Long departamentId) {
 		this.departamentId = departamentId;
 	}
+
+	public List<String> getResponsable() {
+		return responsable;
+	}
+
+	public void setResponsable(List<String> responsable) {
+		this.responsable = responsable;
+	}
+	
+	
 
 }

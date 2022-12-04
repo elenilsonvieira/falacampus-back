@@ -16,20 +16,10 @@ class DepartamentServiceIntregrationTest {
 	@Autowired
 	private DepartamentService departamentService;
 
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-	
-	@Test
-	void test() {
-	      assertNotNull(departamentService);
-
-	}
 
 	@Test
 	void returnUsernameTest() {
 		Departament dep = departamentService.findByName("502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
-		System.out.print(dep.getResponsibleUsers().get(0).getName());
 		assertEquals(1L, dep.getId());
 		assertEquals("502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)", dep.getName());
 

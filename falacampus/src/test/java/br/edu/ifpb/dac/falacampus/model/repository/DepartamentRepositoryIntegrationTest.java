@@ -31,7 +31,7 @@ class DepartamentRepositoryIntegrationTest {
 	@Test
 	void returnUsernameTest() {
 		Departament dep = departamentRepository.findByName("502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
-		System.out.print(dep.getResponsibleUsers().get(0).getName());
+		
 		assertEquals(1L, dep.getId());
 		assertEquals("502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)", dep.getName());
 

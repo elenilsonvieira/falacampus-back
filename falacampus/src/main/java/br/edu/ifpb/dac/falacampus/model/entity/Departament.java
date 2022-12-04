@@ -142,6 +142,12 @@ public class Departament implements Serializable {
 				&& Objects.equals(users, other.users);
 	}
 
+	@Override
+	public String toString() {
+		return "Departament [id=" + id + ", name=" + name + ", users=" + users + ", responsibleUsers="
+				+ responsibleUsers + ", acronymDepartment=" + acronymDepartment + "]";
+	}
+
 	
 
 	

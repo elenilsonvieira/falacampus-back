@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
-import br.edu.ifpb.dac.falacampus.presentation.dto.CommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 
 @Service
@@ -33,12 +32,12 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-	public Comment saveCommentDto(CommentDto commentDto){
-		
-		Comment comment = mapper.map(commentDto, Comment.class);		
-		return commentRepository.save(comment);
-		
-	}
+//	public Comment saveCommentDto(CommentDto commentDto){
+//		
+//		Comment comment = mapper.map(commentDto, Comment.class);		
+//		return commentRepository.save(comment);
+//		
+//	}
 	
 	public void deleteById(Long id) {
 		Comment comment = findById(id);
@@ -54,17 +53,17 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-	public Comment updateCommentDto(Long id, CommentDto commentDto) {
-		
-		if(id == null) {
-			throw new IllegalStateException("Id cannot be null");
-		}
-		
-		Comment commentUpdate = mapper.map(commentDto, Comment.class);
-		commentUpdate.setId(id);
-		
-		return commentRepository.save(commentUpdate);
-	}	
+//	public Comment updateCommentDto(Long id, CommentDto commentDto) {
+//		
+//		if(id == null) {
+//			throw new IllegalStateException("Id cannot be null");
+//		}
+//		
+//		Comment commentUpdate = mapper.map(commentDto, Comment.class);
+//		commentUpdate.setId(id);
+//		
+//		return commentRepository.save(commentUpdate);
+//	}	
 	
 	public Comment findById(Long id) {
 		if(id == null) {

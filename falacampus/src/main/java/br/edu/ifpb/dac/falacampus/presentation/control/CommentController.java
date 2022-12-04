@@ -38,13 +38,13 @@ import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
 import br.edu.ifpb.dac.falacampus.config.ConfigPagination;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
+import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;
 import br.edu.ifpb.dac.falacampus.exceptions.NotFoundException;
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
-import br.edu.ifpb.dac.falacampus.presentation.dto.CommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 
 @RestController
@@ -111,17 +111,35 @@ public class CommentController {
 
 	}
 
+//	@DeleteMapping("{id}")
+//	public ResponseEntity delete(@PathVariable("id") Long id, @RequestBody @Valid DetailsCommentDto dto) {
+//		try {
+//			
+//			dto.setId(id);
+//			Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto);
+//			
+//			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
+//				commentService.deleteById(id);
+//			} else {
+//				throw new CommentCannotUpdateException();
+//			}
+//			 
+//
+//			return new ResponseEntity(HttpStatus.NO_CONTENT);
+//		} catch (Exception e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//
+//	}
 	@DeleteMapping("{id}")
-	public ResponseEntity delete(@PathVariable("id") Long id, @RequestBody @Valid DetailsCommentDto dto) {
+	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-			
-			dto.setId(id);
-			Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto);
+			Comment entity = findById(id);
 			
 			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
 				commentService.deleteById(id);
 			} else {
-				throw new CommentCannotUpdateException();
+				throw new CommentSolvedException();
 			}
 			 
 
@@ -149,7 +167,7 @@ public class CommentController {
 			filter.setCreationDate(creationDate);
 			
 			List<Comment> entities = commentService.find(filter);
-			List<CommentDto> dtos = commentConverterService.commentToDTOList(entities);
+			List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(entities);
 			return ResponseEntity.ok(dtos);
 
 		} catch (Exception e) {

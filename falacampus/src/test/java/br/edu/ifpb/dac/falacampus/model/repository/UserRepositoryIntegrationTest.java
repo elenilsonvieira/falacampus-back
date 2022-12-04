@@ -43,13 +43,13 @@ class UserRepositoryIntegrationTest {
 
 	@Test
 	void returnUsernameTest() {
-		Optional<User> optional = userRepository.findByUsername("202025020004");
+		Optional<User> optional = userRepository.findByUsername("202015020032");
 		
 		assertTrue(optional.isPresent());
 		
 		User user = optional.get();
 		assertEquals(1L, user.getId());
-		assertEquals("Thallyta Maria Medeiros Silva Pereira", user.getName());
+		assertEquals("Tarcizo Leite Monteiro Filho", user.getName());
 		assertEquals("email@ifpb.edu.br", user.getEmail());
 	}
 
