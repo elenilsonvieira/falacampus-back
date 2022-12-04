@@ -148,7 +148,6 @@ public class CommentController {
 			List<Comment> entities = commentService.find(filter);
 			List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(entities);
 			return ResponseEntity.ok(dtos);
-
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
