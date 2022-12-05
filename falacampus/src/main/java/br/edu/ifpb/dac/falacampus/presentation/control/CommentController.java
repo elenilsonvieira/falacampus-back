@@ -1,6 +1,7 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -111,26 +112,6 @@ public class CommentController {
 
 	}
 
-//	@DeleteMapping("{id}")
-//	public ResponseEntity delete(@PathVariable("id") Long id, @RequestBody @Valid DetailsCommentDto dto) {
-//		try {
-//			
-//			dto.setId(id);
-//			Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto);
-//			
-//			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
-//				commentService.deleteById(id);
-//			} else {
-//				throw new CommentCannotUpdateException();
-//			}
-//			 
-//
-//			return new ResponseEntity(HttpStatus.NO_CONTENT);
-//		} catch (Exception e) {
-//			return ResponseEntity.badRequest().body(e.getMessage());
-//		}
-//
-//	}
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
@@ -139,9 +120,8 @@ public class CommentController {
 			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
 				commentService.deleteById(id);
 			} else {
-				throw new CommentSolvedException();
-			}
-			 
+				throw new CommentSolvedException("Comment is solved, cannot deleted");
+				}
 
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 		} catch (Exception e) {
@@ -169,7 +149,6 @@ public class CommentController {
 			List<Comment> entities = commentService.find(filter);
 			List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(entities);
 			return ResponseEntity.ok(dtos);
-
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -202,6 +181,18 @@ public class CommentController {
 		} else {
 			return result;	
 		}
+	}
+	@GetMapping("/commentSolved")
+	public ResponseEntity<?> findSolved() throws Exception {
+
+		List<DetailsCommentDto> dtos = commentService.findAll().stream().map(this::mapToDetailsCommentDto).toList();
+		List<DetailsCommentDto> dtosSolved = new ArrayList<>();
+		for (DetailsCommentDto commentDto : dtos) {
+			if (commentDto.getStatusComment()== StatusComment.SOLVED)
+				dtosSolved.add(commentDto);
+		}
+			
+		return ResponseEntity.ok(dtosSolved);
 	}
 	
 //	@GetMapping(value = "/sortByName")
