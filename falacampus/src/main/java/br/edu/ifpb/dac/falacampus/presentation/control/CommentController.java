@@ -1,6 +1,7 @@
 package br.edu.ifpb.dac.falacampus.presentation.control;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -210,6 +211,19 @@ public class CommentController {
 
 	    Page<Comment> commentPage = commentRepository.findAll(pageable);
 	    return new ConfigPagination(commentPage);
+	}
+	
+	@GetMapping("/commentSolved")
+	public ResponseEntity<?> findSolved() throws Exception {
+
+		List<DetailsCommentDto> dtos = commentService.findAll().stream().map(this::mapToDetailsCommentDto).toList();
+		List<DetailsCommentDto> dtosSolved = new ArrayList<>();
+		for (DetailsCommentDto commentDto : dtos) {
+			if (commentDto.getStatusComment()== StatusComment.SOLVED)
+				dtosSolved.add(commentDto);
+		}
+			
+		return ResponseEntity.ok(dtosSolved);
 	}
 	
 }
