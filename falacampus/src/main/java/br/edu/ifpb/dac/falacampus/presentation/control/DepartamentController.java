@@ -223,7 +223,6 @@ public class DepartamentController {
 //////-------------
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
-	//	d.SaveAllDepartments("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NjY3Mzg3ODksImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NjY2NTIzODl9.kpMxqcdH9cmmi6jhRIJlKec3k9pI8pBu_3crbYq1RyI");
 		departamentConverterServiceImpl.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/a");
 	}
 	

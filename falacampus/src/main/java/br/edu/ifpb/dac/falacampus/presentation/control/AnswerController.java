@@ -189,4 +189,21 @@ public class AnswerController {
 		}
 	}
 	
+	
+//	@GetMapping("/{id}")
+//	public ResponseEntity findById(@PathVariable Long id) throws Exception{
+//		
+//		try {
+//			Answer entity = answerService.findById(id);
+//			AnswerDto dto = answerConverterService.answerToDTO(entity);
+//			
+//			
+//			return ResponseEntity.ok(dto);
+//		
+//		} catch(Exception e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//	}	
+	
+	
 }

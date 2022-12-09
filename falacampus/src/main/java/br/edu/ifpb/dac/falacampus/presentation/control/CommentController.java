@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import javax.security.auth.login.LoginContext;
 import javax.validation.Valid;
 
 import org.modelmapper.ModelMapper;
@@ -37,6 +38,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifpb.dac.falacampus.business.service.CommentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
+import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.config.ConfigPagination;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;
@@ -47,6 +49,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -69,6 +72,8 @@ public class CommentController {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	private UserDto user;
 
 
 	// SAVE
@@ -194,6 +199,20 @@ public class CommentController {
 			
 		return ResponseEntity.ok(dtosSolved);
 	}
+//	
+//	@GetMapping("/commentUser")
+//	public ResponseEntity<?> findCommentsUser() throws Exception {
+//		
+//		List<DetailsCommentDto> dtos = commentService.findAll().stream().map(this::mapToDetailsCommentDto).toList();
+//		List<DetailsCommentDto> dtosSolved = new ArrayList<>();
+//		for (DetailsCommentDto commentDto : dtos) {
+//			if (commentDto.getAuthorId().equals(user.getId()))
+//				System.out.println(user.getId());
+//				dtosSolved.add(commentDto);
+//		}
+//			
+//		return ResponseEntity.ok(dtosSolved);
+//	}
 	
 //	@GetMapping(value = "/sortByName")
 //	public ResponseEntity<List<Comment>> findOrderByName() throws Exception {

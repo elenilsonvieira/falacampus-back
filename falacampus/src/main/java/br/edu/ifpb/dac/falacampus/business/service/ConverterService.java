@@ -42,7 +42,7 @@ public class ConverterService {
 
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
-		
+
 		String token = jsonElement.getAsJsonObject().get("token").getAsString();
 		return token;
 	}
@@ -57,15 +57,12 @@ public class ConverterService {
 	public User jsonToUser(String jsonUser) {
 
 		JsonElement jsonElement = JsonParser.parseString(jsonUser);
-		System.out.println("jsonUser" + jsonUser);
 		JsonObject results = jsonElement.getAsJsonObject()
 				.get("results")
 				.getAsJsonArray()
 				.get(0)
 				.getAsJsonObject();
 		
-		System.out.println("results" + results);
-
 		
 		String name = results.get("nome").getAsString();
 		String username = results.get("matricula").getAsString();
@@ -114,10 +111,7 @@ public class ConverterService {
 			} else {
 				departament = findByNameDepartament;
 			}
-			// List<Departament> find = departamentService.find(new Departament(1l,
-			// "Departamento Estudantil"));
-			// user.setDepartament(find.get(0));
-			// departament = find.get(0);
+	
 		}
 
 		user.setName(name);

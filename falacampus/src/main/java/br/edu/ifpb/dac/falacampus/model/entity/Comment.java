@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -23,7 +24,9 @@ import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import br.edu.ifpb.dac.falacampus.exceptions.ExistingResponseException;
 import br.edu.ifpb.dac.falacampus.model.enums.CommentType;
@@ -77,7 +80,8 @@ public class Comment implements Serializable {
 	@JoinColumn(name = "departament_id")
 	private Departament departament;
 	
-	@OneToOne
+//	@JsonManagedReference
+	@OneToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "answer_id")
 	private Answer answer;
 	

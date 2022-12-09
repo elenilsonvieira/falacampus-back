@@ -70,20 +70,21 @@ public class SuapServiceImpl implements SuapService {
 		
 		String result = findEmployee(token, username);
 		if(result.contains("\"count\":0")) {
-//		if(result == null) {
 			result = findStudent(token, username);
 		}
 		return result;
 	}
 	
-private String find(String token, String findUrl) {
+	private String find(String token, String findUrl) {
+		System.out.println("TOKEN FIND"+token);	
+		System.out.println("URL FIND"+findUrl);	
 		
+	
 		try {
 			HttpRequest url = generateGetUrl(findUrl,
-				//	Map.of(TOKEN_HEADER_NAME,TOKEN_HEADER_VALUE));					
 				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)));
 			
-			
+			System.out.println("URL "+url.headers());
 			return sendRequest(url);
 		} catch (URISyntaxException e) {
 			e.getMessage();
@@ -162,7 +163,6 @@ private String find(String token, String findUrl) {
 		
 		HttpClient httpClient = HttpClient.newHttpClient();
 		String response = httpClient.send(httpRequest,HttpResponse.BodyHandlers.ofString()).body();
-
 		return response;
 	}
 
@@ -171,12 +171,13 @@ private String find(String token, String findUrl) {
 	@Override
 	@Lazy
 	public String findAllDepartament(String url) {
-	String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3Njk1NCwidXNlcm5hbWUiOiIyMDIwMjUwMjAwMDQiLCJleHAiOjE2Njk3NjM4NTIsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2Njk2Nzc0NTJ9.g---Iz-nAa-Gt6GvyGEifpcJE7cpaAYw8Mwg6WroAOo";
+		String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo3Njk1NCwidXNlcm5hbWUiOiIyMDIwMjUwMjAwMDQiLCJleHAiOjE2NzA2NzkxNzMsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NzA1OTI3NzN9.YQRwN7fmFodyRAVTdM-nb-J0R-vsTk_h0jTGdWxYYvX";
 		
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
 		urlSon = urlSon.substring(0,urlSon.length()-1);
-		return find(token, DEPARTAMENTS_URL+urlSon);
+		return find(token, DEPARTAMENTS_URL + urlSon);
+		
 	}
 	
 
