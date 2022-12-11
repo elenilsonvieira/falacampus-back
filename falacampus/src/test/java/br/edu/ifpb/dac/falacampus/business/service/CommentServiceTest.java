@@ -32,7 +32,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.enums.CommentType;
 import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
-import br.edu.ifpb.dac.falacampus.presentation.dto.CommentDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 
 class CommentServiceTest {
 	
@@ -45,7 +45,7 @@ class CommentServiceTest {
 	@Mock
 	private ModelMapper mapper;
 	
-	private static CommentDto commentDto;
+	private static DetailsCommentDto commentDto;
 	
 	private static Optional<Comment> optionalComment;
 	
@@ -58,7 +58,7 @@ class CommentServiceTest {
 	@BeforeAll
 	static void initAll() {
 		comment = new Comment(1L, "Fechadura Digital", "A fechadura não funciona", CommentType.REVIEW, StatusComment.NOT_SOLVED, new User(), new Departament(),new Answer(), new File("Doc"));
-		commentDto = new CommentDto(comment);
+		commentDto = new DetailsCommentDto(comment);
 		optionalComment = Optional.of(new Comment(1L, "Fechadura Digital", "A fechadura não funciona", CommentType.REVIEW, StatusComment.NOT_SOLVED, new User(), new Departament(),new Answer(), new File("Doc")));		
 	}
 
@@ -97,7 +97,7 @@ class CommentServiceTest {
 	@Test
 	public void saveCommentDtoTest() {
 		
-		commentService.saveCommentDto(commentDto);
+		commentService.save(comment);
 		Comment c = mapper.map(commentDto, Comment.class);
 		
 		verify(commentRepository, times(1)).save(c);
