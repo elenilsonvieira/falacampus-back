@@ -47,7 +47,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 
 	@Value("${app.logintype}")
 	private String logintype;
-
+	
 	private String suapToken;
 
 	private Departament departament;
@@ -69,11 +69,10 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	public Departament dtoToDepartament(DepartamentDto dto) {
 		
 		Departament entity = modelMapper.map(dto, Departament.class);
-//		Departament entity = new Departament();
-//		
-//		entity.setId(dto.getId());
-//		entity.setName(dto.getName());
-//		entity.setResponsibleUsers(dto.getResponsibleUsers());
+		//Departament entity = new Departament();
+		
+		//entity.setId(dto.getId());
+		//entity.setName(dto.getName());
 		
 		return entity;
 	}
@@ -82,11 +81,10 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	public DepartamentDto departamentToDTO(Departament entity) {
 		
 		DepartamentDto dto = modelMapper.map(entity, DepartamentDto.class);
-//		DepartamentDto dto = new DepartamentDto();
-//		
-//		dto.setId(entity.getId());
-//		dto.setName(entity.getName());
-//		dto.setResponsibleUsers(entity.getResponsibleUsers().ge);
+		//DepartamentDto dto = new DepartamentDto();
+		
+		//dto.setId(entity.getId());
+		//dto.setName(entity.getName());
 		
 		return dto;
 	}
@@ -95,11 +93,9 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 
 	public void SaveAllDepartments(String url) {
 		//Converter token
-		
 		try {
 			
 			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
-			System.out.println("TOKEN  SUAP 2: "+suapToken);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

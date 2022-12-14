@@ -60,11 +60,11 @@ public class Departament implements Serializable {
 
 	}
 
-	public Departament(Long id, String name, List<User> users,List<User> responsibleUsers) {
+	public Departament(Long id, String name, List<User> users) {
 		this.id = id;
 		this.name = name;
 		this.users = users;
-		this.responsibleUsers = responsibleUsers;
+	//	this.responsibleUsers = responsibleUsers;
 	}
 	
 	public Departament(Long id, String name) {
