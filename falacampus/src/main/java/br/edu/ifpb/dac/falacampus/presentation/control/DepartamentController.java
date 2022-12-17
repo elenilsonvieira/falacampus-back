@@ -7,6 +7,7 @@ import java.util.List;
 import javax.validation.Valid;
 
 import org.apache.catalina.connector.Response;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,9 +30,12 @@ import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
+import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
+import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
 @RestController
@@ -46,25 +50,12 @@ public class DepartamentController {
 	
 	@Autowired
 	private UserServiceImpl userS;
+
+	@Autowired
+	private ModelMapper mapper;
 	
-//------------
 	@Autowired
 	private DepartamentConverterServiceImpl departamentConverterServiceImpl;
-
-//	@Autowired
-//	private UserConverterService userConverterService;
-//
-//	@Autowired
-//	private UserService userService;
-//
-//	@Autowired
-//	private User user;
-//
-//	@Autowired
-//	private UserDto userDto;
-	
-	
-
 
 	@PostMapping
 	public ResponseEntity save(@RequestBody @Valid DepartamentDto dto) {
@@ -206,24 +197,44 @@ public class DepartamentController {
 		}
 	}
 	
-	//FIND ALL
-//	@GetMapping("/all")
-//	public List<Departament> findAll() throws Exception {
-//
-//		List<Departament> result = departamentService.findAll();
-//
-//		if (result.isEmpty()){
-//			throw new Exception("List is empty!");
-//
-//		} else {
-//			return departamentService.findAll();	
-//		}
-//	}
-//	
-//////-------------
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
 		departamentConverterServiceImpl.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/a");
 	}
 	
+	private DepartamentDto mapToDepartamentDto(Departament departament) {
+		return mapper.map(departament, DepartamentDto.class);
+	}
+	
+	// FIND ALL
+	@GetMapping("/all")
+	public ResponseEntity<?> findAll() throws Exception {
+
+		List<DepartamentDto> dtos = departamentService.findAll().stream().map(this::mapToDepartamentDto).toList();
+
+		return ResponseEntity.ok(dtos);
+
+	}
+	
+	@GetMapping("/responsables/{id}")
+	public ResponseEntity isResponsables(@PathVariable("id") Long id){
+		List <Departament> deps = new ArrayList<>();
+		try {			
+			List<Departament> dp = departamentService.findAll();
+
+			for (int i = 0; i < dp.size(); i++)  {
+				for(int j = 0; j<dp.get(i).getResponsibleUsers().size();j++) {
+					User user = dp.get(i).getResponsibleUsers().get(j);
+					if(user.getId().equals(id)){
+						deps.add(dp.get(i));		
+					}
+				}
+			}		
+			System.out.println(deps);
+			List<DepartamentDto> dtos = departamentConvertService.departamentToDTO(deps);
+			return ResponseEntity.ok(dtos);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
 }

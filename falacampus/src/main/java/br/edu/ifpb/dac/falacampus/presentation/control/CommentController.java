@@ -48,6 +48,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
+import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 import ch.qos.logback.classic.pattern.EnsureExceptionHandling;
@@ -245,5 +246,26 @@ public class CommentController {
 	    Page<Comment> commentPage = commentRepository.findAll(pageable);
 	    return new ConfigPagination(commentPage);
 	}
-	
+
+	@GetMapping("/comentDepartament/{id}")
+	public ResponseEntity isResponsables(@PathVariable("id") Long id){
+		List <Comment> deps = new ArrayList<>();
+		try {			
+			List<Comment> dp = commentService.findAll();
+
+			for (int i = 0; i < dp.size(); i++)  {
+				if(dp.get(i).getDepartament().getId().equals(id)){
+					deps.add(dp.get(i));
+					System.out.println("coments " + deps);
+				}
+			}		
+
+			
+			List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(deps);
+			return ResponseEntity.ok(dtos);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
 }
