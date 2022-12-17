@@ -50,6 +50,7 @@ import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.model.repository.CommentRepository;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
+import ch.qos.logback.classic.pattern.EnsureExceptionHandling;
 
 @RestController
 @RequestMapping("/api/comment")
@@ -117,6 +118,7 @@ public class CommentController {
 
 	}
 
+	
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {

@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.edu.ifpb.dac.falacampus.business.service.AnswerConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.AnswerService;
 import br.edu.ifpb.dac.falacampus.business.service.CommentService;
+import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 
 import br.edu.ifpb.dac.falacampus.exceptions.BadArgumentsException;
@@ -33,6 +34,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import br.edu.ifpb.dac.falacampus.presentation.dto.AnswerDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 
 @RestController
 @RequestMapping("/api/answer")
@@ -52,6 +54,9 @@ public class AnswerController {
 	
 	@Autowired
 	private ModelMapper mapper;
+	
+	@Autowired
+	private DetailsCommentConverterService detailsCommentConverterService;
 	
 	@PostMapping
 	public ResponseEntity save(@RequestBody @Valid AnswerDto dto) {
@@ -89,28 +94,56 @@ public class AnswerController {
 		}
 	}
 	
-	@PutMapping("{id}")
-	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid AnswerDto dto) {
-		try {
-			dto.setId(id);
+	
+	//=====
+		@PutMapping("{id}")
+		public ResponseEntity returned(@PathVariable("id") Long id) {
+
+			try {
+//				Comment enti = commentService.findById(id);
+//				
+//				Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto); 			
+			Comment entity=commentService.findById(id);
 			
-			Long commentId = dto.getCommentId();
-			Comment comment = commentService.findById(commentId);
-			
-			if(comment == null) {
-				throw new IllegalStateException(String.format("Could not find any comment with id=%1", id));
+				entity.setStatusComment(StatusComment.RETURNED);
+				entity = commentService.update(entity);
+				
+				
+				DetailsCommentDto dto = detailsCommentConverterService.detailsCommentToDTO(entity); 
+
+				return ResponseEntity.ok(dto);
+			} catch (Exception e) {
+				return ResponseEntity.badRequest().body(e.getMessage());
 			}
-			
-			Answer entity = answerConverterService.dtoToAnswer(dto);
-			entity.setComment(comment);
-			entity = answerService.update(entity);
-			dto = answerConverterService.answerToDTO(entity);
-			
-			return ResponseEntity.ok(dto);
-		} catch(Exception e) {
-			return ResponseEntity.badRequest().body(e.getMessage());
+
 		}
-	}
+
+
+		//====
+
+	
+//	@PutMapping("{id}")
+//	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid AnswerDto dto) {
+//		try {
+//			dto.setId(id);
+//			
+//			Long commentId = dto.getCommentId();
+//			Comment comment = commentService.findById(commentId);
+//			
+//			if(comment == null) {
+//				throw new IllegalStateException(String.format("Could not find any comment with id=%1", id));
+//			}
+//			
+//			Answer entity = answerConverterService.dtoToAnswer(dto);
+//			entity.setComment(comment);
+//			entity = answerService.update(entity);
+//			dto = answerConverterService.answerToDTO(entity);
+//			
+//			return ResponseEntity.ok(dto);
+//		} catch(Exception e) {
+//			return ResponseEntity.badRequest().body(e.getMessage());
+//		}
+//	}
 	
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
