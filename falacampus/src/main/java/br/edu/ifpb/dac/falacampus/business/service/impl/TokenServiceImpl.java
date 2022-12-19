@@ -73,30 +73,21 @@ public class TokenServiceImpl implements TokenService{
 	
 	@Override
 	public boolean isValid(String token) {
-		System.out.println("TOKEN IS VALID1 " +token);
 		
 		if(token == null) {
 			return false;
 		}
-		System.out.println("TOKEN IS VALID2 " +token);
-
 		
 		try {
-			System.out.println("TOKEN IS VALID try1 " +token);
 			Claims claims = getClaims(token);
-			System.out.println("TOKEN IS VALID try2 " +token);
 
 			LocalDateTime expirationDate = claims.getExpiration().toInstant()
 			.atZone(ZoneId.systemDefault()).toLocalDateTime();
-			System.out.println("TOKEN IS VALID try3 " +token);
 
-			
-			System.out.println("antes do return try");
 			return !LocalDateTime.now().isAfter(expirationDate);
 			
 			
 		} catch (Exception e){
-			System.out.println("exception do return");
 			e.printStackTrace();
 			return false;
 		}
