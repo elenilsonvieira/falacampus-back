@@ -58,12 +58,12 @@ public class AuthenticationController {
 	}
 
 	@PostMapping("/isValidToken")
-	public ResponseEntity isTokenValid(@RequestBody String token) {
+	public ResponseEntity isValidToken(@RequestBody TokenDto tokenDto) {
 
 		try {
-			boolean isTokenValid = tokenService.isValid(token);
+			boolean isValidToken = tokenService.isValid(tokenDto.getToken());
 
-			return new ResponseEntity(true, HttpStatus.OK);
+			return new ResponseEntity(isValidToken, HttpStatus.OK);
 
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
