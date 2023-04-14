@@ -55,7 +55,7 @@ class AnswerServiceTest {
 	@Test
 	void testFindById () { 
 		assertThrows(IllegalStateException.class,
-				() -> answerService.findById(1L));
+				() -> answerService.findById(null));
 	}
 	
 	@Test

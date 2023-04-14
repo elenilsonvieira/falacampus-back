@@ -1,4 +1,4 @@
- package br.edu.ifpb.dac.falacampus;
+package br.edu.ifpb.dac.falacampus;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;

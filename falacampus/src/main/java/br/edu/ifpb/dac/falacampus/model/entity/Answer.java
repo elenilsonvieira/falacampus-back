@@ -1,6 +1,7 @@
 package br.edu.ifpb.dac.falacampus.model.entity;
 
 import java.io.Serializable;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
