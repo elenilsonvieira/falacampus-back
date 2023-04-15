@@ -6,7 +6,9 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite
 @Testable
-@SelectClasses({AnswerDtoTest.class})
+@SelectClasses({
+	AnswerDtoTest.class,
+	DepartamentDtoTest.class})
 public class SuiteDtoTest {
 
 }

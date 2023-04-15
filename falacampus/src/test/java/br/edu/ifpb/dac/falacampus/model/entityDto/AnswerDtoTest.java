@@ -16,7 +16,6 @@ public class AnswerDtoTest {
 	
 	private static AnswerDto answerDto;
 
-
 	@BeforeAll
 	public static void setUp() {
 		answerDto = new AnswerDto();
