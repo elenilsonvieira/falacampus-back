@@ -75,7 +75,7 @@ public class AnswerTest {
 		@Order(3)
 		@DisplayName("Name Character Limits")
 		@ParameterizedTest(name="Invalid Test {index} -> {0}.")
-		@ValueSource(strings= {"abcdefgh","abcdefghqw", "Et excepturi sunt est ipsa officiis hic dolores doloremque eos officiis nihil eum "
+		@ValueSource(strings= {"abcdegh","abcdefghw", "Et excepturi sunt est ipsa officiis hic dolores doloremque eos officiis nihil eum "
 				+ "laudantium nulla rem neque repudiandae. Sed perferendis ipsam eos nihil accusamus aut architecto omnis et voluptas voluptatum."
 				+ " Est omnis obcaecati in autem"
 				+ " animi et odio maxime qui odit deserunt est ratione deleniti. Aut magni doloremque sed fugiat perspiciatis ut dignissimos libero."})

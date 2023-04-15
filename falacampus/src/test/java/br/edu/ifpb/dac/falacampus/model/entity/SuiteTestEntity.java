@@ -8,7 +8,8 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
 	UserTest.class,
 	DepartamentTest.class,
-	SystemRoleTest.class
+	SystemRoleTest.class,
+	AnswerTest.class
 })
 public class SuiteTestEntity {
 

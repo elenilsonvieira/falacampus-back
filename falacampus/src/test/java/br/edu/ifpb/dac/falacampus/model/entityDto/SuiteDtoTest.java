@@ -8,7 +8,8 @@ import org.junit.platform.suite.api.Suite;
 @Testable
 @SelectClasses({
 	AnswerDtoTest.class,
-	DepartamentDtoTest.class})
+	DepartamentDtoTest.class
+	})
 public class SuiteDtoTest {
 
 }
