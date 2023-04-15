@@ -43,8 +43,6 @@ public class Departament implements Serializable {
 	private List<User> users = new ArrayList<>();
 
 	
-	//------------
-	
 //	@ManyToMany(fetch = FetchType.EAGER)
 //	private List<User> responsibleUsers;
 
@@ -148,12 +146,6 @@ public class Departament implements Serializable {
 		return "Departament [id=" + id + ", name=" + name + ", users=" + users + ", responsibleUsers="
 				+ responsibleUsers + ", acronymDepartment=" + acronymDepartment + "]";
 	}
-
-	
-
-	
-
-	
 
 
 }

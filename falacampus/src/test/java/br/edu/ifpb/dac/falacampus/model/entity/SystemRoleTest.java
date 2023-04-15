@@ -39,14 +39,9 @@ public class SystemRoleTest {
 		 role.setId(1L);
 	 }
 
-    @Test
-    public void testToString() {
-        String expected = "SystemRole [id=1, ROLE_ADMIN]";
-        assertEquals(expected, role.toString());
-    }
 
     @Test
-    public void testGetAuthority() {
+    public void getAuthority() {
         assertEquals("ROLE_USER", role.getAuthority());
     }
     

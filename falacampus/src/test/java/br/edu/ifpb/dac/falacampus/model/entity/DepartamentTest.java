@@ -41,7 +41,7 @@ class DepartamentTest {
     }
 
     @Test
-    void testConstructor() {
+    void constructor() {
         assertNotNull(departament);
         assertEquals(1L, departament.getId());
         assertEquals("Department Name", departament.getName());

@@ -2,6 +2,7 @@ package br.edu.ifpb.dac.falacampus.presentation.dto;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotEmpty;
@@ -29,15 +30,20 @@ public class DepartamentDto {
 	public DepartamentDto() {
 		
 	}
-
+	//Revisar isso com o professor, Não faz mt sentido se é pra passar uam lista de  objetos usuario ou so os nomes
 	public DepartamentDto(Departament departament) {
 	
+	
+		this.id = departament.getId();
+		this.name = departament.getName();
+		ArrayList<String> nameUsersResponse = new ArrayList<String>();
+		
+		 for(User a: departament.getResponsibleUsers()) {
+			 nameUsersResponse.add(a.getName());
+		 }
+		this.responsibleUsers = nameUsersResponse;
+		this.acronymDepartment = departament.getAcronymDepartment();
 	}
-//		this.id = departament.getId();
-//		this.name = departament.getName();
-//		this.responsibleUsers = departament.getResponsibleUsers();
-//		this.acronymDepartment = departament.getAcronymDepartment();
-//	}
 	
 
 	public Long getId() {
@@ -73,6 +79,10 @@ public class DepartamentDto {
 	}
 
 	public static List<DepartamentDto> toConvert(List<Departament> departaments){
-		return departaments.stream().map(DepartamentDto:: new).collect(Collectors.toList());
+		List<DepartamentDto> list = departaments.stream().map(DepartamentDto::new).collect(Collectors.toList());
+		for(DepartamentDto d: list) {
+			System.out.print(d.acronymDepartment + d.name);
+		}
+		return departaments.stream().map(DepartamentDto::new).collect(Collectors.toList());
 	}
 }
