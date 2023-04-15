@@ -82,8 +82,8 @@ public class DepartamentController {
 			ArrayList<User> users = new ArrayList<>();
 
 			if(dto.getResponsibleUsers() != null) {
-				for (String user : dto.getResponsibleUsers()) {
-					User o = userS.findById(Long.parseLong( user));
+				for (User user : dto.getResponsibleUsers()) {
+					User o = userS.findById(user.getId());
 					if(o==null) {
 						throw new NullPointerException("Id do usuario não encontrado");
 					}else {

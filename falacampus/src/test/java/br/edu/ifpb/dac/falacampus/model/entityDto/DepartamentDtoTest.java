@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
+import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 
 public class DepartamentDtoTest {
@@ -19,10 +20,8 @@ public class DepartamentDtoTest {
 		departamentDto.setId(1L);
 		departamentDto.setName("Finanças");
 		departamentDto.setAcronymDepartment("is True");	
-	    ArrayList<String> names = new ArrayList<>();
-	    names.add("joao");
-	    names.add("Luis");
-	    names.add("Iphone");
+	    ArrayList<User> names = new ArrayList<>();
+	    names.add(new User());
 		departamentDto.setResponsibleUsers(names);
 		
 	}
@@ -40,7 +39,10 @@ public class DepartamentDtoTest {
 		
 		departamen.setId(8L);
 		departamen.setName("Musica");
-		departamen.setAcronymDepartment("PAZ");	
+		departamen.setAcronymDepartment("PAZ");
+		ArrayList<User> users = new ArrayList<>();
+		users.add(new User());
+		departamen.setUsers(users);
 
 		List<Departament> departamens = new ArrayList<>();
 		departamens.add(departamen);

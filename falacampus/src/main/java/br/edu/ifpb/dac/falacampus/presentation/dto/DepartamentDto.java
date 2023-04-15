@@ -2,7 +2,6 @@ package br.edu.ifpb.dac.falacampus.presentation.dto;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 import java.util.stream.Collectors;
 
 import javax.validation.constraints.NotEmpty;
@@ -16,36 +15,28 @@ public class DepartamentDto {
 	
 	private Long id;
 	
-	@NotNull @NotEmpty @Size(min = 2, max=100)
+	@NotNull
+	@NotEmpty
+	@Size(min = 2, max=100)
 	private String name;
 
 	//------------
-	private List<String> responsibleUsers;
+	private List<User> responsibleUsers;
 	
 	private String acronymDepartment;
 	//------------
 	
-	
-
 	public DepartamentDto() {
 		
 	}
-	//Revisar isso com o professor, Não faz mt sentido se é pra passar uam lista de  objetos usuario ou so os nomes
+
 	public DepartamentDto(Departament departament) {
-	
-	
 		this.id = departament.getId();
 		this.name = departament.getName();
-		ArrayList<String> nameUsersResponse = new ArrayList<String>();
-		
-		 for(User a: departament.getResponsibleUsers()) {
-			 nameUsersResponse.add(a.getName());
-		 }
-		this.responsibleUsers = nameUsersResponse;
+		this.responsibleUsers = departament.getResponsibleUsers();
 		this.acronymDepartment = departament.getAcronymDepartment();
 	}
-	
-
+		
 	public Long getId() {
 		return id;
 	}
@@ -62,11 +53,11 @@ public class DepartamentDto {
 		this.name = name;
 	}
 
-	public List<String> getResponsibleUsers() {
+	public List<User> getResponsibleUsers() {
 		return responsibleUsers;
 	}
 
-	public void setResponsibleUsers(List<String> responsibleUsers) {
+	public void setResponsibleUsers(List<User> responsibleUsers) {
 		this.responsibleUsers = responsibleUsers;
 	}
 
@@ -79,10 +70,6 @@ public class DepartamentDto {
 	}
 
 	public static List<DepartamentDto> toConvert(List<Departament> departaments){
-		List<DepartamentDto> list = departaments.stream().map(DepartamentDto::new).collect(Collectors.toList());
-		for(DepartamentDto d: list) {
-			System.out.print(d.acronymDepartment + d.name);
-		}
-		return departaments.stream().map(DepartamentDto::new).collect(Collectors.toList());
+		return departaments.stream().map(DepartamentDto:: new).collect(Collectors.toList());
 	}
 }
