@@ -49,11 +49,12 @@ public class Departament implements Serializable {
 //	private List<User> responsibleUsers;
 
 	@ManyToMany
-	@JoinTable(name = "departaments_responsibleUsers", joinColumns = @JoinColumn(name = "departament_id"),inverseJoinColumns = @JoinColumn(name = "user_id"))
+	@JoinTable(name = "departaments_responsibleUsers", 
+	joinColumns = @JoinColumn(name = "departament_id"),
+	inverseJoinColumns = @JoinColumn(name = "user_id"))
 	private List<User> responsibleUsers;
 	
 	private String acronymDepartment;
-	//------------
 
 
 	public Departament() {

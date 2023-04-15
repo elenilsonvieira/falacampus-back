@@ -59,7 +59,7 @@ public class UserTest {
 		@Order(2)
 		@ValueSource(strings= {"","    ", "        "})
 		void invalidNameEmpty(String name) {
-			user.setName(null);
+			user.setName(name);
 			violations = validator.validateProperty(user, "name");
 			assertFalse(violations.isEmpty());
 		

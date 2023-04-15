@@ -6,7 +6,9 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @Testable
 @SelectClasses({
-	UserTest.class
+	UserTest.class,
+	DepartamentTest.class,
+	SystemRoleTest.class
 })
 public class SuiteTestEntity {
 
