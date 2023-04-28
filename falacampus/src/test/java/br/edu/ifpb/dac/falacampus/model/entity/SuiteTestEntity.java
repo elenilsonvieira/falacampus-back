@@ -9,7 +9,8 @@ import org.junit.platform.suite.api.Suite;
 	UserTest.class,
 	DepartamentTest.class,
 	SystemRoleTest.class,
-	AnswerTest.class
+	AnswerTest.class,
+	CommentTest.class
 })
 public class SuiteTestEntity {
 

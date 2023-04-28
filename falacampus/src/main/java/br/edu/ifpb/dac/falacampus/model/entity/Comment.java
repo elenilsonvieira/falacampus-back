@@ -34,8 +34,7 @@ import br.edu.ifpb.dac.falacampus.model.enums.StatusComment;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter
-@Setter
+
 @Entity
 @Table(name = "CommentSystem")
 public class Comment implements Serializable {
