@@ -35,38 +35,32 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	
 	@Value("${app.logintype}")
 	private String logintype;
-	
+
 	private String suapToken;
 	
 	
 	public String login(String username, String password) {
 		
 		return suapLogin(username, password);		
-//			switch (logintype) {
-//			case "suap": 
-//				return suapLogin(username, password);
-//			case "local":
-//				return localLogin(username, password);
-//			default:
-//				return suapLogin(username, password);
-//			}
-		}
-			
-		private String localLogin(String username, String password) {
-			
-			Authentication authentication =  
-					authenticationManager.authenticate(
-							new UsernamePasswordAuthenticationToken(username, password));
-			
-			User user = userService.findByUserName(username);
 
-			return tokenService.generate(user);
 		}
+			
+	private String localLogin(String username, String password) {
+		
+		Authentication authentication =  
+				authenticationManager.authenticate(
+						new UsernamePasswordAuthenticationToken(username, password));
+		
+		User user = userService.findByUserName(username);
+
+		return tokenService.generate(user);
+	}
 	
 	private String suapLogin(String username, String password) {
 		
 		String jsonToken = suapService.login(username, password);
 		this.suapToken = converterService.jsonToToken(jsonToken);
+		System.out.println("TOKEN DO SUAP: "+suapToken);
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException("Incorrect E-mail or Password");
 		}

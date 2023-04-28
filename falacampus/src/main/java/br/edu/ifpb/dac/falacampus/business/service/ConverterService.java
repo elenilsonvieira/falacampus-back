@@ -1,22 +1,13 @@
 package br.edu.ifpb.dac.falacampus.business.service;
-
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.hibernate.validator.internal.util.stereotypes.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.SystemPropertyUtils;
-
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
-import br.edu.ifpb.dac.falacampus.business.service.impl.SuapServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.SystemRoleServiceImpl;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
@@ -42,12 +33,13 @@ public class ConverterService {
 
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
-
-		String token = jsonElement.getAsJsonObject().get("token").getAsString();
+		String token = jsonElement.getAsJsonObject().get("access").getAsString();
 		return token;
 	}
-	
+
+
 	public String jsonToTokenDepartament(String json) {
+		System.out.print("Json doido      " + json);
 		JsonElement jsonElement = JsonParser.parseString(json);
 		
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
@@ -55,8 +47,9 @@ public class ConverterService {
 	}
 
 	public User jsonToUser(String jsonUser) {
-
+		System.out.print("Json doido      " + jsonUser);
 		JsonElement jsonElement = JsonParser.parseString(jsonUser);
+		System.out.print(jsonElement);
 		JsonObject results = jsonElement.getAsJsonObject()
 				.get("results")
 				.getAsJsonArray()

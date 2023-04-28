@@ -8,7 +8,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -76,13 +75,9 @@ public class SuapServiceImpl implements SuapService {
 	}
 	
 	private String find(String token, String findUrl) {
-		System.out.println("TOKEN FIND"+token);	
-		System.out.println("URL FIND"+findUrl);	
-		
-	
 		try {
 			HttpRequest url = generateGetUrl(findUrl,
-				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)));
+				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)), token);
 			
 			System.out.println("URL "+url.headers());
 			return sendRequest(url);
@@ -121,6 +116,8 @@ public class SuapServiceImpl implements SuapService {
 		return false;
 	}
 
+
+	
 	private HttpRequest generatePostUrl(String url, Map<String, String> headers, String body) throws URISyntaxException {
 		
 		Builder builder = HttpRequest.newBuilder().uri(new URI(url));
@@ -142,18 +139,13 @@ public class SuapServiceImpl implements SuapService {
 		return request;
 	}
 	
-	private HttpRequest generateGetUrl(String url, Map<String, String> headers) throws URISyntaxException {
+	private HttpRequest generateGetUrl(String url, Map<String, String> headers, String token) throws URISyntaxException {
 		
 		Builder builder = HttpRequest.newBuilder().uri(new URI(url));
 
-		for (Map.Entry<String, String> header : DEFAULT_HEADERS.entrySet()) {
-			builder.setHeader(header.getKey(), header.getValue());
-		}
+		
 
-		for (Map.Entry<String, String> header : headers.entrySet()) {
-			builder.setHeader(header.getKey(), header.getValue());
-		}
-
+		builder.header("Authorization", "Bearer " + token);
 		HttpRequest request = builder.GET().build();
 
 		return request;
