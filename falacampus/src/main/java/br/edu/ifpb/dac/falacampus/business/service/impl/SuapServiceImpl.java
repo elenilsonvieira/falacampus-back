@@ -168,6 +168,7 @@ public class SuapServiceImpl implements SuapService {
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
 		urlSon = urlSon.substring(0,urlSon.length()-1);
+		System.out.print("findAllDepartament    :"+ token + DEPARTAMENTS_URL + urlSon);
 		return find(token, DEPARTAMENTS_URL + urlSon);
 		
 	}

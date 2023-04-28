@@ -59,7 +59,11 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private String suapLogin(String username, String password) {
 		
 		String jsonToken = suapService.login(username, password);
-		this.suapToken = converterService.jsonToToken(jsonToken);
+		try {
+			this.suapToken = converterService.jsonToToken(jsonToken);
+		}catch(Exception e) {
+			return e.getMessage();
+		}
 		System.out.println("TOKEN DO SUAP: "+suapToken);
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException("Incorrect E-mail or Password");
