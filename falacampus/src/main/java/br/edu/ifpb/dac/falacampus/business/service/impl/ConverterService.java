@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.falacampus.business.service;
+package br.edu.ifpb.dac.falacampus.business.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -8,7 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import br.edu.ifpb.dac.falacampus.business.service.impl.SystemRoleServiceImpl;
+
+import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
+import br.edu.ifpb.dac.falacampus.business.service.UserService;
+import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -39,9 +42,7 @@ public class ConverterService {
 
 
 	public String jsonToTokenDepartament(String json) {
-		System.out.print("Json doido      " + json);
 		JsonElement jsonElement = JsonParser.parseString(json);
-		
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;
 	}
@@ -126,7 +127,6 @@ public class ConverterService {
 //------------------	
 	public JsonObject jsonToDepartament(String jsonDepartament) {
 		JsonElement jsonE = JsonParser.parseString(jsonDepartament);
-		
 		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
 		
 		return results;

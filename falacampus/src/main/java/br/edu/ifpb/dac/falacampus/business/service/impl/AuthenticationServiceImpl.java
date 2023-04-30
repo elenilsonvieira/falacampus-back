@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
 import br.edu.ifpb.dac.falacampus.business.service.AuthenticationService;
-import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;

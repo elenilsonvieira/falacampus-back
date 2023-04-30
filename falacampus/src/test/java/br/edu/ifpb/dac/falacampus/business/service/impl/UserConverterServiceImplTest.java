@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.UserConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;

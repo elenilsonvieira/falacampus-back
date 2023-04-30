@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentService;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 @AutoConfigureMockMvc
 @SpringBootTest

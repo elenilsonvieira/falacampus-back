@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import br.edu.ifpb.dac.falacampus.business.service.impl.AnswerService;
 import br.edu.ifpb.dac.falacampus.model.entity.Answer;
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.User;

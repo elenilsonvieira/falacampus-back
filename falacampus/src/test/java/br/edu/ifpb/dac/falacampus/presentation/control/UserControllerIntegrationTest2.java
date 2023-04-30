@@ -28,9 +28,9 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 
-import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.SystemRoleServiceImpl;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;

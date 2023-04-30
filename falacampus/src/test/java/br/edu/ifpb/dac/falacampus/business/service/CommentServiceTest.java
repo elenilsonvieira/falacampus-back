@@ -22,6 +22,7 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.Spy;
 import org.modelmapper.ModelMapper;
 
+import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
 import br.edu.ifpb.dac.falacampus.model.entity.Answer;
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;

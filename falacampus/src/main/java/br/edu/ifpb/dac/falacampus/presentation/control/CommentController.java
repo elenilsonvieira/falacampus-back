@@ -36,9 +36,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.dac.falacampus.business.service.CommentConverterService;
-import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
 import br.edu.ifpb.dac.falacampus.config.ConfigPagination;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;

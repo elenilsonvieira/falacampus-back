@@ -42,7 +42,6 @@ public interface SuapService {
 	public String findUser (String token, String username);
 	
 //---------------------------	
-	public String findAllDepartament(String token);
-
+	public String findAllDepartament(String url, String token);
 
 }

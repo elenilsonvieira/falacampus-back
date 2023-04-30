@@ -23,8 +23,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
-import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DetailsCommentConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Answer;

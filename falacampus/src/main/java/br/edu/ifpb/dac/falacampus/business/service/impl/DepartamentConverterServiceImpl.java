@@ -15,9 +15,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
-import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
@@ -29,30 +27,22 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	@Autowired
 	private ModelMapper modelMapper;
-	
-	//------------
 	@Autowired
 	private DepartamentService departamentService;
-//=---------------
 	@Autowired
 	private SuapService suapService;
-
 	@Autowired
 	private ConverterService converterService;
 	@Autowired
 	private AuthenticationManager authenticationManager;
-	
 	@Autowired
 	private TokenService tokenService;
 
 	@Value("${app.logintype}")
 	private String logintype;
-	
 	private String suapToken;
-
 	private Departament departament;
-	
-	//------------
+
 	
 	@Override
 	public List<DepartamentDto> departamentToDTO(List<Departament> entities) {
@@ -69,11 +59,6 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	public Departament dtoToDepartament(DepartamentDto dto) {
 		
 		Departament entity = modelMapper.map(dto, Departament.class);
-		//Departament entity = new Departament();
-		
-		//entity.setId(dto.getId());
-		//entity.setName(dto.getName());
-		
 		return entity;
 	}
 
@@ -81,21 +66,16 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	public DepartamentDto departamentToDTO(Departament entity) {
 		
 		DepartamentDto dto = modelMapper.map(entity, DepartamentDto.class);
-		//DepartamentDto dto = new DepartamentDto();
-		
-		//dto.setId(entity.getId());
-		//dto.setName(entity.getName());
 		
 		return dto;
 	}
 	
-	//----------------------
-
+	
 	public void SaveAllDepartments(String url) {
 		//Converter token
 		try {
 			
-			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
+			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url,suapToken));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -103,7 +83,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException();
 		}
-		String suapDepartamentJson = this.suapService.findAllDepartament(url);
+		String suapDepartamentJson = this.suapService.findAllDepartament(url,suapToken);
 		
 	
 		try {
@@ -127,7 +107,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 			}
 			
 		} catch (Exception e) {
-			// TODO: handle exception
+			
 		}
 	}
 }

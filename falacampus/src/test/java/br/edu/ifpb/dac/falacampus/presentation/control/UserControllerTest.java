@@ -17,7 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentService;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.LoginDto;

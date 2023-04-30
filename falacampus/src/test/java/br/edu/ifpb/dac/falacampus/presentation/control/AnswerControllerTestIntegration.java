@@ -20,11 +20,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import br.edu.ifpb.dac.falacampus.business.service.AnswerConverterService;
-import br.edu.ifpb.dac.falacampus.business.service.AnswerService;
-import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 
 import br.edu.ifpb.dac.falacampus.business.service.impl.AnswerConverterServiceImpl;
+import br.edu.ifpb.dac.falacampus.business.service.impl.AnswerService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DetailsCommentConverterServiceImpl;
 import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;

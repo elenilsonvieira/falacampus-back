@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 
 @Service
@@ -76,10 +75,7 @@ public class SuapServiceImpl implements SuapService {
 	
 	private String find(String token, String findUrl) {
 		try {
-			HttpRequest url = generateGetUrl(findUrl,
-				Map.of(TOKEN_HEADER_NAME, String.format(TOKEN_HEADER_VALUE, token)), token);
-			
-			System.out.println("URL "+url.headers());
+			HttpRequest url = generateGetUrl(findUrl, token);
 			return sendRequest(url);
 		} catch (URISyntaxException e) {
 			e.getMessage();
@@ -139,13 +135,10 @@ public class SuapServiceImpl implements SuapService {
 		return request;
 	}
 	
-	private HttpRequest generateGetUrl(String url, Map<String, String> headers, String token) throws URISyntaxException {
+	private HttpRequest generateGetUrl(String url, String token) throws URISyntaxException {
 		
 		Builder builder = HttpRequest.newBuilder().uri(new URI(url));
-
-		
-
-		builder.header("Authorization", "Bearer " + token);
+		builder.header(TOKEN_HEADER_NAME, TOKEN_HEADER_VALUE + token);
 		HttpRequest request = builder.GET().build();
 
 		return request;
@@ -159,11 +152,9 @@ public class SuapServiceImpl implements SuapService {
 	}
 
 	
-//----------------------------------
 	@Override
 	@Lazy
-	public String findAllDepartament(String url) {
-		String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjo1OTMyNiwidXNlcm5hbWUiOiIyMDIwMTUwMjAwMzIiLCJleHAiOjE2NzE1Mzc4MjIsImVtYWlsIjoiIiwib3JpZ19pYXQiOjE2NzE0NTE0MjJ9.zhzZ8SYWpBorWX6M5Gg9UgqQepP6Sa9mz1TYuPMz8TM";
+	public String findAllDepartament(String url,String token) {
 		
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
