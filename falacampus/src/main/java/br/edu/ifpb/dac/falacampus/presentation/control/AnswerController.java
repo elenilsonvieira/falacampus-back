@@ -20,11 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.ifpb.dac.falacampus.business.service.AnswerConverterService;
-import br.edu.ifpb.dac.falacampus.business.service.AnswerService;
-import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
-
+import br.edu.ifpb.dac.falacampus.business.service.impl.AnswerService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
 import br.edu.ifpb.dac.falacampus.exceptions.BadArgumentsException;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;
 import br.edu.ifpb.dac.falacampus.exceptions.InternalException;

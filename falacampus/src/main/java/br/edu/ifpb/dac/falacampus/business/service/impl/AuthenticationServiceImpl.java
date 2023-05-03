@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 
 import br.edu.ifpb.dac.falacampus.business.service.AuthenticationService;
-import br.edu.ifpb.dac.falacampus.business.service.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
@@ -35,38 +34,36 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	
 	@Value("${app.logintype}")
 	private String logintype;
-	
+
 	private String suapToken;
 	
 	
 	public String login(String username, String password) {
 		
 		return suapLogin(username, password);		
-//			switch (logintype) {
-//			case "suap": 
-//				return suapLogin(username, password);
-//			case "local":
-//				return localLogin(username, password);
-//			default:
-//				return suapLogin(username, password);
-//			}
-		}
-			
-		private String localLogin(String username, String password) {
-			
-			Authentication authentication =  
-					authenticationManager.authenticate(
-							new UsernamePasswordAuthenticationToken(username, password));
-			
-			User user = userService.findByUserName(username);
 
-			return tokenService.generate(user);
 		}
+			
+	private String localLogin(String username, String password) {
+		
+		Authentication authentication =  
+				authenticationManager.authenticate(
+						new UsernamePasswordAuthenticationToken(username, password));
+		
+		User user = userService.findByUserName(username);
+
+		return tokenService.generate(user);
+	}
 	
 	private String suapLogin(String username, String password) {
 		
 		String jsonToken = suapService.login(username, password);
-		this.suapToken = converterService.jsonToToken(jsonToken);
+		try {
+			this.suapToken = converterService.jsonToToken(jsonToken);
+		}catch(Exception e) {
+			return e.getMessage();
+		}
+		System.out.println("TOKEN DO SUAP: "+suapToken);
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException("Incorrect E-mail or Password");
 		}

@@ -37,3 +37,4 @@ build/
 mvnw
 mvnw.cmd
 /bin/
+/.apt_generated_tests/

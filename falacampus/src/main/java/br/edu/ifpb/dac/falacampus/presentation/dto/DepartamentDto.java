@@ -15,31 +15,28 @@ public class DepartamentDto {
 	
 	private Long id;
 	
-	@NotNull @NotEmpty @Size(min = 2, max=100)
+	@NotNull
+	@NotEmpty
+	@Size(min = 2, max=100)
 	private String name;
 
 	//------------
-	private List<String> responsibleUsers;
+	private List<User> responsibleUsers;
 	
 	private String acronymDepartment;
 	//------------
 	
-	
-
 	public DepartamentDto() {
 		
 	}
 
 	public DepartamentDto(Departament departament) {
-	
+		this.id = departament.getId();
+		this.name = departament.getName();
+		this.responsibleUsers = departament.getResponsibleUsers();
+		this.acronymDepartment = departament.getAcronymDepartment();
 	}
-//		this.id = departament.getId();
-//		this.name = departament.getName();
-//		this.responsibleUsers = departament.getResponsibleUsers();
-//		this.acronymDepartment = departament.getAcronymDepartment();
-//	}
-	
-
+		
 	public Long getId() {
 		return id;
 	}
@@ -56,11 +53,11 @@ public class DepartamentDto {
 		this.name = name;
 	}
 
-	public List<String> getResponsibleUsers() {
+	public List<User> getResponsibleUsers() {
 		return responsibleUsers;
 	}
 
-	public void setResponsibleUsers(List<String> responsibleUsers) {
+	public void setResponsibleUsers(List<User> responsibleUsers) {
 		this.responsibleUsers = responsibleUsers;
 	}
 

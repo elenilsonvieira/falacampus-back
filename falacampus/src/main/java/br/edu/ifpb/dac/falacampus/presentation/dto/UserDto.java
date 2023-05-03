@@ -30,7 +30,7 @@ public class UserDto {
 	private String username;
 		
 	@NotBlank
-	//@Size(min=8, max=30)
+	@Size(min=8, max=50)
 	private String password;
 	
 	@NotNull
@@ -41,11 +41,9 @@ public class UserDto {
 	private List<String> responsable = new ArrayList<>();;
 	
 	public UserDto() {
-		
 	}
 	
 	public UserDto(User user) {
-
 	}
 
 	

@@ -24,7 +24,7 @@ public interface SuapService {
 	public static final String TOKEN_JSON_FIELD	 = "token";
 
 	public static final String TOKEN_HEADER_NAME ="Authorization";
-	public static final String TOKEN_HEADER_VALUE = "JWT %s";
+	public static final String TOKEN_HEADER_VALUE = "Bearer ";
 	
 	public static final Map<String ,String> DEFAULT_HEADERS = Map.of("Content-Type","application/json");
 	
@@ -42,7 +42,6 @@ public interface SuapService {
 	public String findUser (String token, String username);
 	
 //---------------------------	
-	public String findAllDepartament(String token);
-
+	public String findAllDepartament(String url, String token);
 
 }

@@ -23,11 +23,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
-import br.edu.ifpb.dac.falacampus.business.service.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
-import br.edu.ifpb.dac.falacampus.business.service.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentConverterServiceImpl;
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.UserServiceImpl;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
@@ -82,8 +82,8 @@ public class DepartamentController {
 			ArrayList<User> users = new ArrayList<>();
 
 			if(dto.getResponsibleUsers() != null) {
-				for (String user : dto.getResponsibleUsers()) {
-					User o = userS.findById(Long.parseLong( user));
+				for (User user : dto.getResponsibleUsers()) {
+					User o = userS.findById(user.getId());
 					if(o==null) {
 						throw new NullPointerException("Id do usuario não encontrado");
 					}else {
