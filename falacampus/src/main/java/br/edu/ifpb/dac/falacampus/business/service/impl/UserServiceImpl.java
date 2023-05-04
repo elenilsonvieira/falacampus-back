@@ -14,14 +14,11 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.PasswordEnconderService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
-import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.repository.UserRepository;
 
-//Classe service que executa a lógica de autenticação 
-//(contém a lógica para validar as credenciais de um usuário que está se autenticando)
 @Service
 public class UserServiceImpl implements UserService {
 	
@@ -43,11 +40,7 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		
-		if(findAll().isEmpty()) {
-			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
-		}else {
-			roles.add(roleService.findDefault());
-		}
+		roles.add(isRole(user.getRoles().get(0).getName()));
 
 		user.setRoles(roles);
 		
@@ -69,14 +62,8 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		
-		if(user.getRoles().get(0).getName().equals("ADMIN")) {
-			roles.add(roleService.findAdmin());
-		}else {
-			roles.add(roleService.findDefault());		}
-		
-		
-		
-		
+		roles.add(isRole(user.getRoles().get(0).getName()));
+
 		user.setRoles(roles);
 		
 		
@@ -141,13 +128,21 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
-
-
-
 	
+	public SystemRole isRole(String role) {
+		if(role.equals("ADMIN")) {
+			return roleService.findAdmin();
+		}
+		else if(role.equals("TEACHER")) {
+			return roleService.findTeacher();
+		}
+		else if(role.equals("TECHNICIAN")) {
+			return roleService.findTechnician();
+		}
+		else {
+			return roleService.findDefault();
+		}
 
-
-
-	
+	}
 
 }

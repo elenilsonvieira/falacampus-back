@@ -64,7 +64,6 @@ public class TokenServiceImpl implements TokenService{
 		return Jwts
 				.parser()
 				.setSigningKey(secret)
-				
 				.parseClaimsJws(token)
 				.getBody();
 	}
