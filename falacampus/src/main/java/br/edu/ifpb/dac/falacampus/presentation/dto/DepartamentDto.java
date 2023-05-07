@@ -1,18 +1,16 @@
 package br.edu.ifpb.dac.falacampus.presentation.dto;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 
 public class DepartamentDto {
 	
+
 	private Long id;
 	
 	@NotNull
@@ -21,7 +19,7 @@ public class DepartamentDto {
 	private String name;
 
 	//------------
-	private List<User> responsibleUsers;
+	private List<String> responsibleUsers;
 	
 	private String acronymDepartment;
 	//------------
@@ -31,10 +29,6 @@ public class DepartamentDto {
 	}
 
 	public DepartamentDto(Departament departament) {
-		this.id = departament.getId();
-		this.name = departament.getName();
-		this.responsibleUsers = departament.getResponsibleUsers();
-		this.acronymDepartment = departament.getAcronymDepartment();
 	}
 		
 	public Long getId() {
@@ -53,11 +47,11 @@ public class DepartamentDto {
 		this.name = name;
 	}
 
-	public List<User> getResponsibleUsers() {
+	public List<String> getResponsibleUsers() {
 		return responsibleUsers;
 	}
 
-	public void setResponsibleUsers(List<User> responsibleUsers) {
+	public void setResponsibleUsers(List<String> responsibleUsers) {
 		this.responsibleUsers = responsibleUsers;
 	}
 

@@ -36,6 +36,7 @@ public class ConverterService {
 
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
+		System.out.print("TOKEN AQUI: "+json);
 		String token = jsonElement.getAsJsonObject().get("access").getAsString();
 		return token;
 	}

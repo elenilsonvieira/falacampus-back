@@ -80,4 +80,15 @@ public class DepartamentService {
 
 		return departamentRepository.findAll(example);
 	}	
+	
+	public void haveResponsible(Long id) throws Exception{
+		 Departament dep = findById(id);
+		 if(dep != null) {
+			 if(dep.getResponsibleUsers().isEmpty()) {
+				 throw new Exception("Responsible not exist!");
+			 }
+		 }
+	}
+	
+	
 }

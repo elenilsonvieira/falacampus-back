@@ -20,8 +20,8 @@ public class DepartamentDtoTest {
 		departamentDto.setId(1L);
 		departamentDto.setName("Finanças");
 		departamentDto.setAcronymDepartment("is True");	
-	    ArrayList<User> names = new ArrayList<>();
-	    names.add(new User());
+	    ArrayList<String> names = new ArrayList<>();
+	    names.add("Joao");
 		departamentDto.setResponsibleUsers(names);
 		
 	}

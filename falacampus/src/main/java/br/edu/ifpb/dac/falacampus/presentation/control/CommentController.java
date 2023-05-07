@@ -39,6 +39,7 @@ import br.edu.ifpb.dac.falacampus.business.service.CommentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
+import br.edu.ifpb.dac.falacampus.business.service.impl.DepartamentService;
 import br.edu.ifpb.dac.falacampus.config.ConfigPagination;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentCannotUpdateException;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;
@@ -59,6 +60,9 @@ public class CommentController {
 
 	@Autowired
 	private CommentConverterService commentConverterService;
+
+	@Autowired
+	private DepartamentService departamentService;
 	
 	@Autowired
 	private CommentService commentService;
@@ -81,7 +85,9 @@ public class CommentController {
 	// SAVE
 	@PostMapping
 	public ResponseEntity save(@RequestBody @Valid DetailsCommentDto dto) {
+
 		try {
+			departamentService.haveResponsible(dto.getDepartamentId());
 			Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto);
 						
 			entity = commentService.save(entity);
@@ -90,8 +96,7 @@ public class CommentController {
 
 			return new ResponseEntity(dto, HttpStatus.CREATED);
 
-	} catch (Exception e) {
-		
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 		
@@ -202,29 +207,6 @@ public class CommentController {
 			
 		return ResponseEntity.ok(dtosSolved);
 	}
-//	
-//	@GetMapping("/commentUser")
-//	public ResponseEntity<?> findCommentsUser() throws Exception {
-//		
-//		List<DetailsCommentDto> dtos = commentService.findAll().stream().map(this::mapToDetailsCommentDto).toList();
-//		List<DetailsCommentDto> dtosSolved = new ArrayList<>();
-//		for (DetailsCommentDto commentDto : dtos) {
-//			if (commentDto.getAuthorId().equals(user.getId()))
-//				System.out.println(user.getId());
-//				dtosSolved.add(commentDto);
-//		}
-//			
-//		return ResponseEntity.ok(dtosSolved);
-//	}
-	
-//	@GetMapping(value = "/sortByName")
-//	public ResponseEntity<List<Comment>> findOrderByName() throws Exception {
-//
-//		List<Comment> result = commentService.findAll(Sort.by(Sort.Direction.ASC, "name"));
-//
-//		return ResponseEntity.ok(result);
-//
-//	}
 	
 	@GetMapping("/pages")
 	public ResponseEntity<Page<DetailsCommentDto>> findAll(

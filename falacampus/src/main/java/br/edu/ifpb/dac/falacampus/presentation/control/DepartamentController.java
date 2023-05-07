@@ -76,14 +76,12 @@ public class DepartamentController {
 	@PutMapping("{id}")
 	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid DepartamentDto dto) {
 		try {
-			dto.setId(id);
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
-			
+			System.out.print("PASSOU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 			ArrayList<User> users = new ArrayList<>();
-
 			if(dto.getResponsibleUsers() != null) {
-				for (User user : dto.getResponsibleUsers()) {
-					User o = userS.findById(user.getId());
+				for (String user : dto.getResponsibleUsers()) {
+					User o = userS.findById(Long.parseLong( user));
 					if(o==null) {
 						throw new NullPointerException("Id do usuario não encontrado");
 					}else {

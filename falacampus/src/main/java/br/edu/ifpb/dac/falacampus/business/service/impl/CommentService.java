@@ -32,12 +32,7 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-//	public Comment saveCommentDto(CommentDto commentDto){
-//		
-//		Comment comment = mapper.map(commentDto, Comment.class);		
-//		return commentRepository.save(comment);
-//		
-//	}
+
 	
 	public void deleteById(Long id) {
 		Comment comment = findById(id);
@@ -53,17 +48,6 @@ public class CommentService {
 		return commentRepository.save(comment);
 	}
 	
-//	public Comment updateCommentDto(Long id, CommentDto commentDto) {
-//		
-//		if(id == null) {
-//			throw new IllegalStateException("Id cannot be null");
-//		}
-//		
-//		Comment commentUpdate = mapper.map(commentDto, Comment.class);
-//		commentUpdate.setId(id);
-//		
-//		return commentRepository.save(commentUpdate);
-//	}	
 	
 	public Comment findById(Long id) {
 		if(id == null) {
@@ -97,23 +81,11 @@ public class CommentService {
 
 	}
 	
-//	public List<Comment> findAll(Sort by) {
-//		
-//		return commentRepository.findAll();
-//	}
 	
 	public List<Comment> findAll(PageRequest pageRequest) {
 		
 		return commentRepository.findAll();
 	}
 
-//	public List<Comment> findOrderByName(String name) {
-//		
-//		List<Comment> result = commentRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
-//		
-//		return result;
-//
-//		
-//	}
 
 }

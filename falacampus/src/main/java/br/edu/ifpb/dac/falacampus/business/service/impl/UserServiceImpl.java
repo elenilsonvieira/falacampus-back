@@ -39,9 +39,11 @@ public class UserServiceImpl implements UserService {
 		passwordEnconderService.encryptPassword(user);
 		
 		List<SystemRole> roles = new ArrayList<>();
-		
-		roles.add(isRole(user.getRoles().get(0).getName()));
-
+		if(findAll().size() == 0) {
+			roles.add(isRole("ADMIN"));
+		}else {
+			roles.add(isRole(user.getRoles().get(0).getName()));
+		}
 		user.setRoles(roles);
 		
 		return userRepository.save(user);
@@ -50,11 +52,16 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User update(User user) {
+		
 		User userUp = findById(user.getId());
 		if (userUp == null) {
 			throw new IllegalStateException("User id is null");
 		}
-		
+		if(userUp.getRoles().get(0).getName().equals("ADMIN") && !user.getRoles().get(0).getName().equals("ADMIN")) {
+			if(sizeAdmin() == 1) {
+				throw new IllegalStateException("cannot be changed, there is only one ADMIN");
+			}
+		}
 		userUp.setEmail(user.getEmail());
 		userUp.setUsername(user.getUsername());
 		userUp.setName(user.getName());
@@ -83,6 +90,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findById(Long id) {
+		
 		if(id == null) {
 			throw new IllegalStateException("Id cannot be null");
 		}
@@ -100,6 +108,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByUserName(String username) {
+		
 		if(username == null) {
 			throw new IllegalStateException("Username cannot be null");
 		}
@@ -110,7 +119,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
 		User user = findByUserName(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("Could not find any user with username %s", username));
@@ -122,6 +130,21 @@ public class UserServiceImpl implements UserService {
 	public ArrayList<User> findAll() {
 		return (ArrayList<User>) userRepository.findAll();
 	}
+	
+	public int sizeAdmin() {
+		int u = 0;
+		List<User> us = findAll();
+		if(us.size() != 0) {
+			for(User a: us) {
+				 List<SystemRole> role =  a.getRoles();
+				if(role.get(0).getName().equals("ADMIN")) {
+					u++;
+				}
+			}
+		}
+		return u;
+	}
+	
 
 	@Override
 	public Optional<User> findByEmail(String email) {

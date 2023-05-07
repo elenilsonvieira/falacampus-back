@@ -48,12 +48,12 @@ public class Comment implements Serializable {
 	
 	@NotNull
 	@NotEmpty
-	@Size(min=5, max=50)
+	@Size(min=4, max=50)
 	@Column(name = "comment_title")
 	private String title;
 	
 	@NotNull
-	@Size(min = 10, max=255)
+	@Size(min = 4, max=255)
 	@Column(name = "comment_message")
 	private String message;
 	
@@ -210,5 +210,6 @@ public class Comment implements Serializable {
 				&& Objects.equals(id, other.id) && Objects.equals(message, other.message)
 				&& statusComment == other.statusComment && Objects.equals(title, other.title);
 	}
+
 	
 }

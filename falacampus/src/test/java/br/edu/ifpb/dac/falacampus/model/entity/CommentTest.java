@@ -82,7 +82,7 @@ public class CommentTest {
 		@Order(3)
 		@DisplayName("Testes tamanho maximo e minimo invalido")
 		@ParameterizedTest(name = "Teste invalido {index} -> {0}.")
-		@ValueSource(strings = { "abcd", "um teste para saber se é possivel passar mais de 51" })
+		@ValueSource(strings = { "ab", "um teste para saber se é possivel passar mais de 51" })
 		void invalidTitleMinimumAndMaximumCharacters(String title) {
 			comment.setTitle(title);
 			violations = validator.validateProperty(comment, "title");
@@ -129,7 +129,7 @@ public class CommentTest {
 		@Order(3)
 		@DisplayName("Testes tamanho maximo e minimo invalido")
 		@ParameterizedTest(name = "Teste invalido {index} -> {0}.")
-		@ValueSource(strings = { "abcdefghw",
+		@ValueSource(strings = { "ab",
 				"A Neo Química Arena recebeu, na tarde deste domingo(16), a estreia do Corinthians no Brasileirão 2023. "
 						+ "O time comandado por Fernando Lázaro venceu o Cruzeiro por 2 a 1, com gols de Matheus Araújo e Róger Guedes. Lucas Oliveira descontou para os visitantes." })
 		// teste 1 = 9 caracteres e teste 2 = 256 caracteres
