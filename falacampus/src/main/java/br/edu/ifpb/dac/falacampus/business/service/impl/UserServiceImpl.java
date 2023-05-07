@@ -63,8 +63,6 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 		userUp.setEmail(user.getEmail());
-		userUp.setUsername(user.getUsername());
-		userUp.setName(user.getName());
 		userUp.setDepartament(user.getDepartament());
 		
 		List<SystemRole> roles = new ArrayList<>();
