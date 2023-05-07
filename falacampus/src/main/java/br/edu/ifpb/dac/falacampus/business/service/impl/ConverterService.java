@@ -43,6 +43,7 @@ public class ConverterService {
 
 
 	public String jsonToTokenDepartament(String json) {
+		System.out.print("JZÂO: "+json);
 		JsonElement jsonElement = JsonParser.parseString(json);
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;

@@ -60,7 +60,6 @@ public class TokenServiceImpl implements TokenService{
 
 	@Override
 	public Claims getClaims(String token) throws ExpiredJwtException {
-		System.out.print("TOKEN AQUI: "+token.toString());
 		return Jwts
 				.parser()
 				.setSigningKey(secret)

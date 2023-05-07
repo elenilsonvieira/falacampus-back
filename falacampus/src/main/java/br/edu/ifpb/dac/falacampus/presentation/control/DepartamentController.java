@@ -77,7 +77,6 @@ public class DepartamentController {
 	public ResponseEntity update(@PathVariable("id") Long id, @RequestBody @Valid DepartamentDto dto) {
 		try {
 			Departament departament = departamentConvertService.dtoToDepartament(dto);
-			System.out.print("PASSOU>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
 			ArrayList<User> users = new ArrayList<>();
 			if(dto.getResponsibleUsers() != null) {
 				for (String user : dto.getResponsibleUsers()) {
@@ -104,29 +103,7 @@ public class DepartamentController {
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-//			 User userEntity = userService.
-//			 UserDto userDto = new UserDto();
-//			 userDto.getDepartamentId();
-
-			/*
-			 * Lógica
-			 * 
-			 * SE id de Departament de relaciona com um User ENTÃO Departament não pode ser
-			 * deletado >> Ou seja << SE Departament é chave estrangeira de um User ENTÃO
-			 * User não pode ser deletado
-			 *
-			 */
-			/*
-			 * ResponseEntity userWithDepartament = findUserByDepartament(id); User author =
-			 * userService.find(userWithDepartament.);
-			 * 
-			 */ 
-//			 if (!findUserByDepartament(id).equals(HttpStatus.OK)) {
-//			  
-//			 } else {
-//					throw new Exception();
-//			}
-
+//			 
 			departamentService.deleteById(id);
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
 			
@@ -137,31 +114,6 @@ public class DepartamentController {
 		}
 	}
 
-//	@GetMapping
-//	private ResponseEntity findUserByDepartament(
-//			@RequestParam(value = "departamentId", required = false) Long departamentId) {
-//
-//		try {
-//
-//			User filter = new User();
-//			Departament departament = departamentService.findById(departamentId);
-//
-//			if (departament == null) {
-//				throw new IllegalStateException(
-//						String.format("Could not find any departament whit id=%1", departamentId));
-//			}
-//
-//			filter.setDepartament(departament);
-//
-//			List<User> entities = userService.find(filter);
-//			List<UserDto> dtos = userConverterService.userToDTOList(entities);
-//
-//			return ResponseEntity.ok(dtos);
-//
-//		} catch (Exception e) {
-//			return ResponseEntity.badRequest().body(e.getMessage());
-//		}
-//	}
 
 	@GetMapping
 	public ResponseEntity findByFilter(@RequestParam(value = "id", required = false) Long id,
@@ -197,7 +149,7 @@ public class DepartamentController {
 	
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
-		departamentConverterServiceImpl.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/9a7ffedf-f9d6-4ad0-a5a6-78ba371c26d9/a");
+		departamentConverterServiceImpl.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/6e5afa99-222e-420a-9984-381b34542369/a");
 	}
 	
 	private DepartamentDto mapToDepartamentDto(Departament departament) {
