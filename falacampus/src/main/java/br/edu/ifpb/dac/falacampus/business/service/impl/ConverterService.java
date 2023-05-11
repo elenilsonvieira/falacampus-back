@@ -14,6 +14,7 @@ import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
+import br.edu.ifpb.dac.falacampus.model.entity.Token;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 
 @Service
@@ -36,21 +37,19 @@ public class ConverterService {
 
 	public String jsonToToken(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
-		System.out.print("TOKEN AQUI: "+json);
 		String token = jsonElement.getAsJsonObject().get("access").getAsString();
 		return token;
 	}
 
 
 	public String jsonToTokenDepartament(String json) {
-		System.out.print("JZÂO: "+json);
 		JsonElement jsonElement = JsonParser.parseString(json);
+		System.out.print("TOKEN AQUI     "+json);
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;
 	}
 
 	public User jsonToUser(String jsonUser) {
-		System.out.print("Json doido      " + jsonUser);
 		JsonElement jsonElement = JsonParser.parseString(jsonUser);
 		System.out.print(jsonElement);
 		JsonObject results = jsonElement.getAsJsonObject()
@@ -130,7 +129,6 @@ public class ConverterService {
 	public JsonObject jsonToDepartament(String jsonDepartament) {
 		JsonElement jsonE = JsonParser.parseString(jsonDepartament);
 		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
-		
 		return results;
 	}
 

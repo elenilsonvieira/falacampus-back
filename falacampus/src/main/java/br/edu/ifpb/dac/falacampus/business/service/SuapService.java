@@ -1,6 +1,4 @@
 package br.edu.ifpb.dac.falacampus.business.service;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -41,7 +39,7 @@ public interface SuapService {
 	
 	public String findUser (String token, String username);
 
-	public String findAllDepartament(String url, String token);
+	public String findAllDepartament(String url);
 	
 //---------------------------	
 

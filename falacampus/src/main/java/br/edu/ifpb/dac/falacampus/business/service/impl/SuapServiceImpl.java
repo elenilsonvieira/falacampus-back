@@ -14,6 +14,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
+import br.edu.ifpb.dac.falacampus.model.entity.Token;
 
 @Service
 public class SuapServiceImpl implements SuapService {
@@ -154,13 +155,12 @@ public class SuapServiceImpl implements SuapService {
 	
 	@Override
 	@Lazy
-	public String findAllDepartament(String url,String token) {
-		token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNDg4MTgzLCJpYXQiOjE2ODM0ODQ1ODMsImp0aSI6IjU3Y2YzMWE1MmU2MTQwYWNhNmQ2ZDExNjBjYmZjZWIwIiwidXNlcl9pZCI6NTM1OTR9.zoOGUe2qpYE9rgBBA-GjGuMJqtdGcnC-0p_SAt1Fz8M";
+	public String findAllDepartament(String url) {
+		System.out.print("TOKEN AQUI     "+Token.access);
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
 		urlSon = urlSon.substring(0,urlSon.length()-1);
-		System.out.print("findAllDepartament    :"+ token + DEPARTAMENTS_URL + urlSon);
-		return find(token,  DEPARTAMENTS_URL + urlSon);
+		return find("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzNTc5MTgwLCJpYXQiOjE2ODM1NzU1ODAsImp0aSI6IjlkZjQzNWVjODgzOTRhYjM5YmY1MTZhMDkyNDliMWFiIiwidXNlcl9pZCI6NTM1OTR9.R4AmIdOal8NAvaspyxbU9c1upvcOExPfnN8I7rCXCgc",  DEPARTAMENTS_URL + urlSon);
 		
 	}
 	

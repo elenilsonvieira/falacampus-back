@@ -17,7 +17,7 @@ import br.edu.ifpb.dac.falacampus.business.service.AuthenticationService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
-
+import br.edu.ifpb.dac.falacampus.model.entity.Token;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.LoginDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.TokenDto;
@@ -29,6 +29,7 @@ import io.jsonwebtoken.Jwts;
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class AuthenticationController {
 
+	
 	@Autowired
 	private AuthenticationService authenticationService;
 	@Autowired
@@ -42,11 +43,8 @@ public class AuthenticationController {
 	public ResponseEntity login(@RequestBody LoginDto dto) {
 		try {
 			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
-			
-			User entity = userService.findByUserName(dto.getUsername());
-					
+			User entity = userService.findByUserName(dto.getUsername());		
 			UserDto user = userConverterService.userToDTO(entity); 
-			
 			TokenDto tokenDto = new TokenDto(token, user);
 			
 			return new ResponseEntity(tokenDto, HttpStatus.OK);

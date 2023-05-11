@@ -20,6 +20,8 @@ import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
+import br.edu.ifpb.dac.falacampus.model.entity.Token;
+import br.edu.ifpb.dac.falacampus.presentation.control.AuthenticationController;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 
 @Service
@@ -72,10 +74,8 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	
 	public void SaveAllDepartments(String url) {
-		//Converter token
 		try {
-			
-			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url,suapToken));
+			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -83,7 +83,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 		if(this.suapToken == null) {
 			throw new IllegalArgumentException();
 		}
-		String suapDepartamentJson = this.suapService.findAllDepartament(url,suapToken);
+		String suapDepartamentJson = this.suapService.findAllDepartament(url);
 		
 	
 		try {
@@ -107,7 +107,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 			}
 			
 		} catch (Exception e) {
-			
+			System.out.print(e.getMessage());
 		}
 	}
 }
