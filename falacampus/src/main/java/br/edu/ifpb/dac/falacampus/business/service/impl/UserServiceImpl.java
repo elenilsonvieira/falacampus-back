@@ -40,9 +40,12 @@ public class UserServiceImpl implements UserService {
 		
 		List<SystemRole> roles = new ArrayList<>();
 		if(findAll().size() == 0) {
+			user.setPreviousRole(user.getRoles().get(0));
 			roles.add(isRole("ADMIN"));
+			
+			
 		}else {
-			roles.add(isRole(user.getRoles().get(0).getName()));
+			roles.add(isRole("TEACHER"));
 		}
 		user.setRoles(roles);
 		
@@ -52,28 +55,47 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User update(User user) {
-		
-		User userUp = findById(user.getId());
-		if (userUp == null) {
-			throw new IllegalStateException("User id is null");
-		}
-		if(userUp.getRoles().get(0).getName().equals("ADMIN") && !user.getRoles().get(0).getName().equals("ADMIN")) {
-			if(sizeAdmin() == 1) {
-				throw new IllegalStateException("cannot be changed, there is only one ADMIN");
-			}
-		}
-		userUp.setEmail(user.getEmail());
-		userUp.setDepartament(user.getDepartament());
-		
-		List<SystemRole> roles = new ArrayList<>();
-		
-		roles.add(isRole(user.getRoles().get(0).getName()));
+	    User userUp = findById(user.getId());
+	    
+	    if (userUp == null) {
+	        throw new IllegalStateException("User id is null");
+	    }
+	    else if (userUp.getRoles().get(0).getName().equals("ADMIN") && user.getRoles().get(0).getName().equals("ADMIN")) {
+	        throw new IllegalStateException("User is already ADMIN");
+	    }
+	    else if(user.getRoles().get(0).getName().equals("REMOVE") && !userUp.getRoles().get(0).getName().equals("ADMIN")) {
+	    	throw new IllegalStateException("User is not an Admin");
+	    }
+	    else if (userUp.getRoles().get(0).getName().equals("ADMIN") && !user.getRoles().get(0).getName().equals("ADMIN")) {
+	        if(sizeAdmin() == 1) {
+	            throw new IllegalStateException("Cannot be changed, there is only one ADMIN");
+	        }
+	    }
+	    
+	    List<SystemRole> roles = userUp.getRoles();
+	    List<SystemRole> newRoles = new ArrayList<>();
+	  
+	    if (user.getRoles().get(0).getName().equals("REMOVE")) {
+	    	 newRoles.add(userUp.getPreviousRole());
+	    }
+	    else {
+	        SystemRole newRole = isRole(user.getRoles().get(0).getName());
+	        newRoles.add(newRole);
+	        
+	        // Se o novo papel for ADMIN, armazenar o papel anterior em "previousRole" antes de atribuir o papel ADMIN
+	        if (newRole.getName().equals("ADMIN")) {
+	            userUp.setPreviousRole(roles.get(0));
+	        }
+	    }
 
-		user.setRoles(roles);
-		
-		
-		return userRepository.save(user);
+	
+	    userUp.setEmail(user.getEmail());
+	    userUp.setDepartament(user.getDepartament());
+	    userUp.setRoles(newRoles);
+	   
+	    return userRepository.save(userUp);
 	}
+
 	
 	@Override
 	public void delete(Long id) {

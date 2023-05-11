@@ -62,6 +62,9 @@ public class User implements UserDetails {
 	@JoinColumn(name = "departament_id")
 	private Departament departament;
 	
+	private SystemRole previousRole;
+	
+	
 	@ManyToMany(fetch = FetchType.EAGER)
 	private List<SystemRole> roles = new ArrayList<>();
 	
@@ -190,6 +193,13 @@ public class User implements UserDetails {
 	public String toString() {
 		return "Username: "+ getUsername()+ "   "+ 
 				"Nome: " + getName();
+	}
+	public SystemRole getPreviousRole() {
+		return previousRole;
+	}
+
+	public void setPreviousRole(SystemRole previousRole) {
+		this.previousRole = previousRole;
 	}
 
 
