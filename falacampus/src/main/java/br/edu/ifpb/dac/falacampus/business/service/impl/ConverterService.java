@@ -8,13 +8,10 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
-import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
-import br.edu.ifpb.dac.falacampus.model.entity.Token;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 
 @Service
@@ -41,10 +38,8 @@ public class ConverterService {
 		return token;
 	}
 
-
 	public String jsonToTokenDepartament(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
-		System.out.print("TOKEN AQUI     "+json);
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
 		return token;
 	}

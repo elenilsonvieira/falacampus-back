@@ -2,26 +2,19 @@ package br.edu.ifpb.dac.falacampus.business.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.concurrent.CompletableFuture;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.Scope;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.WebApplicationContext;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
 import br.edu.ifpb.dac.falacampus.business.service.DepartamentConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
-import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
-import br.edu.ifpb.dac.falacampus.model.entity.Token;
-import br.edu.ifpb.dac.falacampus.presentation.control.AuthenticationController;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 
 @Service
@@ -74,40 +67,44 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	
 	
 	public void SaveAllDepartments(String url) {
-		try {
-			this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		if(this.suapToken == null) {
-			throw new IllegalArgumentException();
-		}
-		String suapDepartamentJson = this.suapService.findAllDepartament(url);
-		
-	
-		try {
-			JsonObject result = converterService.jsonToDepartament(suapDepartamentJson);			
-			departament = new Departament();
-			
-			String name = result.get("nome").getAsString().toString();
-			departament.setName(name);
-			
-			String initials = result.get("sigla").getAsString().toString();
+	    // Converter token
+	    try {
+	        this.suapToken = converterService.jsonToTokenDepartament(suapService.findAllDepartament(url));
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 
-			departament.setAcronymDepartment(initials);
-			
-			departamentService.save(departament);
+	    if (this.suapToken == null) {
+	        throw new IllegalArgumentException();
+	    }
 
-			JsonArray childSectors = result.get("setores_filho").getAsJsonArray();
-			
-			for (JsonElement jsonElement : childSectors) {
-				
-				SaveAllDepartments(jsonElement.toString());
-			}
-			
-		} catch (Exception e) {
-			System.out.print(e.getMessage());
-		}
+	    String suapDepartamentJson = this.suapService.findAllDepartament(url);
+
+	    try {
+	        JsonObject result = converterService.jsonToDepartament(suapDepartamentJson);
+	        Departament departament = new Departament();
+
+	        String name = result.get("nome").getAsString();
+	        departament.setName(name);
+
+	        String initials = result.get("sigla").getAsString();
+	        departament.setAcronymDepartment(initials);
+
+	        departamentService.save(departament);
+
+	        JsonArray childSectors = result.get("setores_filho").getAsJsonArray();
+	        List<CompletableFuture<Void>> futures = new ArrayList<>();
+
+	        for (JsonElement jsonElement : childSectors) {
+	            String childSectorUrl = jsonElement.toString();
+	            futures.add(CompletableFuture.runAsync(() -> SaveAllDepartments(childSectorUrl)));
+	        }
+
+	        CompletableFuture.allOf(futures.toArray(new CompletableFuture[0])).join();
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
+
 }

@@ -14,7 +14,6 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.SuapService;
-import br.edu.ifpb.dac.falacampus.model.entity.Token;
 
 @Service
 public class SuapServiceImpl implements SuapService {
@@ -156,7 +155,6 @@ public class SuapServiceImpl implements SuapService {
 	@Override
 	@Lazy
 	public String findAllDepartament(String url) {
-		System.out.print("TOKEN AQUI     "+Token.access);
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
 		urlSon = urlSon.substring(0,urlSon.length()-1);
