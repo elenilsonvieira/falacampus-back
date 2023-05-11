@@ -90,7 +90,9 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	        String initials = result.get("sigla").getAsString();
 	        departament.setAcronymDepartment(initials);
 
-	        departamentService.save(departament);
+			if(departamentService.findByName(name)!= null || !name.equals("CAMPUS MONTEIRO")){
+				departamentService.save(departament);
+			}
 
 	        JsonArray childSectors = result.get("setores_filho").getAsJsonArray();
 	        List<CompletableFuture<Void>> futures = new ArrayList<>();

@@ -17,7 +17,7 @@ import br.edu.ifpb.dac.falacampus.business.service.AuthenticationService;
 import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
-import br.edu.ifpb.dac.falacampus.model.entity.Token;
+
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.LoginDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.TokenDto;

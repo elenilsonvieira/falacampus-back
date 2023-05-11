@@ -38,7 +38,9 @@ import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.DetailsCommentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 
-@RestController
+import static br.edu.ifpb.dac.falacampus.business.service.SuapService.DEPARTAMENTS_URL_MONTEIRO;
+
+ @RestController
 @RequestMapping("/api/departament")
 public class DepartamentController {
 
@@ -149,7 +151,7 @@ public class DepartamentController {
 	
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
-		departamentConverterServiceImpl.SaveAllDepartments("https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/6e5afa99-222e-420a-9984-381b34542369/a");
+		departamentConverterServiceImpl.SaveAllDepartments(DEPARTAMENTS_URL_MONTEIRO);
 	}
 	
 	private DepartamentDto mapToDepartamentDto(Departament departament) {
