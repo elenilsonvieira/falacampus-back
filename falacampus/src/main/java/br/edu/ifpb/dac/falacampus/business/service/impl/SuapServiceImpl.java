@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -17,7 +18,8 @@ import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 
 @Service
 public class SuapServiceImpl implements SuapService {
-	
+
+	private String tokenAcess;
 	@Autowired
 	private ConverterService converterService;
 
@@ -30,7 +32,10 @@ public class SuapServiceImpl implements SuapService {
 		// mapTOJson(body);
 		try {
 			HttpRequest url = generatePostUrl(OBTAIN_TOKEN_URL, null, json);
-			return sendRequest(url);
+			String send = sendRequest(url);
+			String[] textoSeparado = send.split("\"");
+			tokenAcess = textoSeparado[7];
+			return send;
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} catch (IOException e2) {
@@ -158,7 +163,7 @@ public class SuapServiceImpl implements SuapService {
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
 		urlSon = urlSon.substring(0,urlSon.length()-1);
-		return find("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjgzODI1OTE3LCJpYXQiOjE2ODM4MjIzMTcsImp0aSI6IjNlNjVjNjAxYTJkYjQ3NzdhMzQ5NmJmMDA3YWMyY2JjIiwidXNlcl9pZCI6NTM1OTR9.TwKxZbg9l2IcpNwf3AGZ4Ca4UkVCcR6lkAqmXJR7Dqk",  DEPARTAMENTS_URL + urlSon);
+		return find(tokenAcess,  DEPARTAMENTS_URL + urlSon);
 		
 	}
 	
