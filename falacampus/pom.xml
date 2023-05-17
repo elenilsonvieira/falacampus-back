@@ -19,12 +19,34 @@
 		<maven.test.plugin>2.22.2</maven.test.plugin>
 	</properties>
 	<dependencies>
+	<dependency>
+    <groupId>org.powermock</groupId>
+    <artifactId>powermock-core</artifactId>
+    <version>2.0.9</version>
+    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.powermock</groupId>
+	    <artifactId>powermock-module-junit4</artifactId>
+	    <version>2.0.9</version>
+	    <scope>test</scope>
+	</dependency>
+	<dependency>
+	    <groupId>org.powermock</groupId>
+	    <artifactId>powermock-api-mockito2</artifactId>
+	    <version>2.0.9</version>
+	    <scope>test</scope>
+	</dependency>
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-actuator</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>teste</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-jpa</artifactId>
@@ -138,11 +160,11 @@
 			<version>1.8.2</version>
 			<scope>test</scope>
 		</dependency>
-<dependency>
-    <groupId>org.seleniumhq.selenium</groupId>
-    <artifactId>selenium-java</artifactId>
-    <version>4.6.0</version>
-</dependency>
+		<dependency>
+		<groupId>org.seleniumhq.selenium</groupId>
+		<artifactId>selenium-java</artifactId>
+		<version>4.6.0</version>
+		</dependency>
 
 
 		<dependency>

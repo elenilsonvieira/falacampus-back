@@ -3,6 +3,7 @@ package br.edu.ifpb.dac.falacampus.business.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.edu.ifpb.dac.falacampus.model.entity.Answer;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -29,6 +30,9 @@ public class CommentService {
 	private ModelMapper mapper;
 	
 	public Comment save(Comment comment) {
+		if(comment == null) {
+			throw new IllegalStateException(String.format("Comment not found"));
+		}
 		return commentRepository.save(comment);
 	}
 	
@@ -45,16 +49,20 @@ public class CommentService {
 	}
 
 	public Comment update(Comment comment) {
+		if(comment == null || findById(comment.getId()) == null) {
+			throw new IllegalStateException(String.format("Comment not found"));
+		}
 		return commentRepository.save(comment);
 	}
 	
 	
 	public Comment findById(Long id) {
-		if(id == null) {
+		try{
+			Comment comment = commentRepository.findById(id).get();
+			return comment;
+		}catch (Exception e){
 			throw new IllegalStateException("Id cannot be null");
 		}
-		return commentRepository.findById(id).get();
-		
 	}
 
 	public List<Comment> findAll() {

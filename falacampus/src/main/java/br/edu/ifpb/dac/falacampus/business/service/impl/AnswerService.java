@@ -23,10 +23,16 @@ public class AnswerService {
 	private ModelMapper mapper;
 
 	public Answer save(Answer answer) {
+		if (answer == null) {
+			throw new IllegalStateException(String.format("Answer is null"));
+		}
 		return answerRepository.save(answer);
 	}
 
 	public Answer save(Answer answer, Long id) {
+		if (answer == null) {
+			throw new IllegalStateException(String.format("Answer is null"));
+		}
 		return answerRepository.save(answer);
 	}
 
@@ -48,6 +54,9 @@ public class AnswerService {
 	}
 
 	public Answer update(Answer answer) {
+		if(answer.getId() == null || findById(answer.getId()) == null){
+			throw new IllegalStateException("Id cannot be null");
+		}
 		return answerRepository.save(answer);
 	}
 
@@ -64,10 +73,13 @@ public class AnswerService {
 	}
 
 	public Answer findById(Long id) {
-		if (id == null) {
+
+		try{
+			Answer an = answerRepository.findById(id).get();
+			return an;
+		}catch (Exception e){
 			throw new IllegalStateException("Id cannot be null");
 		}
-		return answerRepository.findById(id).get();
 
 	}
 

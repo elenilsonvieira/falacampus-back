@@ -27,22 +27,6 @@ public class CommentConverterServiceImpl implements CommentConverterService {
 		}
 		return dtos;
 	}
-
-//	@Override
-//	public Comment dtoToComment(CommentDto dto) {
-//		
-//		Comment entity = mapper.map(dto, Comment.class);
-//				
-//		return entity;
-//	}
-
-//	@Override
-//	public CommentDto commentToDTO(Comment entity) {
-//		
-//		CommentDto dto = mapper.map(entity, CommentDto.class);
-//				
-//		return dto;
-//	}
 	
 	public DetailsCommentDto commentToDetailDto(Comment entity) {
 		
@@ -51,4 +35,7 @@ public class CommentConverterServiceImpl implements CommentConverterService {
 		return dto;
 	}
 
+	public void setMapper(ModelMapper mapper) {
+		this.mapper = mapper;
+	}
 }

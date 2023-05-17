@@ -13,7 +13,7 @@ import br.edu.ifpb.dac.falacampus.presentation.dto.AnswerDto;
 
 @Service
 public class AnswerConverterServiceImpl implements AnswerConverterService {
-	
+
 	@Autowired
 	private ModelMapper mapper;
 
@@ -38,11 +38,14 @@ public class AnswerConverterServiceImpl implements AnswerConverterService {
 
 	@Override
 	public AnswerDto answerToDTO(Answer entity) {
-		
+
 		AnswerDto dto = mapper.map(entity, AnswerDto.class);
-		
-		return dto;		
-		
+
+		return dto;
+
 	}
 
+	public void setMapper(ModelMapper mapper) {
+		this.mapper = mapper;
+	}
 }
