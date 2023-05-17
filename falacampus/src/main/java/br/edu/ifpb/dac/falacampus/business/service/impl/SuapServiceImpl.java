@@ -29,12 +29,10 @@ public class SuapServiceImpl implements SuapService {
 		Map body = Map.of(USERNAME_JSON_FIELD, username, PASSWORD_JSON_FIELD, password);
 		
 		String json = converterService.mapToJson(body);
-		// mapTOJson(body);
 		try {
 			HttpRequest url = generatePostUrl(OBTAIN_TOKEN_URL, null, json);
 			String send = sendRequest(url);
-			String[] textoSeparado = send.split("\"");
-			tokenAcess = textoSeparado[7];
+			saveToken(send);
 			return send;
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
@@ -167,7 +165,14 @@ public class SuapServiceImpl implements SuapService {
 		
 	}
 	
+	public void saveToken(String send){
+		try {
+			String[] textoSeparado = send.split("\"");
+			tokenAcess = textoSeparado[7];
+		}catch (Exception e){
 
+		}
+	}
 	
 	
 }
