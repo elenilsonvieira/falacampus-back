@@ -10,7 +10,8 @@ import org.junit.platform.suite.api.Suite;
 	PasswordEnconderServiceUnitTest.class,
 	AnswerConverterUnitTest.class,
 	CommentConverterUnitTest.class,
-	DetailsCommentUnitTest.class
+	DetailsCommentUnitTest.class,
+	UserConverterServiceImplTest.class
 })
 public class SuiteServiceUnitTest {
 

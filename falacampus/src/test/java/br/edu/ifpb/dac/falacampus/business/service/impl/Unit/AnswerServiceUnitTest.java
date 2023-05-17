@@ -99,23 +99,35 @@ public class AnswerServiceUnitTest {
     @Test
     @DisplayName("Test deleteById with non-existing id")
     public void testDeleteByIdWithNonExistingId() {
-        when(answerRepository.findById(anyLong())).thenThrow(new NoSuchElementException());
+        when(answerRepository.findById(anyLong())).thenThrow(new IllegalStateException());
 
-        assertThrows(NoSuchElementException.class, () -> answerService.deleteById(1L));
+        assertThrows(IllegalStateException.class, () -> answerService.deleteById(1L));
         verify(answerRepository, times(0)).deleteById(anyLong());
     }
 
     @Test
     @DisplayName("Test update with success")
-    public void testUpdate() {
-        when(answerRepository.save(any(Answer.class))).thenReturn(answer);
+    public void answerUpdateTest() {
+        // Configuração do cenário
+        Answer originalAnswer = new Answer();
+        originalAnswer.setId(1L);
+        originalAnswer.setMessage("Original Answer");
 
-        Answer updatedAnswer = answerService.update(answer);
+        Answer updatedAnswer = new Answer();
+        updatedAnswer.setId(1L);
+        updatedAnswer.setMessage("Updated Answer");
 
-        assertEquals(answer, updatedAnswer);
-        verify(answerRepository, times(1)).save(answer);
+        when(answerRepository.findById(1L)).thenReturn(Optional.of(originalAnswer));
+        when(answerRepository.save(any(Answer.class))).thenReturn(updatedAnswer);
+
+        Answer result = answerService.update(updatedAnswer);
+
+        assertEquals(updatedAnswer, result);
+        verify(answerRepository, times(1)).findById(1L);
+        verify(answerRepository, times(1)).save(updatedAnswer);
     }
-    
+
+
     @Test
     @DisplayName("Test findAll method")
     public void testFindAll() {

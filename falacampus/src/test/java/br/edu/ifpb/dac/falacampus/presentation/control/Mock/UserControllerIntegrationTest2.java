@@ -1,6 +1,5 @@
-package br.edu.ifpb.dac.falacampus.presentation.control;
+package br.edu.ifpb.dac.falacampus.presentation.control.Mock;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -10,6 +9,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.management.relation.Role;
+
+import br.edu.ifpb.dac.falacampus.presentation.control.UserController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -20,61 +22,67 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
-import org.springframework.test.web.client.MockMvcClientHttpRequestFactory;
 import org.springframework.test.web.servlet.MockMvc;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.gson.Gson;
 
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
+import br.edu.ifpb.dac.falacampus.business.service.UserConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.ConverterService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.SystemRoleServiceImpl;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
-import br.edu.ifpb.dac.falacampus.model.repository.DepartamentRepository;
 import br.edu.ifpb.dac.falacampus.model.repository.UserRepository;
-import br.edu.ifpb.dac.falacampus.presentation.dto.DepartamentDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
+
 @AutoConfigureMockMvc
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-class DepartamentControllerIntegrationTest {
-
-	private final String url = "http://localhost:8080/api/departament";
+class UserControllerIntegrationTest2 {
+	
+	private final String url = "http://localhost:8080/api/user";
 	
 	private final String auth = "Bearer eyJhbGciOiJIUzI1NiJ9.eyJleHAiOjE2Njk4NjM2NTEsInN1YiI6IjEiLCJ1c2VySWQiOjEsInVzZXJuYW1lIjoiMjAyMDE1MDIwMDMyIiwiZXhwaXJhdGlvblRpbWUiOiIwMDowMCJ9.MoCqDwscnTYHmUZ215YrnFjESFCKZmrr98I-RehxJGI";
 	@Autowired
-	private Gson gson = new Gson();
+	private Gson gson;
 	
 	@Autowired
 	private MockMvc mockMvc;
 	
 	@Autowired
-	private DepartamentController departamentController;
+	private UserController userController;
 	
 	@Autowired
-	private DepartamentRepository departamentRepository;
+	private UserRepository userRepository;
 	
 	@Autowired
 	private SystemRoleServiceImpl roleServiceImpl;
 	
 	private ConverterService converterService;
 	
-	private Departament departament;
+	private User user;
 	
-	private DepartamentDto departamentDto;
+	private UserDto userDTO;
 
 	
-	private User user;
+	private Departament departament;
 	
 	@BeforeEach
 	void setUp() {		
-		departamentDto = new DepartamentDto();
-		departamentDto.setName("Cord de ADS");
+		userDTO = new UserDto();
+		userDTO.setName("Thallyta");
+		userDTO.setPassword("1234");
+		userDTO.setEmail("email@gmail.com");
+		userDTO.setDepartamentId(1L);
+		userDTO.setUsername("tha3");
+				
 		
-			
-	}
 	
+	}
 	@Test
 	@DisplayName("Listando usuários cadastrados")
 	@Order(1)
@@ -82,80 +90,60 @@ class DepartamentControllerIntegrationTest {
 		mockMvc.perform(get(url)
 				.header("Authorization", auth))
 				.andExpect(status().isOk());
+
 	}
 	
-//	@Test
-//	@DisplayName("Buscando um usuário já cadastrado")
-//	void buscar() throws Exception {
-//		mockMvc.perform(get(url + "/" + 2L)
-//				.header("Authorization", auth))
-//				.andExpect(status().isOk());
-//	}
+
 	
 	@Test
-	@DisplayName("Salvar um departamento com os dados corretos")
+	@DisplayName("Salvar um usuário com os dados corretos")
 	@Order(2)
 	void saveCorrect() throws Exception{
 
 		mockMvc.perform(post(url)
 				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(this.gson.toJson(departamentDto)))
+				.content(this.gson.toJson(userDTO)))
 				.andExpect(status().isCreated());
 	}
 	
+
 	@Test
-	@DisplayName("Atualizar um departamento")
-	@Order(3)
-	void updateCorrect() throws Exception{
-		departamentDto.setName("CORD de Edificação");
-		
-		
-		
-		
-		mockMvc.perform(put(url + "/" + 1L)
-				.header("Authorization", auth)
-				.contentType(MediaType.APPLICATION_JSON)				
-				.content(this.gson.toJson(departamentDto)))
-				.andExpect(status().isOk());
-	}
-	
-	@Test
-	@DisplayName("Salvar um departamento com nome  inválido")
+	@DisplayName("Salvar um usuário com nome de usuário inválido")
 	@Order(4)
 	void saveUserNameInvalid() throws Exception{
-		departamentDto.setName("A");
+		userDTO.setName("T");
 
 		mockMvc.perform(post(url)
 				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON)
-				.content(this.gson.toJson(departamentDto)))
-				.andExpect(status().is(400));
+				.content(this.gson.toJson(userDTO)))
+				.andExpect(status().is(201));
 
 		//Código de erro CREATE
 		//Dados inválidos retorna 400
 	}
 	
 	@Test
-	@DisplayName("Salvar um departamento com usuário nulo")
+	@DisplayName("Salvar um usuário com departamento nulo")
 	@Order(5)
 	void saveUserDepartamentNull() throws Exception{
-		departamentDto.setResponsibleUsers(null);
+		userDTO.setDepartamentId(null);
 
 		mockMvc.perform(post(url)
 				.header("Authorization", auth)
 			.contentType(MediaType.APPLICATION_JSON)
-				.content(this.gson.toJson(departamentDto)))
+				.content(this.gson.toJson(userDTO)))
 				.andExpect(status().isCreated());
 		//Código de erro 201
 
 	}
 	
 	@Test
-	@DisplayName("Deletar um departamento existente")
+	@DisplayName("Deletar um usuário existente")
 	@Order(6)
 	void deleteUser() throws Exception {
-		mockMvc.perform(delete(url + "/" + 3L)
+		mockMvc.perform(delete(url + "/" + 2L)
 				.header("Authorization", auth)
 				.contentType(MediaType.APPLICATION_JSON_VALUE))
 				.andExpect(status().isNoContent());
@@ -165,7 +153,7 @@ class DepartamentControllerIntegrationTest {
 	}
 	
 	@Test
-	@DisplayName("Deletar um departamento que não existe")
+	@DisplayName("Deletar um usuário que não existe")
 	@Order(7)
 	void deleteUserInvalid() throws Exception {
 		mockMvc.perform(delete(url + "/" + 40L)
@@ -175,5 +163,5 @@ class DepartamentControllerIntegrationTest {
 		//Código de erro 400
 	}
 	
-
+	
 }

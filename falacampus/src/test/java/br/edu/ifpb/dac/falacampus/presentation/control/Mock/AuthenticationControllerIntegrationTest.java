@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.falacampus.presentation.control;
+package br.edu.ifpb.dac.falacampus.presentation.control.Mock;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.CALLS_REAL_METHODS;
@@ -6,6 +6,7 @@ import static org.mockito.Mockito.RETURNS_DEEP_STUBS;
 import static org.mockito.Mockito.RETURNS_DEFAULTS;
 import static org.mockito.Mockito.when;
 
+import br.edu.ifpb.dac.falacampus.presentation.control.AuthenticationController;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

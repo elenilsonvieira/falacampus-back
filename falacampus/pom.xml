@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>br.edu.ifpb.dac</groupId>
-	<artifactId>falacampus</artifactId>
+	<artifactId>falacampusO</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Fala Campus</name>
 	<description>Project Fala Campus - DAC-IFPB 2022.1</description>

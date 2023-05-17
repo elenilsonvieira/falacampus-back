@@ -8,7 +8,8 @@ import org.junit.platform.suite.api.Suite;
 	AuthenticationServiceIntegrationTestIntegrate.class,
 	AnswerServiceTest.class,
 	DepartamentServiceTest.class,
-	CommentServiceTest.class
+	CommentServiceTest.class,
+	SystemRoleServiceImplTest.class
 })
 public class SuiteTestIntegrationService {
 }

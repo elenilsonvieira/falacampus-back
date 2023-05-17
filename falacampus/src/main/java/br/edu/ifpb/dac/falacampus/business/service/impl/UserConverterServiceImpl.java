@@ -17,6 +17,10 @@ import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 @Service
 public class UserConverterServiceImpl implements UserConverterService {
 
+	public void setModelMapper(ModelMapper modelMapper) {
+		this.modelMapper = modelMapper;
+	}
+
 	@Autowired
 	private ModelMapper modelMapper;
 	

@@ -187,18 +187,4 @@ public class UserController {
 		}
 	}
 	
-//	@GetMapping("/users")
-//	public ResponseEntity sortUsers(String name) {
-//		
-//		Pageable nameAsc = PageRequest.of(0, 10,
-//				Sort.by(Sort.Direction.ASC, "name"));
-//		Page<User> users = userService.findByName(name,
-//				nameAsc);
-//		System.out.println(users);
-//		System.out.println("Página atual: " + users.getNumber());
-//		System.out.println("Total de elementos: " + users.getTotalElements());
-//		users.forEach(user -> System.out.println(user.toString()));
-//		
-//	}
-	
 }
