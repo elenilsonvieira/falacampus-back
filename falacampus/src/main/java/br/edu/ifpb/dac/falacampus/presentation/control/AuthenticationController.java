@@ -28,8 +28,6 @@ import io.jsonwebtoken.Jwts;
 @RequestMapping("/api")
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class AuthenticationController {
-
-	
 	@Autowired
 	private AuthenticationService authenticationService;
 	@Autowired

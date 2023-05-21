@@ -78,6 +78,7 @@ public class DepartamentConverterServiceImpl implements DepartamentConverterServ
 	        throw new IllegalArgumentException();
 	    }
 
+
 	    String suapDepartamentJson = this.suapService.findAllDepartament(url);
 
 	    try {

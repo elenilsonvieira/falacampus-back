@@ -24,7 +24,7 @@ import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @AutoConfigureMockMvc(addFilters = false)
-public class UserControllerTest implements ConfigInterfaceUnitTest {
+public class UserControllTest implements ConfigInterfaceUnitTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired

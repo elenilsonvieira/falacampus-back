@@ -7,7 +7,9 @@ import org.junit.platform.suite.api.Suite;
 @Suite
 @Testable
 @SelectClasses({
-        UserControllerTest.class,
+        UserControllTest.class,
+        AnswerControllTeste.class,
+        AuthenticationControllTest.class
 })
 public class SuiteControllTest {
 }

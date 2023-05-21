@@ -61,7 +61,10 @@ public class AnswerController {
 	public ResponseEntity save(@RequestBody @Valid AnswerDto dto) {
 		try {
 			if (dto.getCommentId() == null) {
+				System.out.println("ENTROU");
+
 				throw new IllegalStateException("commentId cannot be null");
+
 			}
 			
 			Long commentId = dto.getCommentId();
@@ -99,10 +102,7 @@ public class AnswerController {
 		public ResponseEntity returned(@PathVariable("id") Long id) {
 
 			try {
-//				Comment enti = commentService.findById(id);
-//				
-//				Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto); 			
-			Comment entity=commentService.findById(id);
+				Comment entity=commentService.findById(id);
 			
 				entity.setStatusComment(StatusComment.RETURNED);
 				entity = commentService.update(entity);
@@ -220,22 +220,4 @@ public class AnswerController {
 			return result;	
 		}
 	}
-	
-	
-//	@GetMapping("/{id}")
-//	public ResponseEntity findById(@PathVariable Long id) throws Exception{
-//		
-//		try {
-//			Answer entity = answerService.findById(id);
-//			AnswerDto dto = answerConverterService.answerToDTO(entity);
-//			
-//			
-//			return ResponseEntity.ok(dto);
-//		
-//		} catch(Exception e) {
-//			return ResponseEntity.badRequest().body(e.getMessage());
-//		}
-//	}	
-	
-	
 }

@@ -58,7 +58,7 @@ class AuthenticationControllerIntegrationTest {
 		loginDto.setUsername("202015020032");
 		loginDto.setPassword(password);
 		ResponseEntity<String> response = authenticationController.login(loginDto);
-//			System.out.println(response);
+		System.out.println(response);
 		assertEquals(HttpStatus.OK, response.getStatusCode());		
 		
 	}
