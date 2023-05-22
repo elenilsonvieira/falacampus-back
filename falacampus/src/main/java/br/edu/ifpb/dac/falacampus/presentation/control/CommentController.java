@@ -110,6 +110,7 @@ public class CommentController {
 			Comment entity = detailsCommentConverterService.dtoToDetailsComment(dto); 
 			
 			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
+
 				entity = commentService.update(entity);
 			} else {
 				throw new CommentCannotUpdateException();

@@ -128,7 +128,6 @@ public class UserControllTest implements ConfigInterfaceUnitTest {
         author.setRoles(roles);
         userController.save(author);
 
-
         UserDto author2 = new UserDto();
         author2.setId(null);
         author2.setName("jose Doe");

@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 @AutoConfigureMockMvc(addFilters = false)
-public class AnswerControllTeste implements ConfigInterfaceUnitTest {
+public class AnswerControllTest implements ConfigInterfaceUnitTest {
     @Autowired
     private MockMvc mockMvc;
     @Autowired
@@ -38,7 +38,8 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     private static Departament dep;
     private static User user;
     private static Comment comment;
-    private static AnswerDto answer;
+    private static AnswerDto answerDto;
+    private static Answer answer;
 
     @BeforeEach
     void up(){
@@ -63,20 +64,30 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
         objectMapper = new ObjectMapper();
         objectMapper.registerModule(new JavaTimeModule());
         objectMapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
-    }
 
-    @Test
-    @Order(1)
-    @DisplayName("AnswerSaveDepartTest")
-    void answerSaveDepartControl(){
-        AnswerDto answerDto = new AnswerDto();
+        answerDto = new AnswerDto();
         answerDto.setId(2L);
         answerDto.setMessage("Mensage Teste");
         answerDto.setCommentId(comment.getId());
         answerDto.setAuthorId(user.getId());
+    }
+    void salveAnswer(){
+        answer = new Answer();
+        answer.setId(55L);
+        answer.setMessage("Mensage Teste");
+        answer.setAuthor(user);
+        answer.setComment(comment);
+        answer = answerService.save(answer);
+    }
+
+    @Test
+    @Order(1)
+    @DisplayName("AnswerSaveTest")
+    void answerSaveControl(){
+        AnswerDto answerDto = AnswerControllTest.answerDto;
 
         try {
-            String json = objectMapper.writeValueAsString(answerDto);
+            String json = objectMapper.writeValueAsString(AnswerControllTest.answerDto);
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/answer")
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(json))
@@ -85,7 +96,7 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
 
             String jsonResponse = mvcResult.getResponse().getContentAsString();
 
-            answer = objectMapper.readValue(jsonResponse, AnswerDto.class);
+            AnswerControllTest.answerDto = objectMapper.readValue(jsonResponse, AnswerDto.class);
 
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
@@ -93,22 +104,18 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
         }
 
         Assertions.assertNotNull(answerDto);
-        Assertions.assertEquals(answerDto.getMessage(), answer.getMessage());
-        Assertions.assertEquals(answerDto.getAuthorId(), answer.getAuthorId());
-        Assertions.assertEquals(answerDto.getCommentId(), answer.getCommentId());
+        Assertions.assertEquals(answerDto.getMessage(), AnswerControllTest.answerDto.getMessage());
+        Assertions.assertEquals(answerDto.getAuthorId(), AnswerControllTest.answerDto.getAuthorId());
+        Assertions.assertEquals(answerDto.getCommentId(), AnswerControllTest.answerDto.getCommentId());
     }
 
     @Test
     @Order(2)
-    @DisplayName("AnswerDepartamentNullErroTest")
-    void answerSaveErroDepartControl() {
+    @DisplayName("AnswerCommentNullErroTest")
+    void answerSaveErroCommentControl() {
         user.setId(null);
         user = userService.save(user);
-        AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(8L);
-        answerDto.setMessage("Mensage Teste");
-        answerDto.setAuthorId(user.getId());
-
+        answerDto.setCommentId(null);
 
         try {
             String json = objectMapper.writeValueAsString(answerDto);
@@ -128,11 +135,7 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     @Order(3)
     @DisplayName("AnswerAuthorErroTest")
     void answerSaveErroAuthControl() {
-        AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(55L);
-        answerDto.setMessage("Mensage Teste");
-        answerDto.setCommentId(comment.getId());
-
+        answerDto.setCommentId(null);
 
         try {
 
@@ -154,11 +157,7 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     void answerSaveErroStatusControl() {
         Comment c = new Comment(null, " Comment", " message", CommentType.SUGGESTION, StatusComment.SOLVED, user, dep, null, null);
         c = commentService.save(c);
-        AnswerDto answerDto = new AnswerDto();
-        answerDto.setId(55L);
-        answerDto.setMessage("Mensage Teste");
         answerDto.setCommentId(c.getId());
-        answerDto.setAuthorId(user.getId());
 
         try {
 
@@ -181,16 +180,11 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     @Order(5)
     @DisplayName("AnswerFindByIdTest")
     void answerFindByIdControl() {
-        Answer answer1 = new Answer();
-        answer1.setId(55L);
-        answer1.setMessage("Mensage Teste");
-        answer1.setAuthor(user);
-        answer1.setComment(comment);
-        answer1 = answerService.save(answer1);
+        salveAnswer();
 
         try {
 
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/answer/"+answer1.getId())
+            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/answer/"+answer.getId())
                             .contentType(MediaType.APPLICATION_JSON))
                     .andReturn();
             String jsonResponse = mvcResult.getResponse().getContentAsString();
@@ -224,12 +218,7 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     @Order(7)
     @DisplayName("AnswerGetAllControlTest")
     void answerGetAllControl() {
-        Answer answer1 = new Answer();
-        answer1.setId(55L);
-        answer1.setMessage("Mensage Teste");
-        answer1.setAuthor(user);
-        answer1.setComment(comment);
-        answer1 = answerService.save(answer1);
+        salveAnswer();
 
         Answer answer2 = new Answer();
         answer2.setId(56L);
@@ -256,15 +245,29 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     @Order(8)
     @DisplayName("AnswerDeleteTest")
     void answerDeleteControl() {
-        Answer answer1 = new Answer();
-        answer1.setId(55L);
-        answer1.setMessage("Mensage Teste");
-        answer1.setAuthor(user);
-        answer1.setComment(comment);
-        answer1 = answerService.save(answer1);
+       salveAnswer();
+        try {
+            mockMvc.perform(MockMvcRequestBuilders.delete("/api/answer/"+ answer.getId())
+                            .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isNoContent())
+                    .andReturn();
+
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+    @Test
+    @Order(9)
+    @DisplayName("AnswerDeleteStatusTest")
+    void answerDeleteStatusControl() {
+        comment.setStatusComment(StatusComment.SOLVED);
+        comment = commentService.update(comment);
+        salveAnswer();
+        answer.setComment(comment);
+        answer = answerService.save(answer);
 
         try {
-            mockMvc.perform(MockMvcRequestBuilders.delete("/api/answer/"+ answer1.getId())
+            mockMvc.perform(MockMvcRequestBuilders.delete("/api/answer/"+ answer.getId())
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isNoContent())
                     .andReturn();
@@ -275,7 +278,7 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
     }
 
     @Test
-    @Order(9)
+    @Order(10)
     @DisplayName("AnswerDeleteErrorTest")
     void answerDeleteErrorControl() {
         try {
@@ -291,24 +294,20 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
             throw new RuntimeException(e.getMessage());
         }
     }
+
+
     @Test
-    @Order(10)
+    @Order(11)
     @DisplayName("AnswerFindByFilterTest")
     void findByFilterTest() {
-        Answer answer1 = new Answer();
-        answer1.setId(55L);
-        answer1.setMessage("Mensage Teste");
-        answer1.setAuthor(user);
-        answer1.setComment(comment);
-        answer1 = answerService.save(answer1);
-
+       salveAnswer();
         try {
 
             MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/api/answer")
-                            .param("id", answer1.getId().toString())
-                            .param("message", answer1.getMessage())
-                            .param("commentId", answer1.getComment().getId().toString())
-                            .param("authorId",  answer1.getAuthor().getId().toString())
+                            .param("id", answer.getId().toString())
+                            .param("message", answer.getMessage())
+                            .param("commentId", answer.getComment().getId().toString())
+                            .param("authorId",  answer.getAuthor().getId().toString())
                             .contentType(MediaType.APPLICATION_JSON))
                     .andExpect(status().isOk())
                     .andReturn();
@@ -326,7 +325,7 @@ public class AnswerControllTeste implements ConfigInterfaceUnitTest {
 
 
     @Test
-    @Order(11)
+    @Order(12)
     @DisplayName("AnswerFBFilterErrorTest")
     void findByFilterErrorControl() {
 
