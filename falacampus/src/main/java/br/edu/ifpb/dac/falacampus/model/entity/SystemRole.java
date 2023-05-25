@@ -8,9 +8,11 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SystemRole implements GrantedAuthority {
 	
 	private static final long serialVersionUID = 1L;

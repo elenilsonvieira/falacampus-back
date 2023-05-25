@@ -17,6 +17,10 @@ import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
 @Service
 public class UserConverterServiceImpl implements UserConverterService {
 
+	public void setModelMapper(ModelMapper modelMapper) {
+		this.modelMapper = modelMapper;
+	}
+
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -35,17 +39,6 @@ public class UserConverterServiceImpl implements UserConverterService {
 	public User dtoToUser(UserDto dto) {
 		
 		User entity = modelMapper.map(dto, User.class);
-//		User entity = new User();
-//		
-//		entity.setId(dto.getId());
-//		entity.setName(dto.getName());
-//		entity.setEmail(dto.getEmail());
-//		entity.setRegistration(dto.getRegistration());
-//		entity.setPassword(dto.getPassword());
-		//entity.setRole(dto.getRole());
-	
-		//entity.setDepartament(dto.getDepartamentId());
-		//entity.setDepartament(departamentService.findById(dto.getDepartamentId()));
 		
 		return entity;
 	}
@@ -54,17 +47,6 @@ public class UserConverterServiceImpl implements UserConverterService {
 	public UserDto userToDTO(User entity) {
 		
 		UserDto dto = modelMapper.map(entity, UserDto.class);
-		
-//		UserDto dto = new UserDto();
-//		
-//		if(entity.getId()!=null) {
-//			dto.setId(entity.getId());	
-//		}		
-//		dto.setName(entity.getName());
-//		dto.setEmail(entity.getEmail());
-//		dto.setRegistration(entity.getRegistration());
-//		//dto.setRole(entity.getRole());
-//		dto.setDepartamentId(entity.getDepartament().getId());
 		
 		return dto;
 	}

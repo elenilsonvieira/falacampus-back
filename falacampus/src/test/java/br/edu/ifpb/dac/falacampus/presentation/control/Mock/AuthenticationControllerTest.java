@@ -1,6 +1,8 @@
-package br.edu.ifpb.dac.falacampus.presentation.control;
+package br.edu.ifpb.dac.falacampus.presentation.control.Mock;
 
 import static org.junit.jupiter.api.Assertions.*;
+
+import br.edu.ifpb.dac.falacampus.presentation.control.AuthenticationController;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.beans.factory.annotation.Autowired;

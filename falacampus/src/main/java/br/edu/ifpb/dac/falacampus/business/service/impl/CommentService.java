@@ -3,6 +3,7 @@ package br.edu.ifpb.dac.falacampus.business.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import br.edu.ifpb.dac.falacampus.model.entity.Answer;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -29,15 +30,13 @@ public class CommentService {
 	private ModelMapper mapper;
 	
 	public Comment save(Comment comment) {
+		if(comment == null) {
+			throw new IllegalStateException(String.format("Comment not found"));
+		}
 		return commentRepository.save(comment);
 	}
 	
-//	public Comment saveCommentDto(CommentDto commentDto){
-//		
-//		Comment comment = mapper.map(commentDto, Comment.class);		
-//		return commentRepository.save(comment);
-//		
-//	}
+
 	
 	public void deleteById(Long id) {
 		Comment comment = findById(id);
@@ -50,27 +49,20 @@ public class CommentService {
 	}
 
 	public Comment update(Comment comment) {
+		if(comment == null || findById(comment.getId()) == null) {
+			throw new IllegalStateException(String.format("Comment not found"));
+		}
 		return commentRepository.save(comment);
 	}
 	
-//	public Comment updateCommentDto(Long id, CommentDto commentDto) {
-//		
-//		if(id == null) {
-//			throw new IllegalStateException("Id cannot be null");
-//		}
-//		
-//		Comment commentUpdate = mapper.map(commentDto, Comment.class);
-//		commentUpdate.setId(id);
-//		
-//		return commentRepository.save(commentUpdate);
-//	}	
 	
 	public Comment findById(Long id) {
-		if(id == null) {
+		try{
+			Comment comment = commentRepository.findById(id).get();
+			return comment;
+		}catch (Exception e){
 			throw new IllegalStateException("Id cannot be null");
 		}
-		return commentRepository.findById(id).get();
-		
 	}
 
 	public List<Comment> findAll() {
@@ -97,23 +89,11 @@ public class CommentService {
 
 	}
 	
-//	public List<Comment> findAll(Sort by) {
-//		
-//		return commentRepository.findAll();
-//	}
 	
 	public List<Comment> findAll(PageRequest pageRequest) {
 		
 		return commentRepository.findAll();
 	}
 
-//	public List<Comment> findOrderByName(String name) {
-//		
-//		List<Comment> result = commentRepository.findAll(Sort.by(Sort.Direction.ASC, "name"));
-//		
-//		return result;
-//
-//		
-//	}
 
 }

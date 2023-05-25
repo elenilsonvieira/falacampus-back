@@ -13,9 +13,4 @@ public interface UserConverterService {
 	public List<UserDto> userToDTOList(List<User> entities);
 	public User dtoToUser(UserDto dto);
 	public UserDto userToDTO(User entity);
-
-	
-	
-	
-
 }

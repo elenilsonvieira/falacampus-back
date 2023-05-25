@@ -28,7 +28,6 @@ import io.jsonwebtoken.Jwts;
 @RequestMapping("/api")
 @Scope(value = WebApplicationContext.SCOPE_SESSION)
 public class AuthenticationController {
-
 	@Autowired
 	private AuthenticationService authenticationService;
 	@Autowired
@@ -42,11 +41,8 @@ public class AuthenticationController {
 	public ResponseEntity login(@RequestBody LoginDto dto) {
 		try {
 			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
-			
-			User entity = userService.findByUserName(dto.getUsername());
-					
+			User entity = userService.findByUserName(dto.getUsername());		
 			UserDto user = userConverterService.userToDTO(entity); 
-			
 			TokenDto tokenDto = new TokenDto(token, user);
 			
 			return new ResponseEntity(tokenDto, HttpStatus.OK);

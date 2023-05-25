@@ -8,6 +8,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpRequest.BodyPublishers;
 import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
+import java.util.Arrays;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -17,7 +18,8 @@ import br.edu.ifpb.dac.falacampus.business.service.SuapService;
 
 @Service
 public class SuapServiceImpl implements SuapService {
-	
+
+	private String tokenAcess;
 	@Autowired
 	private ConverterService converterService;
 
@@ -27,10 +29,11 @@ public class SuapServiceImpl implements SuapService {
 		Map body = Map.of(USERNAME_JSON_FIELD, username, PASSWORD_JSON_FIELD, password);
 		
 		String json = converterService.mapToJson(body);
-		// mapTOJson(body);
 		try {
 			HttpRequest url = generatePostUrl(OBTAIN_TOKEN_URL, null, json);
-			return sendRequest(url);
+			String send = sendRequest(url);
+			saveToken(send);
+			return send;
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
 		} catch (IOException e2) {
@@ -154,17 +157,22 @@ public class SuapServiceImpl implements SuapService {
 	
 	@Override
 	@Lazy
-	public String findAllDepartament(String url,String token) {
-		
+	public String findAllDepartament(String url) {
 		String[] getIdFromUrl = url.split("v1/");
 		String urlSon = getIdFromUrl[1];
 		urlSon = urlSon.substring(0,urlSon.length()-1);
-		System.out.print("findAllDepartament    :"+ token + DEPARTAMENTS_URL + urlSon);
-		return find(token, DEPARTAMENTS_URL + urlSon);
+		return find(tokenAcess,  DEPARTAMENTS_URL + urlSon);
 		
 	}
 	
+	public void saveToken(String send){
+		try {
+			String[] textoSeparado = send.split("\"");
+			tokenAcess = textoSeparado[7];
+		}catch (Exception e){
 
+		}
+	}
 	
 	
 }

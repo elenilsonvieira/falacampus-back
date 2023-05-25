@@ -40,4 +40,7 @@ public class DetailsCommentConverterServiceImpl implements DetailsCommentConvert
 		return dto;
 	}
 
+	public void setMapper(ModelMapper mapper) {
+		this.mapper = mapper;
+	}
 }

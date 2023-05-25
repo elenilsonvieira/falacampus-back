@@ -134,5 +134,7 @@ public class Answer implements Serializable {
 				&& Objects.equals(creationDate, other.creationDate) && Objects.equals(id, other.id)
 				&& Objects.equals(message, other.message);
 	}
+
+
 	
 }

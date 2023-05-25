@@ -191,7 +191,10 @@ public class UserTest {
 		@Order(3)
 		@DisplayName("Password Character Limits")
 		@ParameterizedTest(name="Invalid Test {index} -> {0}.")
-		@ValueSource(strings= {"joao202","0","dfghcvb","gsdfgsd", "ABCDFGHIJKMNOPQRSTUVXWYZABCDEFGHIJKLMNOPQRSTUVXWYZ001abcdefg"})
+		@ValueSource(strings= {"joao202","0","dfghcvb","gsdfgsd", "ABCDFGHIJKMNOPQRSTUVXWYZABCDEFGHIJKLMNOPQRSTUVXWYZ001abcdefg"
+				+ "laudantium nulla rem neque repudiandae. Sed perferendis ipsam eos nihil accusamus aut architecto omnis et voluptas voluptatum."
+				+ " Est omnis obcaecati in autem"
+				+ " animi et odio maxime qui odit deserunt est ratione deleniti. Aut magni doloremque sed fugiat perspiciatis ut dignissimos libero."})
 		void invalidPasswordMinimumAndMaximumCharacters(String password) {
 			user.setPassword(password);
 			violations = validator.validateProperty(user, "password");

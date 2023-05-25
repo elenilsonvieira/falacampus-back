@@ -16,7 +16,6 @@ import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
 public class FalaCampusApplication implements WebMvcConfigurer, CommandLineRunner {
 	@Autowired
 	private SystemRoleService systemRoleService;
-
 	
 	public static void main(String[] args) {
 		SpringApplication.run(FalaCampusApplication.class, args);

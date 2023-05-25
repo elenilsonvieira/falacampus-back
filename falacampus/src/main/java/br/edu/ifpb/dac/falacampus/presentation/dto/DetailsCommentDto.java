@@ -25,12 +25,12 @@ public class DetailsCommentDto {
 	
 	@NotNull
 	@NotEmpty 
-	@Size(min=5, max=50)	
+	@Size(min=3, max=50)	
 	private String title; 
 	
 	@NotNull 
 	@NotEmpty 
-	@Size(min = 10, max=255)
+	@Size(min = 4, max=255)
 	private String message;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm:ss")

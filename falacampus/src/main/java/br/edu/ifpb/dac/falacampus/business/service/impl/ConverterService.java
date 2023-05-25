@@ -8,10 +8,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
-import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.model.entity.Departament;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -40,7 +38,6 @@ public class ConverterService {
 		return token;
 	}
 
-
 	public String jsonToTokenDepartament(String json) {
 		JsonElement jsonElement = JsonParser.parseString(json);
 		String token = jsonElement.getAsJsonObject().get("nome").getAsString();
@@ -48,7 +45,6 @@ public class ConverterService {
 	}
 
 	public User jsonToUser(String jsonUser) {
-		System.out.print("Json doido      " + jsonUser);
 		JsonElement jsonElement = JsonParser.parseString(jsonUser);
 		System.out.print(jsonElement);
 		JsonObject results = jsonElement.getAsJsonObject()
@@ -128,7 +124,6 @@ public class ConverterService {
 	public JsonObject jsonToDepartament(String jsonDepartament) {
 		JsonElement jsonE = JsonParser.parseString(jsonDepartament);
 		JsonObject results = jsonE.getAsJsonObject().getAsJsonObject();
-		
 		return results;
 	}
 

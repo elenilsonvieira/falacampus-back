@@ -1,6 +1,4 @@
 package br.edu.ifpb.dac.falacampus.business.service;
-
-import java.util.ArrayList;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
@@ -14,6 +12,7 @@ public interface SuapService {
 	public static final String STUDENTS_URL ="https://suap.ifpb.edu.br/api/ensino/alunos/v1/";
 //-----	
 
+	public static final String DEPARTAMENTS_URL_MONTEIRO = "https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/6e5afa99-222e-420a-9984-381b34542369/a";
 
 	public static final String DEPARTAMENTS_URL ="https://suap.ifpb.edu.br/api/recursos-humanos/setores/v1/";
 
@@ -40,8 +39,9 @@ public interface SuapService {
 	public String findStudent (String token);
 	
 	public String findUser (String token, String username);
+
+	public String findAllDepartament(String url);
 	
 //---------------------------	
-	public String findAllDepartament(String url, String token);
 
 }

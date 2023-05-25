@@ -3,6 +3,7 @@ package br.edu.ifpb.dac.falacampus.business.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.edu.ifpb.dac.falacampus.model.entity.Answer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
@@ -19,14 +20,28 @@ public class DepartamentService {
 
 	@Autowired
 	private DepartamentRepository departamentRepository;
-	
-	
-	public Departament findByName(String name) {
-		return departamentRepository.findByName(name);
-	}
-	
-	public Departament save(Departament departament) {
 
+
+	public Departament findByName(String name) {
+		try{
+			if (name == null) {
+				throw new Exception();
+			}
+
+			Departament departamentSalvo = departamentRepository.findByName(name);
+
+
+			return departamentSalvo;
+
+		}catch (Exception e){
+			throw new IllegalStateException("Departament not Found");
+		}
+	}
+
+	public Departament save(Departament departament) {
+		if (departament == null) {
+			throw new IllegalStateException("Departament not Found");
+		}
 		return departamentRepository.save(departament);
 	}
 
@@ -42,32 +57,37 @@ public class DepartamentService {
 	}
 
 	public Departament update(Departament departament) {
+
 		Departament departamentUp = findById(departament.getId());
 		departamentUp.setName(departament.getName());
 		departamentUp.setResponsibleUsers(departament.getResponsibleUsers());
-		
-		
 
-		
 		return departamentRepository.save(departament);
-	
+
 	}
 
 	public Departament update(Long id) {
-		Departament departamentSalvo = departamentRepository.getById(id);
-		if (id == null) {
+
+		try{
+			if (id == null) {
+				throw new Exception();
+			}
+
+			Departament departamentSalvo = departamentRepository.getById(id);
+			return departamentRepository.save(departamentSalvo);
+		}catch (Exception e){
 			throw new IllegalStateException("Id cannot be null");
 		}
-		return departamentRepository.save(departamentSalvo);
+
 	}
 
 	public Departament findById(Long id) {
-
-		if (id == null) {
+		try{
+			Departament dp = departamentRepository.findById(id).get();
+			return dp;
+		}catch (Exception e){
 			throw new IllegalStateException("Id cannot be null");
 		}
-
-		return departamentRepository.findById(id).get();
 	}
 
 	public List<Departament> findAll() {
@@ -79,5 +99,16 @@ public class DepartamentService {
 				ExampleMatcher.matching().withIgnoreCase().withStringMatcher(StringMatcher.CONTAINING));
 
 		return departamentRepository.findAll(example);
-	}	
+	}
+
+	public void haveResponsible(Long id) throws Exception{
+		 Departament dep = findById(id);
+		 if(dep != null) {
+			 if(dep.getResponsibleUsers().isEmpty()) {
+				 throw new Exception("Responsible not exist!");
+			 }
+		 }
+	}
+
+
 }

@@ -14,14 +14,11 @@ import org.springframework.stereotype.Service;
 
 import br.edu.ifpb.dac.falacampus.business.service.PasswordEnconderService;
 import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService;
-import br.edu.ifpb.dac.falacampus.business.service.SystemRoleService.AVAILABLE_ROLES;
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.model.entity.SystemRole;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.model.repository.UserRepository;
 
-//Classe service que executa a lógica de autenticação 
-//(contém a lógica para validar as credenciais de um usuário que está se autenticando)
 @Service
 public class UserServiceImpl implements UserService {
 	
@@ -42,13 +39,14 @@ public class UserServiceImpl implements UserService {
 		passwordEnconderService.encryptPassword(user);
 		
 		List<SystemRole> roles = new ArrayList<>();
-		
-		if(findAll().isEmpty()) {
-			roles.add(roleService.findByName(AVAILABLE_ROLES.ADMIN.name()));
+		if(findAll().size() == 0) {
+			user.setPreviousRole(user.getRoles().get(0));
+			roles.add(isRole("ADMIN"));
+			
+			
 		}else {
-			roles.add(roleService.findDefault());
+			roles.add(isRole("TEACHER"));
 		}
-
 		user.setRoles(roles);
 		
 		return userRepository.save(user);
@@ -57,31 +55,47 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User update(User user) {
-		User userUp = findById(user.getId());
-		if (userUp == null) {
-			throw new IllegalStateException("User id is null");
-		}
-		
-		userUp.setEmail(user.getEmail());
-		userUp.setUsername(user.getUsername());
-		userUp.setName(user.getName());
-		userUp.setDepartament(user.getDepartament());
-		
-		List<SystemRole> roles = new ArrayList<>();
-		
-		if(user.getRoles().get(0).getName().equals("ADMIN")) {
-			roles.add(roleService.findAdmin());
-		}else {
-			roles.add(roleService.findDefault());		}
-		
-		
-		
-		
-		user.setRoles(roles);
-		
-		
-		return userRepository.save(user);
+	    User userUp = findById(user.getId());
+	    
+	    if (userUp == null) {
+	        throw new IllegalStateException("User id is null");
+	    }
+	    else if (userUp.getRoles().get(0).getName().equals("ADMIN") && user.getRoles().get(0).getName().equals("ADMIN")) {
+	        throw new IllegalStateException("User is already ADMIN");
+	    }
+	    else if(user.getRoles().get(0).getName().equals("REMOVE") && !userUp.getRoles().get(0).getName().equals("ADMIN")) {
+	    	throw new IllegalStateException("User is not an Admin");
+	    }
+	    else if (userUp.getRoles().get(0).getName().equals("ADMIN") && !user.getRoles().get(0).getName().equals("ADMIN")) {
+	        if(sizeAdmin() == 1) {
+	            throw new IllegalStateException("Cannot be changed, there is only one ADMIN");
+	        }
+	    }
+	    
+	    List<SystemRole> roles = userUp.getRoles();
+	    List<SystemRole> newRoles = new ArrayList<>();
+	  
+	    if (user.getRoles().get(0).getName().equals("REMOVE")) {
+	    	 newRoles.add(userUp.getPreviousRole());
+	    }
+	    else {
+	        SystemRole newRole = isRole(user.getRoles().get(0).getName());
+	        newRoles.add(newRole);
+	        
+	        // Se o novo papel for ADMIN, armazenar o papel anterior em "previousRole" antes de atribuir o papel ADMIN
+	        if (newRole.getName().equals("ADMIN")) {
+	            userUp.setPreviousRole(roles.get(0));
+	        }
+	    }
+
+	
+	    userUp.setEmail(user.getEmail());
+	    userUp.setDepartament(user.getDepartament());
+	    userUp.setRoles(newRoles);
+	   
+	    return userRepository.save(userUp);
 	}
+
 	
 	@Override
 	public void delete(Long id) {
@@ -96,6 +110,7 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public User findById(Long id) {
+		
 		if(id == null) {
 			throw new IllegalStateException("Id cannot be null");
 		}
@@ -113,6 +128,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public User findByUserName(String username) {
+		
 		if(username == null) {
 			throw new IllegalStateException("Username cannot be null");
 		}
@@ -123,7 +139,6 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
 		User user = findByUserName(username);
 		if (user == null) {
 			throw new UsernameNotFoundException(String.format("Could not find any user with username %s", username));
@@ -135,19 +150,42 @@ public class UserServiceImpl implements UserService {
 	public ArrayList<User> findAll() {
 		return (ArrayList<User>) userRepository.findAll();
 	}
+	
+	public int sizeAdmin() {
+		int u = 0;
+		List<User> us = findAll();
+		if(us.size() != 0) {
+			for(User a: us) {
+				 List<SystemRole> role =  a.getRoles();
+				if(role.get(0).getName().equals("ADMIN")) {
+					u++;
+				}
+			}
+		}
+		return u;
+	}
+	
 
 	@Override
 	public Optional<User> findByEmail(String email) {
 		// TODO Auto-generated method stub
 		return Optional.empty();
 	}
-
-
-
 	
+	public SystemRole isRole(String role) {
+		if(role.equals("ADMIN")) {
+			return roleService.findAdmin();
+		}
+		else if(role.equals("TEACHER")) {
+			return roleService.findTeacher();
+		}
+		else if(role.equals("TECHNICIAN")) {
+			return roleService.findTechnician();
+		}
+		else {
+			return roleService.findDefault();
+		}
 
-
-
-	
+	}
 
 }

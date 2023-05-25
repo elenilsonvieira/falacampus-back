@@ -46,7 +46,7 @@ public class Departament implements Serializable {
 //	@ManyToMany(fetch = FetchType.EAGER)
 //	private List<User> responsibleUsers;
 
-	@ManyToMany
+	@ManyToMany(fetch = FetchType.EAGER)
 	@JoinTable(name = "departaments_responsibleUsers", 
 	joinColumns = @JoinColumn(name = "departament_id"),
 	inverseJoinColumns = @JoinColumn(name = "user_id"))

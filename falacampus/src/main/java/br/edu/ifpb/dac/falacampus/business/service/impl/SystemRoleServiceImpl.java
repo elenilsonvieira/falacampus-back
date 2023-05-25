@@ -53,4 +53,14 @@ public class SystemRoleServiceImpl implements SystemRoleService{
 		return findByName(AVAILABLE_ROLES.ADMIN.name());
 	}
 
+	@Override
+	public SystemRole findTechnician() {
+		return findByName(AVAILABLE_ROLES.TECHNICIAN.name());
+	}
+
+	@Override
+	public SystemRole findTeacher() {
+		return findByName(AVAILABLE_ROLES.TEACHER.name());
+	}
+
 }

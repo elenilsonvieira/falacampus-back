@@ -1,4 +1,4 @@
-package br.edu.ifpb.dac.falacampus.presentation.control;
+package br.edu.ifpb.dac.falacampus.presentation.control.Mock;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -8,6 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertAll;
 import java.io.File;
 import java.time.LocalDateTime;
 
+import br.edu.ifpb.dac.falacampus.presentation.control.CommentController;
 import org.hibernate.ObjectNotFoundException;
 import org.junit.Before;
 import org.junit.jupiter.api.BeforeEach;
