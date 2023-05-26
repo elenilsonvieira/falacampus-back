@@ -31,7 +31,5 @@ public class FalaCampusApplication implements WebMvcConfigurer, CommandLineRunne
 	@Override
 	public void run(String... args) throws Exception {
 		systemRoleService.createDefaultValues();
-
-
 	}
 }

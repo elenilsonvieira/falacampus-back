@@ -22,12 +22,19 @@ public class CommentConverterServiceImpl implements CommentConverterService {
 		List<DetailsCommentDto> dtos = new ArrayList<>();
 		
 		for (Comment dto : entities) {
-			DetailsCommentDto entity = commentToDetailDto(dto);
+			DetailsCommentDto entity = commentToDTO(dto);
 			dtos.add(entity);
 		}
 		return dtos;
 	}
-	
+
+	@Override
+	public DetailsCommentDto commentToDTO(Comment entity) {
+		DetailsCommentDto dto = new DetailsCommentDto(entity);
+
+		return dto;
+	}
+
 	public DetailsCommentDto commentToDetailDto(Comment entity) {
 		
 		DetailsCommentDto dto = mapper.map(entity, DetailsCommentDto.class);

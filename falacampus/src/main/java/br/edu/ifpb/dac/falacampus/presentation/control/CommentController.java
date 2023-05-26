@@ -72,17 +72,14 @@ public class CommentController {
 	
 	@Autowired
 	private DetailsCommentConverterService detailsCommentConverterService;
-	
-//	@Autowired
-//	private DetailsCommentDto detailsCommentDto;
-	
+
 	@Autowired
 	private ModelMapper mapper;
 	
 	private UserDto user;
 
 
-	// SAVE
+
 	@PostMapping
 	public ResponseEntity save(@RequestBody @Valid DetailsCommentDto dto) {
 
@@ -233,17 +230,15 @@ public class CommentController {
 	@GetMapping("/comentDepartament/{id}")
 	public ResponseEntity isResponsables(@PathVariable("id") Long id){
 		List <Comment> deps = new ArrayList<>();
-		try {			
+		try {
 			List<Comment> dp = commentService.findAll();
 
 			for (int i = 0; i < dp.size(); i++)  {
 				if(dp.get(i).getDepartament().getId().equals(id)){
 					deps.add(dp.get(i));
-					System.out.println("coments " + deps);
 				}
-			}		
+			}
 
-			
 			List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(deps);
 			return ResponseEntity.ok(dtos);
 		} catch (Exception e) {

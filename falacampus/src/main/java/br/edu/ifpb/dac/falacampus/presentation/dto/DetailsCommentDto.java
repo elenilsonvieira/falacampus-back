@@ -61,7 +61,9 @@ public class DetailsCommentDto {
 		this.statusComment = comment.getStatusComment();
 		this.authorId = comment.getAuthor().getId();
 		this.departamentId = comment.getDepartament().getId();
-		this.answerId = comment.getAnswer().getId();
+		if(comment.getAnswer() != null) {
+			this.answerId = comment.getAnswer().getId();
+		}
 	}
 
 	public Long getId() {
