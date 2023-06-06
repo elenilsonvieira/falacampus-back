@@ -32,10 +32,18 @@ public class ConverterService {
 		return json;
 	}
 
-	public String jsonToToken(String json) {
-		JsonElement jsonElement = JsonParser.parseString(json);
-		String token = jsonElement.getAsJsonObject().get("access").getAsString();
-		return token;
+	public String jsonToToken(String json) throws Exception{
+		try{
+
+			JsonElement jsonElement = JsonParser.parseString(json);
+			String token = jsonElement.getAsJsonObject().get("access").getAsString();
+			return token;
+
+		} catch(Exception e){
+			throw new Exception(json);
+		}
+
+
 	}
 
 	public String jsonToTokenDepartament(String json) {

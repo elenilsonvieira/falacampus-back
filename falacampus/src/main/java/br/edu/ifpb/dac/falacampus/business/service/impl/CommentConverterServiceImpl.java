@@ -31,7 +31,6 @@ public class CommentConverterServiceImpl implements CommentConverterService {
 	@Override
 	public DetailsCommentDto commentToDTO(Comment entity) {
 		DetailsCommentDto dto = new DetailsCommentDto(entity);
-
 		return dto;
 	}
 

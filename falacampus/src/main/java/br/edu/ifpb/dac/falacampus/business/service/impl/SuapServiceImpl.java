@@ -10,6 +10,8 @@ import java.net.http.HttpRequest.Builder;
 import java.net.http.HttpResponse;
 import java.util.Arrays;
 import java.util.Map;
+
+import io.jsonwebtoken.MalformedJwtException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -40,6 +42,8 @@ public class SuapServiceImpl implements SuapService {
 			e2.printStackTrace();
 		} catch (InterruptedException e3) {
 			e3.printStackTrace();
+		} catch (MalformedJwtException e) {
+			e.printStackTrace();
 		}
 		
 		return null;
