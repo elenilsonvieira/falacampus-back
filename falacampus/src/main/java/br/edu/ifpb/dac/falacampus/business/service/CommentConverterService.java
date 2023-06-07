@@ -12,6 +12,6 @@ public interface CommentConverterService {
 	
 	public List<DetailsCommentDto> commentToDTOList(List<Comment> entities);
 //	public Comment dtoToComment(CommentDto dto);
-//	public CommentDto commentToDTO(Comment entity);
+	public DetailsCommentDto commentToDTO(Comment entity);
 
 }
