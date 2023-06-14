@@ -12,20 +12,27 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 abstract class FalaCampusWebTest {
 
 	protected WebDriver driver;
+	protected String url;
 
 	@BeforeAll
-	void setup() throws Exception{
+	void setupConfig() throws Exception{
 		System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.get("http://localhost:3000");
+		driver.get(url);
 	}
 
 	void timeOut(){
 		try {
-			Thread.sleep(3000);
+			Thread.sleep(2000);
 		} catch (InterruptedException e) {
 			throw new RuntimeException(e);
 		}
+	}
+
+	@AfterAll
+	void exit() {
+		timeOut();
+		driver.quit();
 	}
 
 }

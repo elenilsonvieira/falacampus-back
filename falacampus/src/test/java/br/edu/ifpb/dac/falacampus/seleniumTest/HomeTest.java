@@ -8,6 +8,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
  class HomeTest extends FalaCampusWebTest{
+    HomeTest(){
+      url = "http://localhost:3000";
+    }
 
     @Test
     @DisplayName("TitleTest")
@@ -30,4 +33,5 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
        driver.findElement(By.xpath("/html/body/div/nav/div/div/div/li/a")).click();
        assertEquals("http://localhost:3000/login",driver.getCurrentUrl());
     }
-}
+
+ }
