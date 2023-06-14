@@ -42,10 +42,8 @@ public class UserServiceImpl implements UserService {
 		if(findAll().size() == 0) {
 			user.setPreviousRole(user.getRoles().get(0));
 			roles.add(isRole("ADMIN"));
-			
-			
 		}else {
-			roles.add(isRole("TEACHER"));
+			roles.add(roleService.findDefault());
 		}
 		user.setRoles(roles);
 		

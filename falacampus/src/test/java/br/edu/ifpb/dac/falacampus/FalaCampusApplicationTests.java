@@ -10,7 +10,7 @@ class FalaCampusApplicationTests {
 	@Test
 	void contextLoads() {
 		System.out.print("aqui");
-		System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver1.exe");
 		WebDriver driver = new ChromeDriver();
 		driver.navigate().to("http://localhost:3000");
 	}
