@@ -53,9 +53,8 @@ public class TokenServiceImpl implements TokenService{
 				.claim(CLAIM_EXPIRATION, tokenExpiration)
 				.signWith(SignatureAlgorithm.HS256, secret)
 				.compact();
+		System.out.println("Entrou" +token);
 		return token;
-
-
 	}
 
 	@Override

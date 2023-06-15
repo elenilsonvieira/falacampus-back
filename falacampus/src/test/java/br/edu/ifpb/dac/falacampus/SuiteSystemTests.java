@@ -1,15 +1,12 @@
-package br.edu.ifpb.dac.falacampus.seleniumTest;
+package br.edu.ifpb.dac.falacampus;
+import br.edu.ifpb.dac.falacampus.seleniumTest.SuiteSystemTest;
 import org.junit.platform.commons.annotation.Testable;
 import org.junit.platform.suite.api.SelectClasses;
 import org.junit.platform.suite.api.Suite;
-
-
 @Suite
 @Testable
 @SelectClasses({
-        HomeTest.class,
-        LoginTest.class
+        SuiteSystemTest.class
 })
-public class SuiteSystemTest {
-
+class SuiteSystemTests {
 }

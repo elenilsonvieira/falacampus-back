@@ -9,7 +9,7 @@ public interface AuthenticationService {
 	
 	//public String login(Long registration,String password);
 	
-	public String login(String username,String password);	
+	public String login(String username,String password) throws Exception;
 	public User getLoggedUser();
 
 }

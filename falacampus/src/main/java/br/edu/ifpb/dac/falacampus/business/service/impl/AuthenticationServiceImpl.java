@@ -38,28 +38,30 @@ public class AuthenticationServiceImpl implements AuthenticationService{
 	private String suapToken;
 	
 	
-	public String login(String username, String password) {
+	public String login(String username, String password)  {
 		
 		return suapLogin(username, password);		
 
 		}
 			
 	private String localLogin(String username, String password) {
-		
-		Authentication authentication =  
-				authenticationManager.authenticate(
-						new UsernamePasswordAuthenticationToken(username, password));
-		
-		User user = userService.findByUserName(username);
 
-		return tokenService.generate(user);
+			Authentication authentication =
+					authenticationManager.authenticate(
+							new UsernamePasswordAuthenticationToken(username, password));
+
+
+			User user = userService.findByUserName(username);
+			return tokenService.generate(user);
+
 	}
 	
-	private String suapLogin(String username, String password) {
-		
-		String jsonToken = suapService.login(username, password);
+	private String suapLogin(String username, String password){
 		try {
+
+			String jsonToken = suapService.login(username, password);
 			this.suapToken = converterService.jsonToToken(jsonToken);
+
 		}catch(Exception e) {
 			return e.getMessage();
 		}
