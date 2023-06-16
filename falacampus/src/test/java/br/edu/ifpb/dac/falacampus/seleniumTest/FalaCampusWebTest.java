@@ -1,19 +1,11 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
-import br.edu.ifpb.dac.falacampus.FalaCampusApplication;
-import org.junit.After;
-import org.junit.BeforeClass;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.TestInstance;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.interactions.Actions;
-import org.springframework.test.context.TestPropertySource;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class FalaCampusWebTest {
@@ -35,12 +27,27 @@ abstract class FalaCampusWebTest {
 		}
 	}
 
+
 	void deleteXpath(String element){
 		driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
 
 	}
 	void clickButton(String element){
 		driver.findElement(By.xpath(element)).click();
+	}
+
+	void logar(String registration,String password){
+
+		driver.findElement(By.xpath(
+				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
+				.sendKeys(registration);
+		driver.findElement(By.xpath(
+				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
+				.sendKeys(password);
+
+		timeOut();
+
+		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
 	}
 
 }

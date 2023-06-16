@@ -35,15 +35,15 @@ public class LoginTest extends FalaCampusWebTest{
     @Test
     @Order(1)
     void loginSucessTest(){
-        insert(registration,password);
-        clickButton(button);
+        logar(registration,password);
         timeOut();
 
         assertEquals("http://localhost:3000/viewCommentsHome",driver.getCurrentUrl());
         assertEquals(driver.findElement(By.xpath(" /html/body/div[2]")).getText(), "×\nSucesso\n" +
-                nome+" , você está logado!");
+                nome+", você está logado!");
         timeOut();
         timeOut();
+
         driver.findElement(By.xpath("//*[@id=\"goOut\"]")).click();
     }
 
