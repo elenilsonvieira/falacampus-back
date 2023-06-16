@@ -20,10 +20,6 @@ public class LoginTest extends FalaCampusWebTest{
     String input2 = "/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input";
     String button = "/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button";
 
-    private String registration= "";
-    private String password = "";
-    private String nome = "";
-
 
     void insert(String m, String s){
         deleteXpath(input1);
@@ -35,12 +31,12 @@ public class LoginTest extends FalaCampusWebTest{
     @Test
     @Order(1)
     void loginSucessTest(){
-        logar(registration,password);
+        logar(DataSingle.getRegistration(),DataSingle.getPassword());
         timeOut();
 
         assertEquals("http://localhost:3000/viewCommentsHome",driver.getCurrentUrl());
         assertEquals(driver.findElement(By.xpath(" /html/body/div[2]")).getText(), "×\nSucesso\n" +
-                nome+", você está logado!");
+                DataSingle.getNome()+", você está logado!");
         timeOut();
         timeOut();
 
@@ -69,7 +65,7 @@ public class LoginTest extends FalaCampusWebTest{
     @Test
     @Order(4)
     void invalidPasswordTest() {
-        insert(registration,"regergrferf");
+        insert(DataSingle.getRegistration(),"regergrferf");
         clickButton(button);
         timeOut();
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Usuário e/ou senha incorreto(s)");
@@ -81,7 +77,7 @@ public class LoginTest extends FalaCampusWebTest{
     @Test
     @Order(5)
     void unavailableServerTest(){
-        insert(registration,password);
+        insert(DataSingle.getRegistration(),DataSingle.getPassword());
         clickButton(button);
         timeOut();
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Servidor Indisponivel");
@@ -90,7 +86,7 @@ public class LoginTest extends FalaCampusWebTest{
     @Test
     @Order(6)
     void attemptLimitTest() throws InterruptedException {
-        insert(registration,"regergrferf");
+        insert(DataSingle.getRegistration(),"regergrferf");
         for(int i = 0; i < 6; i++){
             clickButton(button);
             Thread.sleep(500);

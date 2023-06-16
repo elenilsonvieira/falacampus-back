@@ -15,7 +15,7 @@ abstract class FalaCampusWebTest {
 
 	@BeforeAll
 	void setupConfig() throws Exception{
-		driver = DriverSingle.getDriver();
+		driver = DataSingle.getDriver();
 		driver.get(url);
 	}
 
