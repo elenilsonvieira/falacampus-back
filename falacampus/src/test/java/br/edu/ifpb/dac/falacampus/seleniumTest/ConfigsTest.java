@@ -39,13 +39,34 @@ abstract class ConfigsTest {
 		driver.findElement(By.xpath(element)).click();
 	}
 
-	void logar(){
+	void logarUser1(){
 		driver.findElement(By.xpath(
 				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
 				.sendKeys(DataSingle.getRegistration());
 		driver.findElement(By.xpath(
 				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
 				.sendKeys(DataSingle.getPassword());
+
+		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
+	}
+	void logarUser2(){
+		driver.findElement(By.xpath(
+						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
+				.sendKeys(DataSingle.getRegistration2());
+		driver.findElement(By.xpath(
+						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
+				.sendKeys(DataSingle.getPassword2());
+
+		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
+	}
+
+	void logarUser1(String registration, String password){
+		driver.findElement(By.xpath(
+						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
+				.sendKeys(registration);
+		driver.findElement(By.xpath(
+						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
+				.sendKeys(password);
 
 		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
 	}

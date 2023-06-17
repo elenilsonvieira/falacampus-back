@@ -5,10 +5,11 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class DataSingle {
     private static DataSingle instance;
     private WebDriver driver;
+    private static String nome = "";
     private static String registration= "";
     private static String password = "";
-    private static String nome = "";
-
+    private static String registration2= "";
+    private static String password2 = "";
     private DataSingle() {
         System.setProperty("webdriver.chrome.driver", "Drivers\\chromedriver.exe");
         driver = new ChromeDriver();
@@ -28,6 +29,12 @@ public class DataSingle {
     }
     public static String getNome() {
         return nome;
+    }
+    public static String getRegistration2() {
+        return registration2;
+    }
+    public static String getPassword2() {
+        return password2;
     }
 }
 

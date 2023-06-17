@@ -11,7 +11,7 @@ public class EditUserTest extends ConfigsTest {
 
     @BeforeAll
     void up(){
-        logar();
+        logarUser1();
         timeOut();
         driver.findElement(By.xpath("//*[@id=\"users\"]")).click();
         assertEquals("http://localhost:3000/viewUsers",driver.getCurrentUrl());

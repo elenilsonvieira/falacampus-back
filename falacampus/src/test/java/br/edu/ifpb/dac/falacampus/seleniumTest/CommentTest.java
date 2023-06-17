@@ -22,6 +22,7 @@ public class CommentTest extends ConfigsTest {
 
     @BeforeAll
     void up(){
+        logarUser1();
         timeOut();
         driver.findElement(By.xpath("//*[@id=\"comments\"]")).click();
         timeOut();
@@ -81,7 +82,6 @@ public class CommentTest extends ConfigsTest {
     @Order(3)
     void buttonEditTest(){
         scroll();
-
         data =  driver.findElement(
                 By.xpath("/html/body/div/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]")).getText();
         timeOut();
@@ -110,7 +110,7 @@ public class CommentTest extends ConfigsTest {
         data =  driver.findElement(
                 By.xpath("/html/body/div/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]")).getText();
         timeOut();
-
+        scroll();
         clickButton("//*[@id=\"button_excluir\"]");
         timeOut();
         data2 =  driver.findElement(

@@ -24,7 +24,7 @@ public class LoginTest extends ConfigsTest {
     @Test
     @Order(1)
     void loginSucessTest(){
-        logar();
+        logarUser1();
         timeOut();
 
         assertEquals("http://localhost:3000/viewCommentsHome",driver.getCurrentUrl());
@@ -54,9 +54,19 @@ public class LoginTest extends ConfigsTest {
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Campo senha é obrigatorio");
         timeOut();
     }
-
     @Test
     @Order(4)
+    void invalidRegistrationTest(){
+        insert("6343545235424","regergrferf");
+        clickButton(button);
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Número de Matrícula Incorreto");
+        timeOut();
+        timeOut();
+    }
+
+    @Test
+    @Order(5)
     void invalidPasswordTest() {
         insert(DataSingle.getRegistration(),"regergrferf");
         clickButton(button);
@@ -68,7 +78,7 @@ public class LoginTest extends ConfigsTest {
 
     @Disabled
     @Test
-    @Order(5)
+    @Order(6)
     void unavailableServerTest(){
         insert(DataSingle.getRegistration(),DataSingle.getPassword());
         clickButton(button);
@@ -77,9 +87,10 @@ public class LoginTest extends ConfigsTest {
     }
 
     @Test
-    @Order(6)
+    @Order(7)
     void attemptLimitTest() throws InterruptedException {
         insert(DataSingle.getRegistration(),"regergrferf");
+        timeOut();
         for(int i = 0; i < 6; i++){
             clickButton(button);
             Thread.sleep(500);
