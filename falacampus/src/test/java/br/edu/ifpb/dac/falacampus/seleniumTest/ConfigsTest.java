@@ -55,6 +55,11 @@ abstract class ConfigsTest {
 		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
 	}
 
+	void scrollUp(){
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, 0)");
+	}
+
 	void home(){
 		driver.findElement(By.xpath("//*[@id=\"answers\"]")).click();
 	}

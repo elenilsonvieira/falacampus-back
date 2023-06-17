@@ -125,8 +125,9 @@ public class EditUserTest extends ConfigsTest {
         select.selectByValue("REMOVE");
         timeOut();
 
-        clickButton("//*[@id=\"button-cancel\"]");
+        scroll();
         timeOut();
+        clickButton("//*[@id=\"button-cancel\"]");
 
 
         assertEquals(driver.findElement(
