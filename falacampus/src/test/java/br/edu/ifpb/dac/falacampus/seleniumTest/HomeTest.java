@@ -1,5 +1,4 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -7,19 +6,19 @@ import org.openqa.selenium.By;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
- class HomeTest extends FalaCampusWebTest{
+ class HomeTest extends ConfigsTest {
     HomeTest(){
       url = "http://localhost:3000";
     }
 
     @Test
-    @DisplayName("TitleTest")
+    @DisplayName("titleTest")
     void homeTitleTest() throws InterruptedException {
         assertTrue(driver.getTitle().contentEquals("Fala Campus"));
     }
 
     @Test
-    @DisplayName("TextHomeTest ")
+    @DisplayName("textHomeTest ")
     void homeTextTest() throws InterruptedException {
         assertEquals("Este espaço é destinado a toda a comunidade acadêmica, " +
                         "onde todos poderão propor sugestões, realizar críticas e elogios," +
@@ -28,7 +27,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
     }
 
     @Test
-    @DisplayName("ButtonTest")
+    @DisplayName("buttonTest")
     void loginButtonTest() throws InterruptedException {
        driver.findElement(By.xpath("/html/body/div/nav/div/div/div/li/a")).click();
        assertEquals("http://localhost:3000/login",driver.getCurrentUrl());

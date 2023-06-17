@@ -1,14 +1,17 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-abstract class FalaCampusWebTest {
+abstract class ConfigsTest {
 
 	protected WebDriver driver;
 	protected String url;
@@ -36,18 +39,24 @@ abstract class FalaCampusWebTest {
 		driver.findElement(By.xpath(element)).click();
 	}
 
-	void logar(String registration,String password){
-
+	void logar(){
 		driver.findElement(By.xpath(
 				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
-				.sendKeys(registration);
+				.sendKeys(DataSingle.getRegistration());
 		driver.findElement(By.xpath(
 				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
-				.sendKeys(password);
-
-		timeOut();
+				.sendKeys(DataSingle.getPassword());
 
 		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
+	}
+
+	void scroll(){
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+	}
+
+	void home(){
+		driver.findElement(By.xpath("//*[@id=\"answers\"]")).click();
 	}
 
 }

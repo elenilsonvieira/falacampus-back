@@ -1,18 +1,11 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
-import ch.qos.logback.core.net.SyslogOutputStream;
-import org.junit.Ignore;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.Mockito.timeout;
 
-@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class LoginTest extends FalaCampusWebTest{
+public class LoginTest extends ConfigsTest {
     LoginTest(){
         url = "http://localhost:3000/login";
     }
@@ -31,7 +24,7 @@ public class LoginTest extends FalaCampusWebTest{
     @Test
     @Order(1)
     void loginSucessTest(){
-        logar(DataSingle.getRegistration(),DataSingle.getPassword());
+        logar();
         timeOut();
 
         assertEquals("http://localhost:3000/viewCommentsHome",driver.getCurrentUrl());
@@ -93,5 +86,13 @@ public class LoginTest extends FalaCampusWebTest{
         }
         timeOut();
         assertTrue(driver.findElement(By.xpath(" /html/body/div[2]")).getText().contains("Pedido foi limitado"));
+
+        timeOut();
+
     }
+
+    void exit(){
+        driver.quit();
+    }
+
 }

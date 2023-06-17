@@ -59,7 +59,6 @@ public class UserServiceImpl implements UserService {
 	        throw new IllegalStateException("User id is null");
 	    }
 	    else if (userUp.getRoles().get(0).getName().equals("ADMIN") && user.getRoles().get(0).getName().equals("ADMIN")) {
-	        throw new IllegalStateException("User is already ADMIN");
 	    }
 	    else if(user.getRoles().get(0).getName().equals("REMOVE") && !userUp.getRoles().get(0).getName().equals("ADMIN")) {
 	    	throw new IllegalStateException("User is not an Admin");
@@ -72,21 +71,23 @@ public class UserServiceImpl implements UserService {
 	    
 	    List<SystemRole> roles = userUp.getRoles();
 	    List<SystemRole> newRoles = new ArrayList<>();
-	  
+
 	    if (user.getRoles().get(0).getName().equals("REMOVE")) {
 	    	 newRoles.add(userUp.getPreviousRole());
 	    }
 	    else {
 	        SystemRole newRole = isRole(user.getRoles().get(0).getName());
 	        newRoles.add(newRole);
-	        
+	         if (userUp.getRoles().get(0).getName().equals("ADMIN") &&
+					 user.getRoles().get(0).getName().equals("ADMIN")) {
+			 }
 	        // Se o novo papel for ADMIN, armazenar o papel anterior em "previousRole" antes de atribuir o papel ADMIN
-	        if (newRole.getName().equals("ADMIN")) {
+	        else if (newRole.getName().equals("ADMIN")) {
 	            userUp.setPreviousRole(roles.get(0));
 	        }
 	    }
 
-	
+
 	    userUp.setEmail(user.getEmail());
 	    userUp.setDepartament(user.getDepartament());
 	    userUp.setRoles(newRoles);
