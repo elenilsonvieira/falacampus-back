@@ -1,4 +1,5 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
@@ -29,8 +30,10 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
     @Test
     @DisplayName("buttonTest")
     void loginButtonTest() throws InterruptedException {
-       driver.findElement(By.xpath("/html/body/div/nav/div/div/div/li/a")).click();
-       assertEquals("http://localhost:3000/login",driver.getCurrentUrl());
+        timeOut();
+        driver.findElement(By.xpath("/html/body/div/nav/div/div/div/li/a")).click();
+        assertEquals("http://localhost:3000/login", driver.getCurrentUrl());
+        timeOut();
     }
 
  }

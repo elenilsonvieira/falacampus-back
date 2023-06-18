@@ -46,7 +46,7 @@ abstract class ConfigsTest {
 		driver.findElement(By.xpath(
 				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
 				.sendKeys(DataSingle.getPassword());
-
+		timeOut();
 		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
 	}
 	void logarUser2(){
@@ -56,20 +56,10 @@ abstract class ConfigsTest {
 		driver.findElement(By.xpath(
 						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
 				.sendKeys(DataSingle.getPassword2());
-
+		timeOut();
 		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
 	}
 
-	void logarUser1(String registration, String password){
-		driver.findElement(By.xpath(
-						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
-				.sendKeys(registration);
-		driver.findElement(By.xpath(
-						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
-				.sendKeys(password);
-
-		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
-	}
 
 	void scroll(){
 		JavascriptExecutor js = (JavascriptExecutor) driver;

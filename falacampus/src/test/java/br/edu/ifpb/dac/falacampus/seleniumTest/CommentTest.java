@@ -22,7 +22,6 @@ public class CommentTest extends ConfigsTest {
 
     @BeforeAll
     void up(){
-        logarUser1();
         timeOut();
         driver.findElement(By.xpath("//*[@id=\"comments\"]")).click();
         timeOut();

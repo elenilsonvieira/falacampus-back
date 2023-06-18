@@ -26,7 +26,6 @@ public class EditUserTest extends ConfigsTest {
     @Order(1)
     void isViewEditUserTest(){
         assertEquals("http://localhost:3000/updateUser/1",driver.getCurrentUrl());
-
     }
 
     @Test
@@ -48,9 +47,9 @@ public class EditUserTest extends ConfigsTest {
         scroll();
         timeOut();
         clickButton("//*[@id=\"button-save\"]");
-
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Informe email valido");
         timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Informe email valido");
+
     }
 
     @Test
@@ -73,6 +72,45 @@ public class EditUserTest extends ConfigsTest {
 
     @Test
     @Order(5)
+    void removeSingleAdminErroTest(){
+        viewEdit();
+        scroll();
+        timeOut();
+
+        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectRole\"]")));
+        select.selectByValue("REMOVE");
+
+        clickButton("//*[@id=\"button-save\"]");
+        timeOut();
+
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Não pode ser alterado, só existe um ADMIN!");
+        timeOut();
+
+        scrollUp();
+        timeOut();
+        driver.findElement(By.xpath("/html/body/div/nav/div/div/div/li[2]/a")).click();
+
+    }
+    @Test
+    @Order(6)
+    void addAdminTest(){
+        timeOut();
+        clickButton("/html/body/div/div[1]/div/div/div[3]/div/div/table/tbody/tr[2]/td[6]/button");
+        scroll();
+        timeOut();
+
+        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectRole\"]")));
+        select.selectByValue("ADMIN");
+        timeOut();
+
+        clickButton("//*[@id=\"button-save\"]");
+        timeOut();
+        assertEquals(driver.findElement(By.xpath(" /html/body/div[2]")).getText(), "×\nSucesso\n" +
+                "Usuário atualizado com sucesso!");
+    }
+
+    @Test
+    @Order(7)
     void removeAdminTest(){
         viewEdit();
         scroll();
@@ -88,8 +126,9 @@ public class EditUserTest extends ConfigsTest {
     }
 
     @Test
-    @Order(6)
+    @Order(8)
     void removeAdminErrorTest(){
+        timeOut();
         viewEdit();
         scroll();
         timeOut();
@@ -102,37 +141,18 @@ public class EditUserTest extends ConfigsTest {
 
     }
 
-    @Test
-    @Order(6)
-    void addAdminTest(){
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectRole\"]")));
-        select.selectByValue("ADMIN");
-        timeOut();
 
-        clickButton("//*[@id=\"button-save\"]");
-        timeOut();
-        assertEquals(driver.findElement(By.xpath(" /html/body/div[2]")).getText(), "×\nSucesso\n" +
-                "Usuário atualizado com sucesso!");
-    }
 
     @Test
-    @Order(6)
+    @Order(9)
     void cancelTest(){
-        viewEdit();
-        scroll();
-
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectRole\"]")));
-        select.selectByValue("REMOVE");
-        timeOut();
-
-        scroll();
         timeOut();
         clickButton("//*[@id=\"button-cancel\"]");
 
 
         assertEquals(driver.findElement(
                 By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]/td[5]"))
-                .getText(), "ADMIN");
+                .getText(), "STUDENTS");
     }
 
     @AfterAll

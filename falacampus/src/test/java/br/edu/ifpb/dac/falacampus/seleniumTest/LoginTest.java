@@ -24,9 +24,9 @@ public class LoginTest extends ConfigsTest {
     @Test
     @Order(1)
     void loginSucessTest(){
+        timeOut();
         logarUser1();
         timeOut();
-
         assertEquals("http://localhost:3000/viewCommentsHome",driver.getCurrentUrl());
         assertEquals(driver.findElement(By.xpath(" /html/body/div[2]")).getText(), "×\nSucesso\n" +
                 DataSingle.getNome()+", você está logado!");
@@ -56,18 +56,8 @@ public class LoginTest extends ConfigsTest {
     }
     @Test
     @Order(4)
-    void invalidRegistrationTest(){
-        insert("6343545235424","regergrferf");
-        clickButton(button);
-        timeOut();
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Número de Matrícula Incorreto");
-        timeOut();
-        timeOut();
-    }
-
-    @Test
-    @Order(5)
     void invalidPasswordTest() {
+        timeOut();
         insert(DataSingle.getRegistration(),"regergrferf");
         clickButton(button);
         timeOut();
@@ -75,20 +65,25 @@ public class LoginTest extends ConfigsTest {
         timeOut();
         timeOut();
     }
-
-    @Disabled
     @Test
-    @Order(6)
-    void unavailableServerTest(){
-        insert(DataSingle.getRegistration(),DataSingle.getPassword());
+    @Order(5)
+    void invalidRegistrationTest(){
+        timeOut();
+        insert("6343545235424","regergrferf");
         clickButton(button);
         timeOut();
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Servidor Indisponivel");
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Número de Matrícula Incorreto");
+        timeOut();
+        timeOut();
     }
 
+
+
     @Test
-    @Order(7)
+    @Order(6)
     void attemptLimitTest() throws InterruptedException {
+        timeOut();
         insert(DataSingle.getRegistration(),"regergrferf");
         timeOut();
         for(int i = 0; i < 6; i++){
@@ -100,6 +95,15 @@ public class LoginTest extends ConfigsTest {
 
         timeOut();
 
+    }
+    @Disabled
+    @Test
+    @Order(7)
+    void unavailableServerTest(){
+        insert(DataSingle.getRegistration(),DataSingle.getPassword());
+        clickButton(button);
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Servidor Indisponivel");
     }
 
     void exit(){
