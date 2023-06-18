@@ -5,9 +5,9 @@ import org.openqa.selenium.chrome.ChromeDriver;
 public class DataSingle {
     private static DataSingle instance;
     private WebDriver driver;
-    private static String nome = "";
-    private static String registration= "";
-    private static String password = "";
+    private static String nome = "Ezequias Soares de Oliveira";
+    private static String registration= "202025020025";
+    private static String password = "Eze2017";
     private static String registration2= "";
     private static String password2 = "";
     private DataSingle() {
