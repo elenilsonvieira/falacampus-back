@@ -71,7 +71,8 @@ public class UserControllTest implements ConfigInterfaceUnitTest {
             ObjectMapper objectMapper = new ObjectMapper();
             String json = objectMapper.writeValueAsString(author);
 
-            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/user").contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isCreated()).andReturn();
+            MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post("/api/user")
+                    .contentType(MediaType.APPLICATION_JSON).content(json)).andExpect(status().isCreated()).andReturn();
 
             String jsonResponse = mvcResult.getResponse().getContentAsString();
 
