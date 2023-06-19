@@ -22,16 +22,22 @@ public class EditDepartament extends ConfigsTest {
         timeOut();
         logarUser2();
         timeOut();
+        driver.findElement(By.id("goOut")).click();
         timeOut();
+        timeOut();
+
+    }
+    @Test
+    @Order(1)
+    void logar(){
         logarUser1();
         timeOut();
         clickButton("/html/body/div/nav/div/div/div/li[1]/a");
         timeOut();
     }
 
-
     @Test
-    @Order(1)
+    @Order(2)
     void addResponseTest() {
         timeOut();
         scrollUp();
@@ -55,7 +61,7 @@ public class EditDepartament extends ConfigsTest {
     }
 
     @Test
-    @Order(2)
+    @Order(3)
     void removeResponseTest() {
         scrollUp();
         timeOut();
