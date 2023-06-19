@@ -80,4 +80,11 @@ public class ListDepartmentTest extends ConfigsTest {
         clickButton("//*[@id=\"idListar\"]");
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Atualizando Departamentos, Isso pode demorar um pouco!");
     }
+    @Test
+    @Order(5)
+    void loginuser2(){
+        timeOut();
+        loginuser2();
+        timeOut();
+    }
 }

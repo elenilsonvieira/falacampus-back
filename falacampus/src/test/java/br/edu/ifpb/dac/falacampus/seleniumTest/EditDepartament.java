@@ -16,6 +16,10 @@ public class EditDepartament extends ConfigsTest {
     @BeforeAll
     void before(){
         timeOut();
+        logarUser1();
+        timeOut();
+        clickButton("/html/body/div/nav/div/div/div/li[1]/a");
+        timeOut();
     }
 
 

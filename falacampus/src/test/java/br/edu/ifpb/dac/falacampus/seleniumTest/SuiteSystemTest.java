@@ -9,6 +9,7 @@ import org.junit.platform.suite.api.Suite;
 @SelectClasses({
         HomeTest.class,
         ListDepartmentTest.class,
+        EditDepartament.class,
         RegisterCommentTest.class,
         UserTest.class,
         EditUserTest.class,

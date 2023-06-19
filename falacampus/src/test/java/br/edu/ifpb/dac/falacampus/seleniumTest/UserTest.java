@@ -19,8 +19,6 @@ public class UserTest extends ConfigsTest{
     @BeforeAll
     void before(){
         timeOut();
-        logarUser1();
-        timeOut();
         clickButton("//*[@id=\"users\"]");
         assertEquals("http://localhost:3000/viewUsers",driver.getCurrentUrl());
     }
