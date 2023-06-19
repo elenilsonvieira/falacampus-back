@@ -8,6 +8,8 @@ import org.junit.platform.suite.api.Suite;
 @Testable
 @SelectClasses({
         HomeTest.class,
+        ListDepartmentTest.class,
+        RegisterCommentTest.class,
         EditUserTest.class,
         CommentTest.class,
         LoginTest.class

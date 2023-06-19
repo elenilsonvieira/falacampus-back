@@ -42,10 +42,11 @@ public class EditUserTest extends ConfigsTest {
     @Order(3)
     void alterEmailInvalidTest(){
         deleteXpath("//*[@id=\"inputEmail\"]");
-        driver.findElement(By.xpath("//*[@id=\"inputEmail\"]")).sendKeys("TestTest.com");
+        insert("//*[@id=\"inputEmail\"]","TestTest.com");
 
         scroll();
         timeOut();
+
         clickButton("//*[@id=\"button-save\"]");
         timeOut();
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Informe email valido");
@@ -57,7 +58,7 @@ public class EditUserTest extends ConfigsTest {
     void alterEmailValidTest(){
 
         deleteXpath("//*[@id=\"inputEmail\"]");
-        driver.findElement(By.xpath("//*[@id=\"inputEmail\"]")).sendKeys("Test@Test.com");
+        insert("//*[@id=\"inputEmail\"]","Test@Test.com");
         timeOut();
 
         clickButton("//*[@id=\"button-save\"]");
@@ -74,6 +75,7 @@ public class EditUserTest extends ConfigsTest {
     @Order(5)
     void removeSingleAdminErroTest(){
         viewEdit();
+        timeOut();
         scroll();
         timeOut();
 
@@ -112,9 +114,11 @@ public class EditUserTest extends ConfigsTest {
     @Test
     @Order(7)
     void removeAdminTest(){
-        viewEdit();
-        scroll();
         timeOut();
+        viewEdit();
+
+        timeOut();
+        scroll();
 
         Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectRole\"]")));
         select.selectByValue("REMOVE");
@@ -148,7 +152,6 @@ public class EditUserTest extends ConfigsTest {
     void cancelTest(){
         timeOut();
         clickButton("//*[@id=\"button-cancel\"]");
-
 
         assertEquals(driver.findElement(
                 By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]/td[5]"))

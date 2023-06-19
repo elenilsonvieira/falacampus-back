@@ -8,7 +8,6 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class ConfigsTest {
@@ -30,7 +29,6 @@ abstract class ConfigsTest {
 		}
 	}
 
-
 	void deleteXpath(String element){
 		driver.findElement(By.xpath(element)).sendKeys(Keys.chord(Keys.CONTROL, "a"), Keys.DELETE);
 
@@ -40,26 +38,22 @@ abstract class ConfigsTest {
 	}
 
 	void logarUser1(){
-		driver.findElement(By.xpath(
-				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
-				.sendKeys(DataSingle.getRegistration());
-		driver.findElement(By.xpath(
-				"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
-				.sendKeys(DataSingle.getPassword());
+		insert(	"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input", DataSingle.getRegistration());
+		insert(	"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input", DataSingle.getPassword());
 		timeOut();
 		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
 	}
 	void logarUser2(){
-		driver.findElement(By.xpath(
-						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input"))
-				.sendKeys(DataSingle.getRegistration2());
-		driver.findElement(By.xpath(
-						"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input"))
-				.sendKeys(DataSingle.getPassword2());
+		insert(	"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[1]/input", DataSingle.getRegistration2());
+		insert(	"/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/div[2]/input", DataSingle.getPassword2());
+
 		timeOut();
 		clickButton("/html/body/div/div[1]/div/div/div/div/div/div/div/div/form/fieldset/button");
 	}
-
+   void insert(String xpath, String args){
+	   driver.findElement(By.xpath(xpath))
+			   .sendKeys(args);
+   }
 
 	void scroll(){
 		JavascriptExecutor js = (JavascriptExecutor) driver;

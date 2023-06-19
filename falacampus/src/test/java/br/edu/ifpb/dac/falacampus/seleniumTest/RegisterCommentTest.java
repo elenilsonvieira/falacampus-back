@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -7,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.Select;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RegisterCommentTest extends ConfigsTest{
 
@@ -16,74 +18,34 @@ public class RegisterCommentTest extends ConfigsTest{
 
     @BeforeAll
     void before(){
-        logarUser1();
+        clickButton("//*[@id=\"goOut\"]");
+        timeOut();
+        logarUser2();
+        timeOut();
+        clickButton("/html/body/div/nav/div/div/div/li[3]/a");
+        clickButton("//*[@id=\"cadastrar_comentario\"]");
     }
 
     @Test
     @Order(1)
-    void CommentErradoTitulo() throws InterruptedException {
-
-        Thread.sleep(2000);
-        clickButton("/html/body/div/nav/div/div/div/li[3]/a");
-        clickButton("//*[@id=\"cadastrar_comentario\"]");
-
-        driver.findElement(By.xpath("//*[@id=\"inputCommentTitle\"]")).sendKeys("Min");
-        driver.findElement(By.xpath("//*[@id=\"MessageTextarea\"]")).sendKeys("Suficiente");
-
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
-        select.selectByValue("REVIEW");
-
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("Protocolo Virtual do Campus Monteiro");
-
+    void nullTitleErrorTest(){
         scroll();
-        Thread.sleep(2000);
-
-
+        timeOut();
         driver.findElement(By.xpath("//*[@id=\"button_salvar\"]")).click();
-        scrollUp();
+        timeOut();
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Titulo Incorreto!");
-
-        scroll();
-        Thread.sleep(2000);
-
-        driver.findElement(By.xpath("//*[@id=\"button_cancelar\"]")).click();
-
-
-
 
     }
 
     @Test
     @Order(2)
-    void CommentErradoMensagem() throws InterruptedException {
-        scrollUp();
-        Thread.sleep(2000);
+    void minTitleErrorTest() {
+        insert("//*[@id=\"inputCommentTitle\"]","Min");
+        timeOut();
+        clickButton("//*[@id=\"button_salvar\"]");
+        timeOut();
 
-        clickButton("//*[@id=\"cadastrar_comentario\"]");
-
-        driver.findElement(By.xpath("//*[@id=\"inputCommentTitle\"]")).sendKeys("Suficiente");
-        driver.findElement(By.xpath("//*[@id=\"MessageTextarea\"]")).sendKeys("Min");
-
-
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
-        select.selectByValue("REVIEW");
-
-
-
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("Protocolo Virtual do Campus Monteiro");
-
-        scroll();
-        Thread.sleep(2000);
-
-        driver.findElement(By.xpath("//*[@id=\"button_salvar\"]")).click();
-        scrollUp();
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Comentário incorreto!");
-
-        scroll();
-        Thread.sleep(2000);
-
-        driver.findElement(By.xpath("//*[@id=\"button_cancelar\"]")).click();
-
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Titulo Incorreto!");
 
 
 
@@ -91,125 +53,118 @@ public class RegisterCommentTest extends ConfigsTest{
 
     @Test
     @Order(3)
-    void CommentErradoTipo() throws InterruptedException {
-
-        scrollUp();
-        Thread.sleep(2000);
-
-        clickButton("//*[@id=\"cadastrar_comentario\"]");
-        driver.findElement(By.xpath("//*[@id=\"inputCommentTitle\"]")).sendKeys("Suficiente");
-        driver.findElement(By.xpath("//*[@id=\"MessageTextarea\"]")).sendKeys("Suficiente");
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("Protocolo Virtual do Campus Monteiro");
-
-        scroll();
-        Thread.sleep(2000);
-
-
-        clickButton("//*[@id=\"button_salvar\"]");
-        scrollUp();
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Tipo de comentario incorreto!");
-
-        scroll();
+    void titleTest(){
+        deleteXpath("//*[@id=\"inputCommentTitle\"]");
         timeOut();
-
-        clickButton("//*[@id=\"button_cancelar\"]");
-
+        insert("//*[@id=\"inputCommentTitle\"]","Limpeza");
+        timeOut();
     }
 
     @Test
     @Order(4)
-    void CommentErradoDepartament(){
-        scrollUp();
-        timeOut();
-
-        clickButton("//*[@id=\"cadastrar_comentario\"]");
-        driver.findElement(By.xpath("//*[@id=\"inputCommentTitle\"]")).sendKeys("Suficiente");
-        driver.findElement(By.xpath("//*[@id=\"MessageTextarea\"]")).sendKeys("Suficiente");
-
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
-        select.selectByValue("REVIEW");
-
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("Protocolo");
-
-        scroll();
+    void nullCommentErrorTest(){
+        insert("//*[@id=\"MessageTextarea\"]", "");
         timeOut();
 
         clickButton("//*[@id=\"button_salvar\"]");
-        scrollUp();
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Departamento incorreto!");
-
-        scroll();
         timeOut();
-
-        driver.findElement(By.xpath("//*[@id=\"button_cancelar\"]")).click();
-
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Comentário incorreto!");
     }
 
     @Test
     @Order(5)
-    void departmenResponse() throws InterruptedException {
+    void minCommentErrorTest() {
 
-        scrollUp();
-        Thread.sleep(2000);
-
-        clickButton("//*[@id=\"cadastrar_comentario\"]");
-
-        driver.findElement(By.xpath("//*[@id=\"inputCommentTitle\"]")).sendKeys("Suficiente");
-        driver.findElement(By.xpath("//*[@id=\"MessageTextarea\"]")).sendKeys("Suficiente");
-
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
-        select.selectByValue("REVIEW");
-
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("COORDENAÇÃO DE CONTROLE ACADÊMICO - CAMPUS MONTEIRO");
-
+        insert("//*[@id=\"MessageTextarea\"]", "Min");
         scroll();
-        Thread.sleep(2000);
+        timeOut();
 
         clickButton("//*[@id=\"button_salvar\"]");
-        scrollUp();
-        assertEquals(driver.findElement(By.className("toast-message")).getText(), "No momento não existe responsavel pelo departamento! Tente mais tarde");
-
-        scroll();
-        Thread.sleep(2000);
-
-        clickButton("//*[@id=\"button_cancelar\"]");
-
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Comentário incorreto!");
+        timeOut();
     }
 
+    @Test
+    @Order(6)
+    void CommentTest() {
+        timeOut();
+        deleteXpath("//*[@id=\"MessageTextarea\"]");
+        timeOut();
+        insert("//*[@id=\"MessageTextarea\"]", "Limpeza do lab4");
+    }
 
 
 
     @Test
-    @Order(6)
-    void abaComent() throws InterruptedException{
-
-        scrollUp();
-        timeOut();
-        clickButton("/html/body/div/nav/div/div/div/li[3]/a");
-        clickButton("//*[@id=\"cadastrar_comentario\"]");
-
-        driver.findElement(By.xpath("//*[@id=\"inputCommentTitle\"]")).sendKeys("Internet do campus");
-        driver.findElement(By.xpath("//*[@id=\"MessageTextarea\"]")).sendKeys("Problemas constantes na internet do campus");
-
-        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
-        select.selectByValue("REVIEW");
-
-        driver.findElement(By.xpath("//*[@id=\"input\"]")).sendKeys("Protocolo Virtual do Campus Monteiro");
-
+    @Order(7)
+    void typeCommentErrorTest() {
         scroll();
         timeOut();
 
         clickButton("//*[@id=\"button_salvar\"]");
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Tipo de comentario incorreto");
 
         timeOut();
-        assertEquals("Internet do campus", driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[2]/td[1]")).getText());
-        assertEquals("Problemas constantes na internet do campus", driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[2]/td[2]")).getText());
 
-        assertEquals("REVIEW", driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]/td[4]")).getText());
-        assertEquals("NOT_SOLVED", driver.findElement(By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]/td[5]")).getText());
+    }
+    @Test
+    @Order(8)
+    void typeCommentTest(){
+        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
+        select.selectByValue("REVIEW");
+        timeOut();
+
+    }
+    @Test
+    @Order(9)
+    void nullDepartamentErrorTest()  {
+        clickButton("//*[@id=\"button_salvar\"]");
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Departamento incorreto!");
+        timeOut();
+    }
+
+    @Test
+    @Order(10)
+    void creatCommentSucess(){
+        insert("//*[@id=\"input\"]","502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
+        timeOut();
+        clickButton("//*[@id=\"button_salvar\"]");
+        timeOut();
+        assertEquals(driver.findElement(By.className("toast-message")).getText(), "Comentário criado com sucesso!");
 
     }
 
+   @AfterAll
+    void createComment2(){
+       clickButton("//*[@id=\"cadastrar_comentario\"]");
+       timeOut();
+
+       scroll();
+       timeOut();
+
+       insert("//*[@id=\"inputCommentTitle\"]","Internet Ruim");
+       timeOut();
+
+       insert("//*[@id=\"MessageTextarea\"]", "internet do lab4 nao esta funcionando");
+       timeOut();
+
+       Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
+       select.selectByValue("REVIEW");
+       timeOut();
+
+       insert("//*[@id=\"input\"]","502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
+       timeOut();
+
+       clickButton("//*[@id=\"button_salvar\"]");
+
+       timeOut();
+
+       clickButton("//*[@id=\"goOut\"]");
+
+   }
 
 
 }

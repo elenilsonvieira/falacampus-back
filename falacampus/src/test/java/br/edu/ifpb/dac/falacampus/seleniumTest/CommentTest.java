@@ -124,11 +124,13 @@ public class CommentTest extends ConfigsTest {
     void tableDepartamentTest(){
         scroll();
         try {
+
             Boolean ok = driver.findElement(
                     By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/p")).getText().equals(
-                    "Com  entarios Do Departamento");
+                    "Comentarios Do Departamento");
 
             if (ok) {
+
                 WebElement e = driver.findElement(
                         By.xpath("/html/body/div/div[1]/div/div/div[4]"));
 
@@ -139,13 +141,14 @@ public class CommentTest extends ConfigsTest {
 
             }
         }catch (Exception e){
-            System.out.println("Tabela não existe");
+           assertTrue(false);
         }
 
         timeOut();
     }
 
     void buttonResponseTest(){
+
         data =  driver.findElement(
                 By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table/tbody/tr/td[3]")).getText();
         timeOut();
