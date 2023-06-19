@@ -16,6 +16,13 @@ public class EditDepartament extends ConfigsTest {
     @BeforeAll
     void before(){
         timeOut();
+        scrollUp();
+        timeOut();
+        driver.findElement(By.id("goOut")).click();
+        timeOut();
+        logarUser2();
+        timeOut();
+        timeOut();
         logarUser1();
         timeOut();
         clickButton("/html/body/div/nav/div/div/div/li[1]/a");
