@@ -11,11 +11,9 @@ public class EditUserTest extends ConfigsTest {
 
     @BeforeAll
     void up(){
-        logarUser1();
         timeOut();
-        driver.findElement(By.xpath("//*[@id=\"users\"]")).click();
-        assertEquals("http://localhost:3000/viewUsers",driver.getCurrentUrl());
         viewEdit();
+        timeOut();
     }
 
     void viewEdit(){
@@ -122,7 +120,8 @@ public class EditUserTest extends ConfigsTest {
 
         Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectRole\"]")));
         select.selectByValue("REMOVE");
-
+        scroll();
+        timeOut();
         clickButton("//*[@id=\"button-save\"]");
         timeOut();
         assertEquals(driver.findElement(By.xpath(" /html/body/div[2]")).getText(), "×\nSucesso\n" +
@@ -145,22 +144,83 @@ public class EditUserTest extends ConfigsTest {
 
     }
 
-
-
     @Test
     @Order(9)
     void cancelTest(){
         timeOut();
         clickButton("//*[@id=\"button-cancel\"]");
-
+        timeOut();
         assertEquals(driver.findElement(
                 By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]/td[5]"))
                 .getText(), "STUDENTS");
+
+        timeOut();
     }
 
-    @AfterAll
+    @Test
+    @Order(10)
+    void createComments(){
+        clickButton("//*[@id=\"comments\"]");
+        timeOut();
+        clickButton("//*[@id=\"cadastrar_comentario\"]");
+        timeOut();
+
+        scroll();
+        timeOut();
+
+        insert("//*[@id=\"inputCommentTitle\"]","Internet Ruim");
+        timeOut();
+
+        insert("//*[@id=\"MessageTextarea\"]", "internet do lab4 nao esta funcionando");
+        timeOut();
+
+        Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
+        select.selectByValue("REVIEW");
+        timeOut();
+
+        insert("//*[@id=\"input\"]","502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
+        timeOut();
+        scroll();
+        timeOut();
+        clickButton("//*[@id=\"button_salvar\"]");
+
+        timeOut();
+
+        //Comment 2
+        scrollUp();
+        timeOut();
+        clickButton("//*[@id=\"cadastrar_comentario\"]");
+
+        timeOut();
+
+        scroll();
+        timeOut();
+
+        insert("//*[@id=\"inputCommentTitle\"]","Limpeza lab5");
+        timeOut();
+
+        insert("//*[@id=\"MessageTextarea\"]", "laboratorio esta sujo");
+        timeOut();
+
+        select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
+        select.selectByValue("REVIEW");
+        timeOut();
+
+        insert("//*[@id=\"input\"]","502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
+        timeOut();
+        scroll();
+        timeOut();
+        clickButton("//*[@id=\"button_salvar\"]");
+        timeOut();
+
+    }
+
+    @Test
+    @Order(11)
     void exit(){
-       home();
+        scrollUp();
+        timeOut();
+        home();
     }
 
 }

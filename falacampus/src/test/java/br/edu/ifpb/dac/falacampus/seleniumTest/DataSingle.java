@@ -8,9 +8,9 @@ public class DataSingle {
     private static String nome = "Ezequias Soares de Oliveira";
     private static String registration= "202025020025";
     private static String password = "Eze2017";
-    private static String nome2 = "";
-    private static String registration2= "";
-    private static String password2 = "";
+    private static String nome2 = "Jefferson Riam Victo Freitas";
+    private static String registration2= "202125010011";
+    private static String password2 = "Suap22@$";
 
 
     private DataSingle() {

@@ -18,11 +18,11 @@ public class RegisterCommentTest extends ConfigsTest{
 
     @BeforeAll
     void before(){
-        clickButton("//*[@id=\"goOut\"]");
         timeOut();
         logarUser2();
         timeOut();
         clickButton("/html/body/div/nav/div/div/div/li[3]/a");
+        timeOut();
         clickButton("//*[@id=\"cadastrar_comentario\"]");
     }
 
@@ -41,14 +41,12 @@ public class RegisterCommentTest extends ConfigsTest{
     @Order(2)
     void minTitleErrorTest() {
         insert("//*[@id=\"inputCommentTitle\"]","Min");
+        scroll();
         timeOut();
         clickButton("//*[@id=\"button_salvar\"]");
         timeOut();
 
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Titulo Incorreto!");
-
-
-
     }
 
     @Test
@@ -65,7 +63,8 @@ public class RegisterCommentTest extends ConfigsTest{
     void nullCommentErrorTest(){
         insert("//*[@id=\"MessageTextarea\"]", "");
         timeOut();
-
+        scroll();
+        timeOut();
         clickButton("//*[@id=\"button_salvar\"]");
         timeOut();
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Comentário incorreto!");
@@ -136,35 +135,4 @@ public class RegisterCommentTest extends ConfigsTest{
         assertEquals(driver.findElement(By.className("toast-message")).getText(), "Comentário criado com sucesso!");
 
     }
-
-   @AfterAll
-    void createComment2(){
-       clickButton("//*[@id=\"cadastrar_comentario\"]");
-       timeOut();
-
-       scroll();
-       timeOut();
-
-       insert("//*[@id=\"inputCommentTitle\"]","Internet Ruim");
-       timeOut();
-
-       insert("//*[@id=\"MessageTextarea\"]", "internet do lab4 nao esta funcionando");
-       timeOut();
-
-       Select select = new Select(driver.findElement(By.xpath("//*[@id=\"selectCommentType\"]")));
-       select.selectByValue("REVIEW");
-       timeOut();
-
-       insert("//*[@id=\"input\"]","502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
-       timeOut();
-
-       clickButton("//*[@id=\"button_salvar\"]");
-
-       timeOut();
-
-       clickButton("//*[@id=\"goOut\"]");
-
-   }
-
-
 }

@@ -32,7 +32,7 @@ public class LoginTest extends ConfigsTest {
         timeOut();
         timeOut();
 
-        driver.findElement(By.xpath("//*[@id=\"goOut\"]")).click();
+       clickButton("//*[@id=\"goOut\"]");
     }
 
     @Test

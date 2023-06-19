@@ -1,5 +1,6 @@
 package br.edu.ifpb.dac.falacampus.seleniumTest;
 
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -45,11 +46,11 @@ public class ListDepartmentTest extends ConfigsTest {
     void filterDepartmentTest(){
         clickButton("/html/body/div/div[1]/div/div/div[1]/div/div/form/fieldset/div/input");
         insert("//*[@id=\"inputDepartamentName\"]",
-                "513 - Técnico em Instrumento Musical Subsequente - Monteiro (CAMPUS MONTEIRO)");
+                "502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)");
         timeOut();
         clickButton("//*[@id=\"btn-search\"]");
 
-        assertEquals("513 - Técnico em Instrumento Musical Subsequente - Monteiro (CAMPUS MONTEIRO)",
+        assertEquals("502 - Tecnologia em Análise e Desenvolvimento de Sistemas - Monteiro (CAMPUS MONTEIRO)",
                 driver.findElement(
                         By.xpath("//*[@id=\"root\"]/div[1]/div/div/div[3]/div/div/table/tbody/tr[1]/td[2]")).getText());
 

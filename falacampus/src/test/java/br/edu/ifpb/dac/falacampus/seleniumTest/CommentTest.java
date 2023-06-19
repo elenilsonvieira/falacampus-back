@@ -123,59 +123,50 @@ public class CommentTest extends ConfigsTest {
     @Order(5)
     void tableDepartamentTest(){
         scroll();
-        try {
 
-            Boolean ok = driver.findElement(
-                    By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/p")).getText().equals(
-                    "Comentarios Do Departamento");
+        Boolean ok = driver.findElement(
+                By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/p")).getText().equals(
+                "Comentarios Do Departamento");
 
-            if (ok) {
+        if (ok) {
 
-                WebElement e = driver.findElement(
-                        By.xpath("/html/body/div/div[1]/div/div/div[4]"));
+            WebElement e = driver.findElement(
+                    By.xpath("/html/body/div/div[1]/div/div/div[4]"));
 
-                WebElement table = driver.findElement(By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table"));
-                assertFalse((table.findElement(By.tagName("tbody")).findElements(By.tagName("tr")).isEmpty()));
+            WebElement table = driver.findElement(By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table"));
+            assertFalse((table.findElement(By.tagName("tbody")).findElements(By.tagName("tr")).isEmpty()));
 
-                buttonResponseTest();
 
-            }
-        }catch (Exception e){
-           assertTrue(false);
+            timeOut();
+
+
+            data = driver.findElement(
+                    By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table/tbody/tr/td[3]")).getText();
+            timeOut();
+
+            clickButton("//*[@id=\"butonAnswer\"]");
+            timeOut();
+
+            assertTrue(driver.getCurrentUrl().contains("http://localhost:3000/createAnswer/"));
+            timeOut();
+            scrollUp();
+            timeOut();
+            clickButton("//*[@id=\"comments\"]");
+            timeOut();
+            scroll();
+
+            timeOut();
+            data2 = driver.findElement(
+                    By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table/tbody/tr/td[3]")).getText();
+
+            assertEquals(data, data2);
         }
-
-        timeOut();
-    }
-
-    void buttonResponseTest(){
-
-        data =  driver.findElement(
-                By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table/tbody/tr/td[3]")).getText();
-        timeOut();
-
-        clickButton("//*[@id=\"butonAnswer\"]");
-        timeOut();
-
-        assertTrue(driver.getCurrentUrl().contains("http://localhost:3000/createAnswer/"));
-        timeOut();
-
-        clickButton("//*[@id=\"comments\"]");
-        scroll();
-
-        timeOut();
-        data2 = driver.findElement(
-                By.xpath("/html/body/div/div[1]/div/div/div[4]/div/div/table/tbody/tr/td[3]")).getText();
-
-        assertEquals(data,data2);
     }
 
 
     @AfterAll
     void exit(){
         scrollUp();
-        timeOut();
-        home();
-        clickButton("//*[@id=\"goOut\"]");
     }
 
 }

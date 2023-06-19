@@ -56,13 +56,19 @@ abstract class ConfigsTest {
    }
 
 	void scroll(){
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+		try {
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("window.scrollTo(0, document.body.scrollHeight)");
+		}catch (Exception e){
+
+		}
 	}
 
 	void scrollUp(){
-		JavascriptExecutor js = (JavascriptExecutor) driver;
-		js.executeScript("window.scrollTo(0, 0)");
+		try {
+			JavascriptExecutor js = (JavascriptExecutor) driver;
+			js.executeScript("window.scrollTo(0, 0)");
+		}catch (Exception e){}
 	}
 
 	void home(){
