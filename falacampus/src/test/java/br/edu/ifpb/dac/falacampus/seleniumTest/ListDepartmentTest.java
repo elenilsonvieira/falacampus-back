@@ -82,9 +82,12 @@ public class ListDepartmentTest extends ConfigsTest {
     }
     @Test
     @Order(5)
-    void loginuser2(){
+    void login2(){
+        scrollUp();
         timeOut();
-        loginuser2();
+        driver.findElement(By.id("goOut")).click();
+        timeOut();
+        logarUser2();
         timeOut();
     }
 }
