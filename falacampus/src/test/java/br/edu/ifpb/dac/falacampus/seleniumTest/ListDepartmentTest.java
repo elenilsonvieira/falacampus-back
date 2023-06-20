@@ -20,6 +20,7 @@ public class ListDepartmentTest extends ConfigsTest {
     void before(){
          logarUser1();
          timeOut();
+         timeOut();
          clickButton("//*[@id=\"departments\"]");
      }
 
