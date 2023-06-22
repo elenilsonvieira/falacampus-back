@@ -40,15 +40,15 @@ public class AuthenticationController {
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
 		try {
-			String token = authenticationService.login(dto.getUsername(), dto.getPassword()); 
-			User entity = userService.findByUserName(dto.getUsername());		
+
+			String token = authenticationService.login(dto.getUsername(), dto.getPassword());
+			User entity = userService.findByUserName(dto.getUsername());
 			UserDto user = userConverterService.userToDTO(entity); 
 			TokenDto tokenDto = new TokenDto(token, user);
 			
 			return new ResponseEntity(tokenDto, HttpStatus.OK);
 			
-		} catch (AuthenticationException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}

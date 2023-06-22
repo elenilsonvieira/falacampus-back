@@ -44,6 +44,8 @@ public class SuapServiceImpl implements SuapService {
 			e3.printStackTrace();
 		} catch (MalformedJwtException e) {
 			e.printStackTrace();
+		}catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		return null;

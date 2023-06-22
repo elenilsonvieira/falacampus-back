@@ -33,8 +33,8 @@ public class ConverterService {
 	}
 
 	public String jsonToToken(String json) throws Exception{
-		try{
 
+		try{
 			JsonElement jsonElement = JsonParser.parseString(json);
 			String token = jsonElement.getAsJsonObject().get("access").getAsString();
 			return token;
