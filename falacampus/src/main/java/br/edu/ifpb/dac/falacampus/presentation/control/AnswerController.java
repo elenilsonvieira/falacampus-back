@@ -208,16 +208,36 @@ public class AnswerController {
 	}
 	
 	
+	// @GetMapping("/{id}")
+	// public Answer findById(@PathVariable("id") Long id) throws Exception {
+
+	// 	Answer result = answerService.findById(id);
+
+	// 	if (result == null){
+	// 		throw new Exception("answer not exist!");
+
+	// 	} else {
+	// 		return result;	
+	// 	}
+	// }
+
 	@GetMapping("/{id}")
-	public Answer findById(@PathVariable("id") Long id) throws Exception {
+	public ResponseEntity<?> findById(@PathVariable("id") Long id) throws Exception {
 
-		Answer result = answerService.findById(id);
+		try {
 
-		if (result == null){
-			throw new Exception("answer not exist!");
+			Answer result = answerService.findById(id);
+			AnswerDto answerDto = answerConverterService.answerToDTO(result);
+			return ResponseEntity.ok(answerDto);
 
-		} else {
-			return result;	
+		} catch (IllegalStateException e) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+
+		} catch (Exception e) {
+
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro inesperado");
+		
 		}
 	}
 }

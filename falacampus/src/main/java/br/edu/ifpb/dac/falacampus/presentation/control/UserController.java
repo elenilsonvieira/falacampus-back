@@ -137,19 +137,30 @@ public class UserController {
     }
 
     //FIND ALL
+    // @GetMapping("/all")
+    // public List<User> findAll() throws Exception {
+
+    //     List<User> result = (List<User>) userService.findAll();
+
+    //     if (result.isEmpty()) {
+    //         throw new Exception("List is empty!");
+
+    //     } else {
+    //         return (List<User>) userService.findAll();
+    //     }
+    // }
     @GetMapping("/all")
-    public List<User> findAll() throws Exception {
+    public List<UserDto> findAll() throws Exception {
 
         List<User> result = (List<User>) userService.findAll();
+        List<UserDto> dtos = userConverterService.userToDTOList(result);
 
-        if (result.isEmpty()) {
+        if (dtos.isEmpty()) {
             throw new Exception("List is empty!");
-
         } else {
-            return (List<User>) userService.findAll();
+            return (List<UserDto>) dtos;
         }
     }
-
 //	@GetMapping("/users")
 //	public ResponseEntity execute(
 //	         		 @PageableDefault(sort = "name",

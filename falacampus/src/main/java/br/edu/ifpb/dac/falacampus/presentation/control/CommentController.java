@@ -126,15 +126,18 @@ public class CommentController {
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-			Comment entity = findById(id);
-			
+
+			// Comment entity = findById(id);
+			Comment entity = commentService.findById(id);
+
 			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
 				commentService.deleteById(id);
 			} else {
 				throw new CommentSolvedException("Comment is solved, cannot deleted");
-				}
+			}
 
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
