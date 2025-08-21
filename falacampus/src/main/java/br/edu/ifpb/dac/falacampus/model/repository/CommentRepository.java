@@ -16,6 +16,8 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
 	@Query(value = "SELECT obj FROM Comment obj JOIN FETCH obj.author JOIN FETCH obj.departament JOIN FETCH obj.answer")
 	public List<Comment> findCommentsDatas(List<Comment> comments);
 
+	//Para o falacampus mobile
+	public List<Comment> findByAuthorId(Long authorId);
 }
 
 

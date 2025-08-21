@@ -97,4 +97,8 @@ public class AnswerService {
 		return answerRepository.findAll(example);
 	}
 
+
+	public List<Answer> findByCommentId(Long commentId) {
+    	return answerRepository.findByCommentId(commentId);
+	}
 }

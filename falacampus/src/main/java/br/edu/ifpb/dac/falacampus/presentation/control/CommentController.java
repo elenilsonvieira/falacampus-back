@@ -249,4 +249,11 @@ public class CommentController {
 		}
 	}
 
+	//Para o falacampus mobile
+	@GetMapping("/byAuthor/{authorId}")
+	public ResponseEntity<?> findByAuthor(@PathVariable Long authorId) {
+		List<Comment> comments = commentRepository.findByAuthorId(authorId);
+		List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(comments);
+		return ResponseEntity.ok(dtos);
+}
 }

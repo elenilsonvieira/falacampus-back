@@ -24,10 +24,7 @@ import br.edu.ifpb.dac.falacampus.business.service.DetailsCommentConverterServic
 import br.edu.ifpb.dac.falacampus.business.service.UserService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.AnswerService;
 import br.edu.ifpb.dac.falacampus.business.service.impl.CommentService;
-import br.edu.ifpb.dac.falacampus.exceptions.BadArgumentsException;
 import br.edu.ifpb.dac.falacampus.exceptions.CommentSolvedException;
-import br.edu.ifpb.dac.falacampus.exceptions.InternalException;
-import br.edu.ifpb.dac.falacampus.exceptions.ResourceNotFoundException;
 import br.edu.ifpb.dac.falacampus.model.entity.Answer;
 import br.edu.ifpb.dac.falacampus.model.entity.Comment;
 import br.edu.ifpb.dac.falacampus.model.entity.User;
@@ -95,27 +92,50 @@ public class AnswerController {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
 	}
-	
-	
-	//=====
-		@PutMapping("{id}")
-		public ResponseEntity returned(@PathVariable("id") Long id) {
 
-			try {
-				Comment entity=commentService.findById(id);
-			
-				entity.setStatusComment(StatusComment.RETURNED);
-				entity = commentService.update(entity);
-				
-				
-				DetailsCommentDto dto = detailsCommentConverterService.detailsCommentToDTO(entity); 
-
-				return ResponseEntity.ok(dto);
-			} catch (Exception e) {
-				return ResponseEntity.badRequest().body(e.getMessage());
+	//novo -> atualiza a mensagem
+	@PutMapping("{id}")
+	public ResponseEntity<?> updateAnswer(@PathVariable Long id, @RequestBody @Valid AnswerDto dto) {
+		try {
+			Answer answer = answerService.findById(id);
+			if(answer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Answer not found");
 			}
 
+			answer.setMessage(dto.getMessage());
+
+			answer = answerService.update(answer);
+
+
+			AnswerDto updatedDto = answerConverterService.answerToDTO(answer);
+			return ResponseEntity.ok(updatedDto);
+
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
 		}
+	}
+
+
+
+	//=====
+		// @PutMapping("{id}")
+		// public ResponseEntity returned(@PathVariable("id") Long id) {
+
+		// 	try {
+		// 		Comment entity=commentService.findById(id);
+			
+		// 		entity.setStatusComment(StatusComment.RETURNED);
+		// 		entity = commentService.update(entity);
+				
+				
+		// 		DetailsCommentDto dto = detailsCommentConverterService.detailsCommentToDTO(entity); 
+
+		// 		return ResponseEntity.ok(dto);
+		// 	} catch (Exception e) {
+		// 		return ResponseEntity.badRequest().body(e.getMessage());
+		// 	}
+
+		// }
 
 
 		//====
@@ -208,36 +228,36 @@ public class AnswerController {
 	}
 	
 	
-	// @GetMapping("/{id}")
-	// public Answer findById(@PathVariable("id") Long id) throws Exception {
-
-	// 	Answer result = answerService.findById(id);
-
-	// 	if (result == null){
-	// 		throw new Exception("answer not exist!");
-
-	// 	} else {
-	// 		return result;	
-	// 	}
-	// }
-
 	@GetMapping("/{id}")
 	public ResponseEntity<?> findById(@PathVariable("id") Long id) throws Exception {
-
-		try {
-
-			Answer result = answerService.findById(id);
-			AnswerDto answerDto = answerConverterService.answerToDTO(result);
-			return ResponseEntity.ok(answerDto);
-
-		} catch (IllegalStateException e) {
-
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-
-		} catch (Exception e) {
-
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Erro inesperado");
 		
+		Answer result = answerService.findById(id);
+		AnswerDto answerDto = answerConverterService.answerToDTO(result);
+		
+
+		if (result == null){
+			throw new Exception("answer not exist!");
+
+		} else {
+			return ResponseEntity.ok(answerDto);	
 		}
 	}
+
+	//novo	
+	@GetMapping("/byComment/{commentId}")
+	public ResponseEntity<?> findByComment(@PathVariable Long commentId) {
+		try {
+			
+			List<Answer> answers = answerService.findByCommentId(commentId);
+
+			
+			List<AnswerDto> dtos = answerConverterService.answerToDTOList(answers);
+
+			return ResponseEntity.ok(dtos);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(e.getMessage());
+		}
+	}
+
 }
+
