@@ -185,17 +185,18 @@ public class CommentController {
 	
 	
 	@GetMapping("/{id}")
-	public Comment findById(@PathVariable("id") Long id) throws Exception {
+	public DetailsCommentDto findById(@PathVariable("id") Long id) throws Exception {
 
 		Comment result = commentService.findById(id);
-
-		if (result == null){
+		DetailsCommentDto dto = commentConverterService.commentToDTO(result);
+		if (dto == null){
 			throw new Exception("Comment not exist!");
 
 		} else {
-			return result;	
+			return dto;	
 		}
 	}
+
 	@GetMapping("/commentSolved")
 	public ResponseEntity<?> findSolved() throws Exception {
 
