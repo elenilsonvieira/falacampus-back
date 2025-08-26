@@ -53,14 +53,35 @@ public class AuthenticationController {
 		}
 	}
 
+	// @PostMapping("/isValidToken")
+	// public ResponseEntity isValidToken(@RequestBody TokenDto tokenDto) {
+
+	// 	try {
+	// 		boolean isValidToken = tokenService.isValid(tokenDto.getToken());
+
+	// 		return new ResponseEntity(isValidToken, HttpStatus.OK);
+
+	// 	} catch (Exception e) {
+	// 		return ResponseEntity.badRequest().body(e.getMessage());
+	// 	}
+	// }
+
 	@PostMapping("/isValidToken")
-	public ResponseEntity isValidToken(@RequestBody TokenDto tokenDto) {
+	public ResponseEntity<?> isValidToken(@RequestBody TokenDto tokenDto) {
 
 		try {
 			boolean isValidToken = tokenService.isValid(tokenDto.getToken());
+			if(isValidToken){
+				String userName = tokenService.getUsername(tokenDto.getToken());
+				User entity = userService.findByUserName(userName);
+				UserDto user = userConverterService.userToDTO(entity); 
 
-			return new ResponseEntity(isValidToken, HttpStatus.OK);
+				TokenDto response = new TokenDto(tokenDto.getToken(), user);
 
+				return ResponseEntity.ok(response);
+			}
+			
+			return new ResponseEntity("Token inválido", HttpStatus.UNAUTHORIZED);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
