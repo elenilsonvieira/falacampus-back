@@ -17,6 +17,7 @@ import br.edu.ifpb.dac.falacampus.business.service.TokenService;
 import br.edu.ifpb.dac.falacampus.presentation.dto.LoginDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.TokenDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.UserResponseDto;
 
 public class AuthenticationControllTest {
     @Mock
@@ -39,11 +40,14 @@ public class AuthenticationControllTest {
         loginDto.setPassword("password");
 
         TokenDto tokenDto = new TokenDto();
-        UserDto userDto = new UserDto();
-        userDto.setUsername("John Doe");
-        userDto.setPassword("password");
-        tokenDto.setUser(userDto);
+        // UserDto userDto = new UserDto();
+        UserResponseDto userResponseDto = new UserResponseDto();
+        // userDto.setUsername("John Doe");
+        // userDto.setPassword("password");
+        // tokenDto.setUser(userDto);
+        userResponseDto.setUsername("John Doe");
         tokenDto.setToken(token);
+        tokenDto.setUser(userResponseDto);
 
         Mockito.when(authenticationController.login(Mockito.any(LoginDto.class))).thenReturn(new ResponseEntity<>(tokenDto, HttpStatus.OK));
 
@@ -61,10 +65,12 @@ public class AuthenticationControllTest {
         loginDto.setPassword("12345");
 
         TokenDto token = new TokenDto();
-        UserDto u = new UserDto();
-        u.setPassword(loginDto.getPassword());
-        u.setUsername(loginDto.getUsername());
-        token.setUser(u);
+        // UserDto u = new UserDto();
+        UserResponseDto userResponseDto = new UserResponseDto();
+        // u.setPassword(loginDto.getPassword());
+        // u.setUsername(loginDto.getUsername());
+        userResponseDto.setUsername(loginDto.getUsername());
+        token.setUser(userResponseDto);
 
         Mockito.when(authenticationController.login(Mockito.any(LoginDto.class)))
                 .thenReturn(ResponseEntity.badRequest().body(token));
