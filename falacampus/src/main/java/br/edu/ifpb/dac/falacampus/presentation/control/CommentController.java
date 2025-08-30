@@ -126,15 +126,18 @@ public class CommentController {
 	@DeleteMapping("{id}")
 	public ResponseEntity delete(@PathVariable("id") Long id) {
 		try {
-			Comment entity = findById(id);
-			
+
+			// Comment entity = findById(id);
+			Comment entity = commentService.findById(id);
+
 			if (entity.getStatusComment().equals(StatusComment.NOT_SOLVED)){
 				commentService.deleteById(id);
 			} else {
 				throw new CommentSolvedException("Comment is solved, cannot deleted");
-				}
+			}
 
 			return new ResponseEntity(HttpStatus.NO_CONTENT);
+			
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}
@@ -182,17 +185,18 @@ public class CommentController {
 	
 	
 	@GetMapping("/{id}")
-	public Comment findById(@PathVariable("id") Long id) throws Exception {
+	public DetailsCommentDto findById(@PathVariable("id") Long id) throws Exception {
 
 		Comment result = commentService.findById(id);
-
-		if (result == null){
+		DetailsCommentDto dto = commentConverterService.commentToDTO(result);
+		if (dto == null){
 			throw new Exception("Comment not exist!");
 
 		} else {
-			return result;	
+			return dto;	
 		}
 	}
+
 	@GetMapping("/commentSolved")
 	public ResponseEntity<?> findSolved() throws Exception {
 
@@ -246,4 +250,11 @@ public class CommentController {
 		}
 	}
 
+	//Para o falacampus mobile
+	@GetMapping("/byAuthor/{authorId}")
+	public ResponseEntity<?> findByAuthor(@PathVariable Long authorId) {
+		List<Comment> comments = commentRepository.findByAuthorId(authorId);
+		List<DetailsCommentDto> dtos = commentConverterService.commentToDTOList(comments);
+		return ResponseEntity.ok(dtos);
+}
 }

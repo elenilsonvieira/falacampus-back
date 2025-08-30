@@ -22,6 +22,7 @@ import br.edu.ifpb.dac.falacampus.model.entity.User;
 import br.edu.ifpb.dac.falacampus.presentation.dto.LoginDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.TokenDto;
 import br.edu.ifpb.dac.falacampus.presentation.dto.UserDto;
+import br.edu.ifpb.dac.falacampus.presentation.dto.UserResponseDto;
 import io.jsonwebtoken.Jwts;
 
 @RestController
@@ -37,13 +38,29 @@ public class AuthenticationController {
 	@Autowired
 	private TokenService tokenService;
 
+	// @PostMapping("/login")
+	// public ResponseEntity login(@RequestBody LoginDto dto) {
+	// 	try {
+
+	// 		String token = authenticationService.login(dto.getUsername(), dto.getPassword());
+	// 		User entity = userService.findByUserName(dto.getUsername());
+	// 		UserDto user = userConverterService.userToDTO(entity); 
+	// 		TokenDto tokenDto = new TokenDto(token, user);
+			
+	// 		return new ResponseEntity(tokenDto, HttpStatus.OK);
+			
+	// 	} catch (Exception e) {
+	// 		return ResponseEntity.badRequest().body(e.getMessage());
+	// 	}
+	// }
+
 	@PostMapping("/login")
 	public ResponseEntity login(@RequestBody LoginDto dto) {
 		try {
 
 			String token = authenticationService.login(dto.getUsername(), dto.getPassword());
 			User entity = userService.findByUserName(dto.getUsername());
-			UserDto user = userConverterService.userToDTO(entity); 
+			UserResponseDto user = userConverterService.userToResponseDto(entity); 
 			TokenDto tokenDto = new TokenDto(token, user);
 			
 			return new ResponseEntity(tokenDto, HttpStatus.OK);
@@ -53,14 +70,35 @@ public class AuthenticationController {
 		}
 	}
 
+	// @PostMapping("/isValidToken")
+	// public ResponseEntity isValidToken(@RequestBody TokenDto tokenDto) {
+
+	// 	try {
+	// 		boolean isValidToken = tokenService.isValid(tokenDto.getToken());
+
+	// 		return new ResponseEntity(isValidToken, HttpStatus.OK);
+
+	// 	} catch (Exception e) {
+	// 		return ResponseEntity.badRequest().body(e.getMessage());
+	// 	}
+	// }
+
 	@PostMapping("/isValidToken")
 	public ResponseEntity isValidToken(@RequestBody TokenDto tokenDto) {
 
 		try {
 			boolean isValidToken = tokenService.isValid(tokenDto.getToken());
+			if(isValidToken){
+				String userName = tokenService.getUsername(tokenDto.getToken());
+				User entity = userService.findByUserName(userName);
+				UserResponseDto user = userConverterService.userToResponseDto(entity); 
 
-			return new ResponseEntity(isValidToken, HttpStatus.OK);
+				TokenDto response = new TokenDto(tokenDto.getToken(), user);
 
+				return ResponseEntity.ok(response);
+			}
+			
+			return new ResponseEntity("Token inválido", HttpStatus.UNAUTHORIZED);
 		} catch (Exception e) {
 			return ResponseEntity.badRequest().body(e.getMessage());
 		}

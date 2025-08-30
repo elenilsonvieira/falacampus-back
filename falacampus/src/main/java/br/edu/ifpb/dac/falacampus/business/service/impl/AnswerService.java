@@ -78,7 +78,8 @@ public class AnswerService {
 			Answer an = answerRepository.findById(id).get();
 			return an;
 		}catch (Exception e){
-			throw new IllegalStateException("Id cannot be null");
+			// throw new IllegalStateException("Id cannot be null");
+			throw new IllegalStateException("Id not found");
 		}
 
 	}
@@ -96,4 +97,8 @@ public class AnswerService {
 		return answerRepository.findAll(example);
 	}
 
+
+	public List<Answer> findByCommentId(Long commentId) {
+    	return answerRepository.findByCommentId(commentId);
+	}
 }

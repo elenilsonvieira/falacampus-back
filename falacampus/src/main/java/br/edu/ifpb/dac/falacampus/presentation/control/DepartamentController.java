@@ -136,19 +136,33 @@ public class DepartamentController {
 		}
 	}
 
+	// @GetMapping("/{id}")
+	// public Departament findById(@PathVariable("id") Long id) throws Exception {
+
+	// 	Departament result = departamentService.findById(id);
+
+	// 	if (result == null) {
+	// 		throw new Exception("Departament not exist!");
+
+	// 	} else {
+	// 		return result;
+	// 	}
+	// }
+	
 	@GetMapping("/{id}")
-	public Departament findById(@PathVariable("id") Long id) throws Exception {
+	public DepartamentDto findById(@PathVariable("id") Long id) throws Exception {
 
 		Departament result = departamentService.findById(id);
+		DepartamentDto resutlDto = departamentConverterServiceImpl.departamentToDTO(result);
 
-		if (result == null) {
+		if (resutlDto == null) {
 			throw new Exception("Departament not exist!");
 
 		} else {
-			return result;
+			return resutlDto;
 		}
 	}
-	
+
 	@GetMapping("/getDepartmentsApi")
 	public void getDepartmentsApi() {
 		departamentConverterServiceImpl.SaveAllDepartments(DEPARTAMENTS_URL_MONTEIRO);
